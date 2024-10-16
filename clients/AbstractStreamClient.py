@@ -33,10 +33,11 @@ class AbstractStreamClient(Thread):
         while self.active:
 
             metadata_size = struct.unpack('>I', client_socket.recv(4))[0]
+            print(f"metadata_size = {metadata_size}")
             item_metadata = self.get_item_bytes(client_socket, metadata_size, metadata_size)
 
             item_size = struct.unpack('>I', client_socket.recv(4))[0]
-            print("item_size = " + str(item_size))
+            print(f"item_size = {item_size}")
             item_bytes = self.get_item_bytes(client_socket, item_size, 4096)
 
             self.use_item_metadata_and_bytes(item_metadata, item_bytes)

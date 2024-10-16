@@ -15,6 +15,8 @@ class ImageStreamClient(AbstractStreamClient):
         array_metadata = str_item_metadata.split(",")
         width = int(array_metadata[0])
         height = int(array_metadata[1])
+        print(f"image size = {width} x {height}")
+
         image = Image.frombytes('RGBA', (width, height), item_bytes)
 
         if self.count % 30 == 0:
