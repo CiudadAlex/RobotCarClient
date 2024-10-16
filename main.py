@@ -20,5 +20,5 @@ if __name__ == "__main__":
 
 
 # FIXME test host and port in properties
-# FIXME UI to see the videostream
+# FIXME UI to see the videostream RemoteControlUI
 
