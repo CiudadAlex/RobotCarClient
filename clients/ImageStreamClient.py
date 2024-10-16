@@ -4,9 +4,9 @@ from PIL import Image
 
 class ImageStreamClient(AbstractStreamClient):
 
-    def __init__(self, host, port):
+    def __init__(self, host, port, on_image_received):
         super().__init__(host, port)
-        self.count = 0
+        self.on_image_received = on_image_received
         self.start()
 
     def use_item_metadata_and_bytes(self, item_metadata, item_bytes):
@@ -18,11 +18,5 @@ class ImageStreamClient(AbstractStreamClient):
         print(f"image size = {width} x {height}")
 
         image = Image.frombytes('RGBA', (width, height), item_bytes)
-
-        if self.count % 30 == 0:
-            image.show()
-
-        self.count = self.count + 1
-
-# FIXME finish
+        self.on_image_received(image)
 
