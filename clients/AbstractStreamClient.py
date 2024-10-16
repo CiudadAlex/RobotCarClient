@@ -33,24 +33,31 @@ class AbstractStreamClient(Thread):
         while self.active:
 
             metadata_size = struct.unpack('>I', client_socket.recv(4))[0]
-            print(f"metadata_size = {metadata_size}")
             item_metadata = self.get_item_bytes(client_socket, metadata_size, metadata_size)
+            print(f"metadata_size = {metadata_size} = {len(item_metadata)}")
 
             item_size = struct.unpack('>I', client_socket.recv(4))[0]
-            print(f"item_size = {item_size}")
             item_bytes = self.get_item_bytes(client_socket, item_size, 4096)
+            print(f"item_size = {item_size} = {len(item_bytes)}")
 
             self.use_item_metadata_and_bytes(item_metadata, item_bytes)
 
     @staticmethod
-    def get_item_bytes(client_socket, item_size, buff_size):
+    def get_item_bytes(client_socket, item_size, initial_buff_size):
+
+        buff_size = initial_buff_size
+        reminder = item_size
 
         item_bytes = b""
-        while len(item_bytes) < item_size:
+        while reminder > 0:
             packet = client_socket.recv(buff_size)
             if not packet:
                 break
             item_bytes += packet
+            reminder = item_size - len(item_bytes)
+
+            if buff_size > reminder:
+                buff_size = reminder
 
         return item_bytes
 
