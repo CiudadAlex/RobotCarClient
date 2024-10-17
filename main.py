@@ -1,20 +1,10 @@
 import time
-from utils.PropertiesReader import PropertiesReader
-from clients.ImageStreamClient import ImageStreamClient
-
-
-def on_image_received(image):
-    # image.show()
-    pass
+from remotecontrolui.RemoteControlUI import RemoteControlUI
 
 
 if __name__ == "__main__":
 
-    propertiesReader = PropertiesReader('config.properties')
-    host = propertiesReader.host
-    port_images_stream = propertiesReader.port_images_stream
-
-    imageStreamClient = ImageStreamClient(host, port_images_stream, on_image_received)
+    RemoteControlUI.launch()
 
     time.sleep(300)
 
