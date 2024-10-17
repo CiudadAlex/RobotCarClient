@@ -7,7 +7,6 @@ class ImageStreamClient(AbstractStreamClient):
     def __init__(self, host, port, on_image_received):
         super().__init__(host, port)
         self.on_image_received = on_image_received
-        self.start()
 
     def use_item_metadata_and_bytes(self, item_metadata, item_bytes):
 

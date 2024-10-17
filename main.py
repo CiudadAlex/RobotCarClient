@@ -19,6 +19,5 @@ if __name__ == "__main__":
     time.sleep(300)
 
 
-# FIXME test host and port in properties
-# FIXME UI to see the videostream RemoteControlUI
+# FIXME test properties and UI
 

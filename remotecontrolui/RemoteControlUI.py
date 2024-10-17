@@ -1,3 +1,5 @@
+from utils.PropertiesReader import PropertiesReader
+from clients.ImageStreamClient import ImageStreamClient
 import wx
 import traceback
 import time
@@ -31,26 +33,31 @@ class RemoteControlUI(wx.Frame):
         margin_button_pad_image = 30
 
         self.static_bitmap = wx.StaticBitmap(panel, wx.ID_ANY, wx.NullBitmap, pos=(left_margin, up_margin + 3 * button_height + margin_button_pad_image))
-        self.update_static_bitmap()
 
         self.Bind(wx.EVT_CLOSE, self.OnClose)
 
+        properties_reader = PropertiesReader('config.properties')
+        host = properties_reader.host
+        port_images_stream = properties_reader.port_images_stream
+
+        image_stream_client = ImageStreamClient(host, port_images_stream, self.on_image_received)
+        image_stream_client.start()
+
         self.Show()
 
-    def update_static_bitmap(self):
-        pil_image = self.get_pil_image_from_camera()
-        wx_image = wx.Image(pil_image.size[0], pil_image.size[1])
-        wx_image.SetData(pil_image.convert("RGB").tobytes())
+    def on_image_received(self, image):
+
+        image = self.resize_pil_image(image, 0.5)
+        wx_image = wx.Image(image.size[0], image.size[1])
+        wx_image.SetData(image.convert("RGB").tobytes())
         bitmap = wx.Bitmap(wx_image)
         self.static_bitmap.SetBitmap(bitmap)
 
-    def get_pil_image_from_camera(self):
+    @staticmethod
+    def resize_pil_image(pil_image, factor):
 
-        # FIXME use ImageStreamClient
-
-        pil_image = self.rtsp_client.get_pil_image()
         width, height = pil_image.size
-        new_size = (round(width / 8), round(height / 8))
+        new_size = (round(width * factor), round(height * factor))
         pil_image = pil_image.resize(new_size)
         return pil_image
 
@@ -75,8 +82,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_up(self, event):
         try:
             print("UP!!")
-            time.sleep(2)
-            self.update_static_bitmap()
+
         except:
             print("Problem with command up")
             traceback.print_exc()
@@ -84,8 +90,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_down(self, event):
         try:
             print("DOWN!!")
-            time.sleep(2)
-            self.update_static_bitmap()
+
         except:
             print("Problem with command down")
             traceback.print_exc()
@@ -93,8 +98,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_left(self, event):
         try:
             print("LEFT!!")
-            time.sleep(2)
-            self.update_static_bitmap()
+
         except:
             print("Problem with command left")
             traceback.print_exc()
@@ -102,8 +106,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_right(self, event):
         try:
             print("RIGHT!!")
-            time.sleep(2)
-            self.update_static_bitmap()
+
         except:
             print("Problem with command right")
             traceback.print_exc()
@@ -111,13 +114,11 @@ class RemoteControlUI(wx.Frame):
     def on_press_home(self, event):
         try:
             print("HOME!!")
-            time.sleep(5)
-            self.update_static_bitmap()
+
         except:
             print("Problem with command home")
             traceback.print_exc()
 
     def OnClose(self, event):
         print("Closing stream")
-        print("CLOSE!!")
         self.Destroy()
