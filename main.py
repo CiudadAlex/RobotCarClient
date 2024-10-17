@@ -9,5 +9,5 @@ if __name__ == "__main__":
     time.sleep(300)
 
 
-# FIXME test properties and UI
+# FIXME reduce size in bytes images 1228800 bytes
 
