@@ -3,6 +3,7 @@ from clients.ImageStreamClient import ImageStreamClient
 import wx
 import traceback
 import time
+import os
 
 
 class RemoteControlUI(wx.Frame):
@@ -38,7 +39,7 @@ class RemoteControlUI(wx.Frame):
 
         properties_reader = PropertiesReader('config.properties')
         host = properties_reader.host
-        port_images_stream = properties_reader.port_images_stream
+        port_images_stream = int(properties_reader.port_images_stream)
 
         image_stream_client = ImageStreamClient(host, port_images_stream, self.on_image_received)
         image_stream_client.start()
@@ -122,3 +123,4 @@ class RemoteControlUI(wx.Frame):
     def OnClose(self, event):
         print("Closing stream")
         self.Destroy()
+        os._exit(0)
