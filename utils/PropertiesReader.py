@@ -11,3 +11,6 @@ class PropertiesReader:
 
         self.host = config[section]['host']
         self.port_images_stream = config[section]['port_images_stream']
+        self.port_text_stream = config[section]['port_text_stream']
+        self.port_audio_stream = config[section]['port_audio_stream']
+
