@@ -1,2 +1,5 @@
 pillow==11.0.0
 wxPython==4.2.1
+webrtcvad==2.0.10
+SpeechRecognition==3.10.4
+PyAudio==0.2.14
