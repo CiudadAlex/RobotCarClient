@@ -18,6 +18,9 @@ class AudioStreamClient(AbstractStreamClient):
         self.rate = 16000
         self.audio_format = pyaudio.paInt16
 
+        # Initialize PyAudio
+        self.p = pyaudio.PyAudio()
+
         self.queue_of_chunks = queue.Queue()
         self.recognized_text = None
 
