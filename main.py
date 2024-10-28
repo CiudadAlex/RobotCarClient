@@ -4,7 +4,7 @@ from clients.TextStreamClient import TextStreamClient
 from clients.AudioStreamClient import AudioStreamClient
 
 
-commands_by_audio = False
+commands_by_audio = True
 
 
 def on_text_received(text):
