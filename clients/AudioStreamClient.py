@@ -22,6 +22,7 @@ class AudioStreamClient(AbstractStreamClient):
         self.p = pyaudio.PyAudio()
 
         self.queue_of_chunks = queue.Queue()
+        self.list_chunk_parts = []
         self.recognized_text = None
 
         # Start recognizing audio in a separate thread
@@ -30,13 +31,25 @@ class AudioStreamClient(AbstractStreamClient):
 
     def use_item_metadata_and_bytes(self, item_metadata, item_bytes):
 
-        audio_chunk = item_bytes
+        # Reception of audio chunks of 0.5 secs, from the first one that speech is detected until the last one with
+        # detection, all them together will be sent to SpeechRecognition
 
-        is_speech_detected = self.speech_detector.detect_voice(audio_chunk)
+        # FIXME finish
+
+        chunk_part = item_bytes
+
+        is_speech_detected = self.speech_detector.detect_voice(chunk_part)
 
         if is_speech_detected:
             print("Speech detected!!")
-            self.queue_of_chunks.put(audio_chunk)
+            self.list_chunk_parts.append(chunk_part)
+
+        else:
+
+            if len(self.list_chunk_parts) > 0:
+                audio_chunk = b''.join(self.list_chunk_parts)
+                self.queue_of_chunks.put(audio_chunk)
+                self.list_chunk_parts.clear()
 
     def process_audio_queue(self):
 
