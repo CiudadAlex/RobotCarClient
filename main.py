@@ -13,7 +13,7 @@ def on_text_received(text):
 
 if __name__ == "__main__":
 
-    RemoteControlUI.launch()
+    # RemoteControlUI.launch()
 
     properties_reader = PropertiesReader('config.properties')
     host = properties_reader.host
@@ -29,6 +29,5 @@ if __name__ == "__main__":
         text_stream_client.start()
 
 
-# FIXME TextStreamClient
 # FIXME AudioStreamClient
-
+# FIXME CommandsClient

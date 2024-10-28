@@ -28,6 +28,8 @@ class AbstractStreamClient(Thread):
 
     def connect_and_receive(self):
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        print(f"Connecting to = {self.host}:{self.port}")
         client_socket.connect((self.host, self.port))
 
         while self.active:
