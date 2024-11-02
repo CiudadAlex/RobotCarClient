@@ -8,7 +8,7 @@ commands_by_audio = True
 
 
 def on_text_received(text):
-    print(f"######## {text}")
+    print(f"############################ {text}")
 
 
 if __name__ == "__main__":
@@ -29,5 +29,4 @@ if __name__ == "__main__":
         text_stream_client.start()
 
 
-# FIXME AudioStreamClient
 # FIXME CommandsClient

@@ -23,7 +23,6 @@ class AudioStreamClient(AbstractStreamClient):
 
         self.queue_of_chunks = queue.Queue()
         self.list_chunk_parts = []
-        self.recognized_text = None
 
         # Start recognizing audio in a separate thread
         recognizing_thread = threading.Thread(target=self.process_audio_queue)
@@ -33,8 +32,6 @@ class AudioStreamClient(AbstractStreamClient):
 
         # Reception of audio chunks of 0.5 secs, from the first one that speech is detected until the last one with
         # detection, all them together will be sent to SpeechRecognition
-
-        # FIXME finish
 
         chunk_part = item_bytes
 
@@ -68,27 +65,19 @@ class AudioStreamClient(AbstractStreamClient):
 
             audio_data = sr.AudioData(audio_chunk, self.rate, self.p.get_sample_size(self.audio_format))
 
-            text = self.recognizer.recognize_google(audio_data)
-            print(f"Recognized Text: {text}")
+            recognized_text = self.recognizer.recognize_google(audio_data)
+            print(f"Recognized Text: {recognized_text}")
 
-            if self.recognized_text is None:
-                self.recognized_text = text
-            else:
-                self.recognized_text = self.recognized_text + " " + text
+            self.on_text_received_decoded(recognized_text)
+
+            print("Back waiting for commands...")
+
+            with self.queue_of_chunks.mutex:
+                self.queue_of_chunks.queue.clear()
 
         except sr.UnknownValueError:
             print("Google Speech Recognition could not understand audio")
-            if self.recognized_text is not None:
-                self.on_text_received_decoded(self.recognized_text)
-
-                print("Back waiting for commands...")
-
-                with self.queue_of_chunks.mutex:
-                    self.queue_of_chunks.queue.clear()
-
-            self.recognized_text = None
 
         except sr.RequestError as e:
             print(f"Could not request results from Google Speech Recognition service; {e}")
-            self.recognized_text = None
 
