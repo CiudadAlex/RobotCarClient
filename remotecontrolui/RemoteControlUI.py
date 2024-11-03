@@ -1,5 +1,9 @@
 from utils.PropertiesReader import PropertiesReader
 from clients.ImageStreamClient import ImageStreamClient
+from clients.CommandsClient import CommandsClient
+from clients.TextStreamClient import TextStreamClient
+from clients.AudioStreamClient import AudioStreamClient
+from textinterpreter.TextCommandInterpreter import TextCommandInterpreter
 import wx
 import traceback
 import time
@@ -24,6 +28,7 @@ class RemoteControlUI(wx.Frame):
         panel = wx.Panel(self)
 
         self.create_button_pad(panel)
+        self.create_led_command_selector(panel)
 
         # To allow the client to connect correctly
         time.sleep(1)
@@ -37,14 +42,34 @@ class RemoteControlUI(wx.Frame):
 
         self.Bind(wx.EVT_CLOSE, self.OnClose)
 
+        commands_by_audio = True
+        self.create_stream_clients(commands_by_audio)
+        self.commands_client = CommandsClient.get_instance()
+        self.text_command_interpreter = TextCommandInterpreter()
+
+        self.Show()
+
+    def on_text_received(self, text):
+        print(f"############################ {text}")
+        self.text_command_interpreter.interpret(text)
+
+    def create_stream_clients(self, commands_by_audio):
+
         properties_reader = PropertiesReader('config.properties')
         host = properties_reader.host
         port_images_stream = int(properties_reader.port_images_stream)
+        port_text_stream = int(properties_reader.port_text_stream)
+        port_audio_stream = int(properties_reader.port_audio_stream)
 
         image_stream_client = ImageStreamClient(host, port_images_stream, self.on_image_received)
         image_stream_client.start()
 
-        self.Show()
+        if commands_by_audio:
+            audio_stream_client = AudioStreamClient(host, port_audio_stream, self.on_text_received)
+            audio_stream_client.start()
+        else:
+            text_stream_client = TextStreamClient(host, port_text_stream, self.on_text_received)
+            text_stream_client.start()
 
     def on_image_received(self, image):
 
@@ -75,10 +100,28 @@ class RemoteControlUI(wx.Frame):
         RemoteControlUI.build_button_with_action(panel, 'RIGHT', (left_margin + 2 * button_width, up_margin + button_height), self.on_press_right)
         RemoteControlUI.build_button_with_action(panel, 'HOME', (left_margin + button_width, up_margin + button_height), self.on_press_home)
 
+    def create_led_command_selector(self, panel):
+
+        left_margin = RemoteControlUI.button_pad_left_margin
+        up_margin = RemoteControlUI.button_pad_up_margin
+        button_height = RemoteControlUI.button_height
+        button_width = RemoteControlUI.button_width
+
+        options = ['stop', 'alarm', 'police', 'rainbow', 'rainbow_flag', 'breathe']
+
+        pos = (left_margin + 2 * button_width + left_margin, up_margin)
+        cb = wx.ComboBox(panel, -1, pos=pos, size=(button_width, button_height), choices=options, style=wx.CB_READONLY)
+        cb.Bind(wx.EVT_BUTTON, self.on_led_command_selection)
+
+    def on_led_command_selection(self, event):
+
+        mode = event.GetSelection()
+        self.commands_client.led(mode)
+
     @staticmethod
     def build_button_with_action(panel, label, pos, action):
         my_btn = wx.Button(panel, label=label, pos=pos, size=(RemoteControlUI.button_width, RemoteControlUI.button_height))
-        my_btn.Bind(wx.EVT_BUTTON, action)
+        my_btn.Bind(wx.EVT_COMBOBOX, action)
 
     def on_press_up(self, event):
         try:
