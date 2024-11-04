@@ -70,7 +70,7 @@ class AudioStreamClient(AbstractStreamClient):
 
             self.on_text_received_decoded(recognized_text)
 
-            print("Back waiting for commands...")
+            self.debug_print("Back waiting for commands...")
 
             with self.queue_of_chunks.mutex:
                 self.queue_of_chunks.queue.clear()

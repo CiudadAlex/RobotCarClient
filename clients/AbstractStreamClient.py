@@ -7,10 +7,11 @@ import sys
 
 class AbstractStreamClient(Thread):
 
-    def __init__(self, host, port):
+    def __init__(self, host, port, debug=False):
         super().__init__()
         self.host = host
         self.port = port
+        self.debug = debug
         self.active = True
 
     def stop(self):
@@ -36,13 +37,17 @@ class AbstractStreamClient(Thread):
 
             metadata_size = struct.unpack('>I', client_socket.recv(4))[0]
             item_metadata = self.get_item_bytes(client_socket, metadata_size, metadata_size)
-            print(f"metadata_size = {metadata_size} = {len(item_metadata)}")
+            self.debug_print(f"metadata_size = {metadata_size} = {len(item_metadata)}")
 
             item_size = struct.unpack('>I', client_socket.recv(4))[0]
             item_bytes = self.get_item_bytes(client_socket, item_size, 4096)
-            print(f"item_size = {item_size} = {len(item_bytes)}")
+            self.debug_print(f"item_size = {item_size} = {len(item_bytes)}")
 
             self.use_item_metadata_and_bytes(item_metadata, item_bytes)
+
+    def debug_print(self, text):
+        if self.debug:
+            print(text)
 
     @staticmethod
     def get_item_bytes(client_socket, item_size, initial_buff_size):

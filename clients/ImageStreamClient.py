@@ -14,7 +14,7 @@ class ImageStreamClient(AbstractStreamClient):
         array_metadata = str_item_metadata.split(",")
         width = int(array_metadata[0])
         height = int(array_metadata[1])
-        print(f"image size = {width} x {height}")
+        self.debug_print(f"image size = {width} x {height}")
 
         image = Image.frombytes('RGB', (width, height), item_bytes)
         self.on_image_received(image)
