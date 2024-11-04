@@ -16,6 +16,6 @@ class ImageStreamClient(AbstractStreamClient):
         height = int(array_metadata[1])
         print(f"image size = {width} x {height}")
 
-        image = Image.frombytes('RGBA', (width, height), item_bytes)
+        image = Image.frombytes('RGB', (width, height), item_bytes)
         self.on_image_received(image)
 
