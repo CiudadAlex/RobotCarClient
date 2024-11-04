@@ -26,6 +26,7 @@ class CommandsClient:
         self.port = port
 
     def led(self, mode):
+        print(f'Command LED : {mode}')
         response = requests.post(f'http://{self.host}:{self.port}/led/{mode}')
         print(f'Response: {response.status_code}')
 
