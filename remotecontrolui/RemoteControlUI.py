@@ -73,7 +73,7 @@ class RemoteControlUI(wx.Frame):
 
     def on_image_received(self, image):
 
-        image = self.resize_pil_image(image, 0.5)
+        # image = self.resize_pil_image(image, 1)
         wx_image = wx.Image(image.size[0], image.size[1])
         wx_image.SetData(image.convert("RGB").tobytes())
         bitmap = wx.Bitmap(wx_image)
