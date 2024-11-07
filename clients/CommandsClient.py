@@ -1,8 +1,10 @@
 import requests
 from utils.PropertiesReader import PropertiesReader
+from threading import Thread
+import queue
 
 
-class CommandsClient:
+class CommandsClient(Thread):
 
     instance = None
 
@@ -11,6 +13,7 @@ class CommandsClient:
 
         if CommandsClient.instance is None:
             CommandsClient.instance = CommandsClient.build_instance()
+            CommandsClient.instance.start()
 
         return CommandsClient.instance
 
@@ -22,11 +25,25 @@ class CommandsClient:
         return CommandsClient(host, port_commands_rest_api)
 
     def __init__(self, host, port):
+        super().__init__()
         self.host = host
         self.port = port
+        self.queue_of_command_paths = queue.Queue()
+
+    def run(self):
+
+        while True:
+            command_path = self.queue_of_command_paths.get()
+            self.execute_command_path(command_path)
+            self.queue_of_command_paths.task_done()
+
+    def execute_command_path(self, command_path):
+        print(f'Command : {command_path}')
+        response = requests.post(f'http://{self.host}:{self.port}/{command_path}')
+        print(f'Response: {response.status_code}')
 
     def led(self, mode):
-        print(f'Command LED : {mode}')
-        response = requests.post(f'http://{self.host}:{self.port}/led/{mode}')
-        print(f'Response: {response.status_code}')
+
+        command_path = f'led/{mode}'
+        self.queue_of_command_paths.put(command_path)
 
