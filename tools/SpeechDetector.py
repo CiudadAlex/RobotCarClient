@@ -22,21 +22,32 @@ class SpeechDetector:
     def divide_bytearray(byte_array, piece_size):
         return [byte_array[i:i + piece_size] for i in range(0, len(byte_array), piece_size)]
 
-    def energy(self, chunk):
-        # Calculates the energy of the chunk
+    def analyze_audio(self, chunk):
+
         np_array = np.frombuffer(chunk, dtype=np.int16)
-        energy = np.sum(np.abs(np_array))
-
-        # self.store_audio_file(chunk)
-
-        plt.plot(np_array)
-        plt.show()
-        time.sleep(10)
+        energy = self.calculate_energy(np_array)
+        sign_changes = self.calculate_sign_changes(np_array)
 
         if self.debug:
-            print(f"Energy = {energy}")
+            print(f"energy = {energy}")
+            print(f"sign_changes = {sign_changes}")
 
+        # self.store_audio_file(chunk)
+        # plt.plot(np_array)
+        # plt.show()
+        # time.sleep(10)
+
+    @staticmethod
+    def calculate_energy(np_array):
+        energy = np.sum(np.abs(np_array))
         return energy
+
+    @staticmethod
+    def calculate_sign_changes(np_array):
+        array_positive = np_array > 0
+        array_changes = np.diff(array_positive)
+        num_changes = np.sum(array_changes != 0)
+        return num_changes
 
     def store_audio_file(self, audio_chunk):
 
@@ -61,7 +72,7 @@ class SpeechDetector:
         piece_size = int(bytes_per_sample * sample_rate * frame_duration)
 
         list_frames = self.divide_bytearray(audio_chunk, piece_size)
-        #  self.energy(audio_chunk)
+        # self.analyze_audio(audio_chunk)
 
         # Evaluate each frame to detect speech
         is_speech_detected = False
