@@ -6,7 +6,6 @@ from clients.AudioStreamClient import AudioStreamClient
 from textinterpreter.TextCommandInterpreter import TextCommandInterpreter
 import wx
 import traceback
-import time
 import os
 
 
@@ -27,6 +26,8 @@ class RemoteControlUI(wx.Frame):
     def __init__(self, connect_to_video_stream, connect_to_audio_or_text_command_stream):
         super().__init__(parent=None, title='Camera Control Pad', size=(500, 500))
         panel = wx.Panel(self)
+
+        self.options_combo_led_commands = ['stop', 'alarm', 'police', 'rainbow', 'rainbow_flag', 'breathe']
 
         self.create_button_pad(panel)
         self.create_led_command_selector(panel)
@@ -105,15 +106,14 @@ class RemoteControlUI(wx.Frame):
         button_height = RemoteControlUI.button_height
         button_width = RemoteControlUI.button_width
 
-        options = ['stop', 'alarm', 'police', 'rainbow', 'rainbow_flag', 'breathe']
-
         pos = (left_margin + 3 * button_width + left_margin, up_margin)
-        cb = wx.ComboBox(panel, -1, pos=pos, size=(button_width, button_height), choices=options, style=wx.CB_READONLY)
+        cb = wx.ComboBox(panel, -1, pos=pos, size=(button_width, button_height), choices=self.options_combo_led_commands, style=wx.CB_READONLY)
         cb.Bind(wx.EVT_COMBOBOX, self.on_led_command_selection)
 
     def on_led_command_selection(self, event):
 
-        mode = event.GetSelection()
+        idx_selection = event.GetSelection()
+        mode = self.options_combo_led_commands[idx_selection]
         self.commands_client.led(mode)
 
     @staticmethod
