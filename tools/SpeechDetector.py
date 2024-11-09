@@ -3,6 +3,7 @@ import numpy as np
 import wave
 import pyaudio
 from utils.SporadicPlotter import SporadicPlotter
+from tools.AudioProcessingTool import AudioProcessingTool
 
 
 class SpeechDetector:
@@ -25,8 +26,8 @@ class SpeechDetector:
     def analyze_audio(self, chunk):
 
         np_array = np.frombuffer(chunk, dtype=np.int16)
-        energy = self.calculate_energy(np_array)
-        sign_changes = self.calculate_sign_changes(np_array)
+        energy = AudioProcessingTool.calculate_energy(np_array)
+        sign_changes = AudioProcessingTool.calculate_sign_changes(np_array)
 
         if self.debug:
             print(f"energy = {energy}")
@@ -35,19 +36,8 @@ class SpeechDetector:
         # self.store_audio_file(chunk)
         # self.sporadic_plotter.plot(np_array)
 
-        self.sporadic_plotter.plot_fft(np_array)
-
-    @staticmethod
-    def calculate_energy(np_array):
-        energy = np.sum(np.abs(np_array))
-        return energy
-
-    @staticmethod
-    def calculate_sign_changes(np_array):
-        array_positive = np_array > 0
-        array_changes = np.diff(array_positive)
-        num_changes = np.sum(array_changes != 0)
-        return num_changes
+        fft = AudioProcessingTool.calculate_fft(np_array, zoom_center_factor=10)
+        self.sporadic_plotter.plot(fft)
 
     def store_audio_file(self, audio_chunk):
 
