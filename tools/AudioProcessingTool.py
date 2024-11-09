@@ -5,7 +5,7 @@ class AudioProcessingTool:
 
     @staticmethod
     def calculate_energy(np_array):
-        energy = np.sum(np.abs(np_array))
+        energy = int(np.sum(np.abs(np_array)) / 10000)
         return energy
 
     @staticmethod
