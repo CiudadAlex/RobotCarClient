@@ -23,20 +23,28 @@ class SporadicPlotter:
 
         self.last_time_plotted = time.time()
 
-    def plot_fft(self, np_array):
+    def plot_fft(self, np_array, zoom_center_factor=30):
 
         now = time.time()
 
         if now - self.last_time_plotted < self.secs_between_plots:
             return
 
-        t = np.arange(np_array.size)
-        sp = np.fft.fft(np_array)
-        freq = np.fft.fftfreq(t.shape[-1])
+        self.last_time_plotted = time.time()
 
-        plt.plot(freq, sp.real, freq, sp.imag)
+        num_samples = np_array.size
+        zoom_last_sample = int(num_samples / (2 * zoom_center_factor))
+
+        sp = np.fft.fft(np_array)
+
+        fft = np.abs(sp.real[0:zoom_last_sample])
+
+        plt.plot(fft)
         plt.show()
 
         plt.figure()
 
-        self.last_time_plotted = time.time()
+
+
+
+
