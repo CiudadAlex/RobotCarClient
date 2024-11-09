@@ -13,7 +13,7 @@ class SporadicPlotter:
         now = time.time()
 
         if now - self.last_time_plotted < self.secs_between_plots:
-            return
+            return False
 
         plt.plot(np_array)
         plt.show()
@@ -21,3 +21,4 @@ class SporadicPlotter:
         plt.figure()
 
         self.last_time_plotted = time.time()
+        return True
