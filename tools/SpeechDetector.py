@@ -23,19 +23,21 @@ class SpeechDetector:
     def divide_bytearray(byte_array, piece_size):
         return [byte_array[i:i + piece_size] for i in range(0, len(byte_array), piece_size)]
 
-    def analyze_audio(self, chunk):
+    def is_speech(self, chunk):
 
         np_array = np.frombuffer(chunk, dtype=np.int16)
         fft = AudioProcessingTool.calculate_fft(np_array, zoom_center_factor=10)
         fft = fft[100:]
-        plotted = self.sporadic_plotter.plot(fft)
 
-        if plotted and self.debug:
-            energy = AudioProcessingTool.calculate_energy(fft)
-            print(f"energy = {energy}")
+        energy = AudioProcessingTool.calculate_energy(fft)
 
-        # self.store_audio_file(chunk)
-        # self.sporadic_plotter.plot(np_array)
+        if self.debug:
+            plotted = self.sporadic_plotter.plot(fft)
+            if plotted:
+                print(f"energy = {energy}")
+                # self.store_audio_file(chunk)
+
+        return energy > 120
 
     def store_audio_file(self, audio_chunk):
 
@@ -52,6 +54,9 @@ class SpeechDetector:
         wavefile.close()
 
     def detect_voice(self, audio_chunk):
+        return self.is_speech(audio_chunk)
+
+    def detect_voice_vad(self, audio_chunk):
 
         # Divide in segments of 30 ms (mandatory for VAD)
         frame_duration = 30 / 1000  # secs
@@ -60,7 +65,6 @@ class SpeechDetector:
         piece_size = int(bytes_per_sample * sample_rate * frame_duration)
 
         list_frames = self.divide_bytearray(audio_chunk, piece_size)
-        self.analyze_audio(audio_chunk)
 
         # Evaluate each frame to detect speech
         is_speech_detected = False
