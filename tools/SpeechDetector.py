@@ -1,9 +1,8 @@
-import time
 import webrtcvad
 import numpy as np
 import wave
 import pyaudio
-import matplotlib.pyplot as plt
+from utils.SporadicPlotter import SporadicPlotter
 
 
 class SpeechDetector:
@@ -17,6 +16,7 @@ class SpeechDetector:
 
         self.p = pyaudio.PyAudio()
         self.idx = 0
+        self.sporadic_plotter = SporadicPlotter(secs_between_plots=5)
 
     @staticmethod
     def divide_bytearray(byte_array, piece_size):
@@ -33,9 +33,9 @@ class SpeechDetector:
             print(f"sign_changes = {sign_changes}")
 
         # self.store_audio_file(chunk)
-        # plt.plot(np_array)
-        # plt.show()
-        # time.sleep(10)
+        # self.sporadic_plotter.plot(np_array)
+
+        self.sporadic_plotter.plot_fft(np_array)
 
     @staticmethod
     def calculate_energy(np_array):
