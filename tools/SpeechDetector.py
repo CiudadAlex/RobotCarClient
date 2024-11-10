@@ -8,7 +8,7 @@ from tools.AudioProcessingTool import AudioProcessingTool
 
 class SpeechDetector:
 
-    def __init__(self, aggressiveness=0, debug=True):
+    def __init__(self, aggressiveness=0, debug=False):
         self.vad = webrtcvad.Vad(aggressiveness)
         self.debug = debug
         self.chans = 1
@@ -27,6 +27,8 @@ class SpeechDetector:
 
         np_array = np.frombuffer(chunk, dtype=np.int16)
         fft = AudioProcessingTool.calculate_fft(np_array, zoom_center_factor=10)
+
+        # Discard low frequency noise
         fft = fft[100:]
 
         energy = AudioProcessingTool.calculate_energy(fft)
@@ -37,7 +39,8 @@ class SpeechDetector:
                 print(f"energy = {energy}")
                 # self.store_audio_file(chunk)
 
-        return energy > 120
+        # Energy threshold measured: 150
+        return energy > 150
 
     def store_audio_file(self, audio_chunk):
 
