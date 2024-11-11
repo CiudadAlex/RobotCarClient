@@ -11,7 +11,7 @@ if __name__ == "__main__":
 # FIXME Generator Corpus Yolo
 # FIXME Door recognizer
 # FIXME Record Video
-# FIXME LLM with contexts
+# FIXME LLM with contexts (play music, answer wikipedia, plain command)
 # FIXME Speakers to answer
 # FIXME Questions to wikipedia API
 

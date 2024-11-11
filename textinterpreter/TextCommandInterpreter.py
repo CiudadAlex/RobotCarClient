@@ -19,3 +19,5 @@ class TextCommandInterpreter:
 
         print(f"No interpretation of: {text}")
 
+# FIXME MusicPlayer
+
