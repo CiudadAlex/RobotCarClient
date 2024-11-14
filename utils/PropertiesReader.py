@@ -26,3 +26,4 @@ class PropertiesReader:
         self.port_commands_rest_api = config[section]['port_commands_rest_api']
         self.vlc_executable_path = config[section]['vlc_executable_path']
         self.music_dir_path = config[section]['music_dir_path']
+        self.model_llama_ccp_path = config[section]['model_llama_ccp_path']

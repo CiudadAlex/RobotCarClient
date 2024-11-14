@@ -1,6 +1,7 @@
 from clients.CommandsClient import CommandsClient
 from utils.PropertiesReader import PropertiesReader
 from textinterpreter.music.MusicPlayer import MusicPlayer
+from ai.llm.InformationRetriever import InformationRetriever
 
 
 class TextCommandInterpreter:
@@ -35,6 +36,7 @@ class TextCommandInterpreter:
         self.mode = TextCommandInterpreter.MODE_COMMAND
         self.properties_reader = PropertiesReader.get_instance()
         self.music_player = MusicPlayer(self.properties_reader.music_dir_path, self.properties_reader.vlc_executable_path)
+        self.information_retriever = InformationRetriever(self.properties_reader.model_llama_ccp_path)
 
     def interpret(self, text):
 
@@ -79,7 +81,7 @@ class TextCommandInterpreter:
         return True
 
     def interpret_questions(self, text):
-        print(f"No interpretation of: {text}")
+        answer = self.information_retriever.get_answer(text)
         # FIXME Questions
         return True
 
