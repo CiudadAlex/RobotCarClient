@@ -106,4 +106,5 @@ class TextCommandInterpreter:
 
     def execute_complex_command(self, text):
         print(f">>>>>>>>>>>>>>>>>>>>> COMPLEX_COMMAND = {text}")
+        # FIXME implement
 
