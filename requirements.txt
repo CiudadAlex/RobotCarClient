@@ -12,3 +12,4 @@ transformers==4.44.0
 langchain==0.2.12
 langchain_experimental==0.0.64
 sentence-transformers==3.0.1
+pyttsx3==2.91

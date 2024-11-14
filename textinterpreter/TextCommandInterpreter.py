@@ -2,6 +2,7 @@ from clients.CommandsClient import CommandsClient
 from utils.PropertiesReader import PropertiesReader
 from textinterpreter.music.MusicPlayer import MusicPlayer
 from ai.llm.InformationRetriever import InformationRetriever
+from tools.Text2SpeechEngine import Text2SpeechEngine
 
 
 class TextCommandInterpreter:
@@ -37,6 +38,7 @@ class TextCommandInterpreter:
         self.properties_reader = PropertiesReader.get_instance()
         self.music_player = MusicPlayer(self.properties_reader.music_dir_path, self.properties_reader.vlc_executable_path)
         self.information_retriever = InformationRetriever(self.properties_reader.model_llama_ccp_path)
+        self.text_2_speech_engine = Text2SpeechEngine("en")
 
     def interpret(self, text):
 
@@ -82,7 +84,8 @@ class TextCommandInterpreter:
 
     def interpret_questions(self, text):
         answer = self.information_retriever.get_answer(text)
-        # FIXME Questions
+        print(f"answer = {answer}")
+        self.text_2_speech_engine.say(answer)
         return True
 
     @staticmethod
