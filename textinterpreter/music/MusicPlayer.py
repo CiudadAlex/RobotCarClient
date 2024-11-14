@@ -5,8 +5,9 @@ import subprocess
 
 class MusicPlayer:
 
-    def __init__(self, root_dir):
+    def __init__(self, root_dir, vlc_executable_path):
         self.map_file_name_path = FileUtils.get_map_file_name_2_path(root_dir, MusicPlayer.preprocess_name, MusicPlayer.preprocess_path)
+        self.vlc_executable_path = vlc_executable_path
         self.process = None
 
     @staticmethod
@@ -32,5 +33,5 @@ class MusicPlayer:
         path_music_file = self.map_file_name_path[most_similar_key]
 
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + path_music_file)
-        self.process = subprocess.Popen(["C:/Program Files (x86)/VideoLAN/VLC/vlc.exe", "--started-from-file", path_music_file])
+        self.process = subprocess.Popen([self.vlc_executable_path, "--started-from-file", path_music_file])
 

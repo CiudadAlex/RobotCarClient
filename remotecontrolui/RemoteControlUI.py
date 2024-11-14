@@ -52,7 +52,7 @@ class RemoteControlUI(wx.Frame):
 
     def create_stream_clients(self, commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream):
 
-        properties_reader = PropertiesReader('config.properties')
+        properties_reader = PropertiesReader.get_instance()
         host = properties_reader.host
         port_images_stream = int(properties_reader.port_images_stream)
         port_text_stream = int(properties_reader.port_text_stream)

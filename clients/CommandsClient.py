@@ -19,7 +19,7 @@ class CommandsClient(Thread):
 
     @staticmethod
     def build_instance():
-        properties_reader = PropertiesReader('config.properties')
+        properties_reader = PropertiesReader.get_instance()
         host = properties_reader.host
         port_commands_rest_api = int(properties_reader.port_commands_rest_api)
         return CommandsClient(host, port_commands_rest_api)
