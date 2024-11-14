@@ -43,18 +43,45 @@ class TextCommandInterpreter:
         interpreted = self.interpret_change_mode(text)
 
         if interpreted:
-            return
+            return True
 
-        print(f"No interpretation of: {text}")
+        if self.mode == TextCommandInterpreter.MODE_COMMAND:
+            return self.interpret_command(text)
+        elif self.mode == TextCommandInterpreter.MODE_MUSIC:
+            return self.interpret_music(text)
+        elif self.mode == TextCommandInterpreter.MODE_QUESTIONS:
+            return self.interpret_questions(text)
+        else:
+            print(f"Unknown mode: {self.mode}")
+            return False
 
     def interpret_change_mode(self, text):
         return self.interpret_command(text, TextCommandInterpreter.commands_complex, "CHANGE MODE", self.execute_change_mode)
+
+    def interpret_command(self, text):
+
+        if self.interpret_command_complex(text):
+            return True
+        elif self.interpret_command_led(text):
+            return True
+        else:
+            print(f"No interpretation of command: {text}")
+            return False
 
     def interpret_command_complex(self, text):
         return self.interpret_command(text, TextCommandInterpreter.commands_complex, "COMPLEX", self.execute_complex_command)
 
     def interpret_command_led(self, text):
         return self.interpret_command(text, TextCommandInterpreter.commands_led, "LED", self.commands_client.led)
+
+    def interpret_music(self, text):
+        self.music_player.process_text(text)
+        return True
+
+    def interpret_questions(self, text):
+        print(f"No interpretation of: {text}")
+        # FIXME Questions
+        return True
 
     @staticmethod
     def interpret_command(text, map_command_utterances, command_type, func):
@@ -74,6 +101,4 @@ class TextCommandInterpreter:
 
     def execute_complex_command(self, text):
         print(f">>>>>>>>>>>>>>>>>>>>> COMPLEX_COMMAND = {text}")
-
-# FIXME MusicPlayer
 
