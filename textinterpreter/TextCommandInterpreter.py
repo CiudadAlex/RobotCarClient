@@ -3,6 +3,7 @@ from utils.PropertiesReader import PropertiesReader
 from textinterpreter.music.MusicPlayer import MusicPlayer
 from ai.llm.InformationRetriever import InformationRetriever
 from tools.Text2SpeechEngine import Text2SpeechEngine
+from tools.Wikipedia import Wikipedia
 
 
 class TextCommandInterpreter:
@@ -39,6 +40,7 @@ class TextCommandInterpreter:
         self.music_player = MusicPlayer(self.properties_reader.music_dir_path, self.properties_reader.vlc_executable_path)
         self.information_retriever = InformationRetriever(self.properties_reader.model_llama_ccp_path)
         self.text_2_speech_engine = Text2SpeechEngine("en")
+        self.wikipedia = Wikipedia()
 
     def interpret(self, text):
 
@@ -83,9 +85,17 @@ class TextCommandInterpreter:
         return True
 
     def interpret_questions(self, text):
-        answer = self.information_retriever.get_answer(text)
+
+        num_of_words = len(text.split())
+
+        if num_of_words > 2:
+            answer = self.information_retriever.get_answer(text)
+        else:
+            answer = self.wikipedia.retrieve_first_part(text)
+
         print(f"answer = {answer}")
         self.text_2_speech_engine.say(answer)
+
         return True
 
     @staticmethod
