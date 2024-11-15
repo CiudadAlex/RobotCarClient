@@ -8,7 +8,7 @@ class Wikipedia:
 
     def retrieve_full(self, title):
 
-        page_py = self.page(title)
+        page_py = self.wiki.page(title)
         return page_py.text
 
     def retrieve_first_part(self, title):
@@ -17,7 +17,7 @@ class Wikipedia:
 
     @staticmethod
     def trunk_first_part(text):
-        end = text.find('\r\n\r\n')
+        end = text.find('\n\n')
         if end != -1:
             return text[:end]
         else:
