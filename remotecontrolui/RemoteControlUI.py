@@ -124,6 +124,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_up(self, event):
         try:
             print("UP!!")
+            self.commands_client.move("forward")
 
         except:
             print("Problem with command up")
@@ -132,6 +133,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_down(self, event):
         try:
             print("DOWN!!")
+            self.commands_client.move("backward")
 
         except:
             print("Problem with command down")
@@ -140,6 +142,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_left(self, event):
         try:
             print("LEFT!!")
+            self.commands_client.move("turn_left")
 
         except:
             print("Problem with command left")
@@ -148,6 +151,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_right(self, event):
         try:
             print("RIGHT!!")
+            self.commands_client.move("turn_right")
 
         except:
             print("Problem with command right")
@@ -156,6 +160,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_home(self, event):
         try:
             print("HOME!!")
+            self.commands_client.move("stop")
 
         except:
             print("Problem with command home")

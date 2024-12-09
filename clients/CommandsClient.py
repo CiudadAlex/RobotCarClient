@@ -47,3 +47,13 @@ class CommandsClient(Thread):
         command_path = f'led/{mode}'
         self.queue_of_command_paths.put(command_path)
 
+    def move(self, mode):
+
+        command_path = f'move/{mode}'
+        self.queue_of_command_paths.put(command_path)
+
+    def look(self, mode):
+
+        command_path = f'look/{mode}'
+        self.queue_of_command_paths.put(command_path)
+
