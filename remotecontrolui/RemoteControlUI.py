@@ -31,6 +31,7 @@ class RemoteControlUI(wx.Frame):
 
         self.create_button_pad(panel)
         self.create_led_command_selector(panel)
+        self.create_look_button_pad(panel)
 
         left_margin = RemoteControlUI.button_pad_left_margin
         up_margin = RemoteControlUI.button_pad_up_margin
@@ -93,11 +94,26 @@ class RemoteControlUI(wx.Frame):
         button_height = RemoteControlUI.button_height
         button_width = RemoteControlUI.button_width
 
-        RemoteControlUI.build_button_with_action(panel, 'UP', (left_margin + button_width, up_margin), self.on_press_up)
-        RemoteControlUI.build_button_with_action(panel, 'DOWN', (left_margin + button_width, up_margin + 2 * button_height), self.on_press_down)
+        RemoteControlUI.build_button_with_action(panel, 'FORWARD', (left_margin + button_width, up_margin), self.on_press_forward)
+        RemoteControlUI.build_button_with_action(panel, 'BACKWARD', (left_margin + button_width, up_margin + 2 * button_height), self.on_press_backward)
         RemoteControlUI.build_button_with_action(panel, 'LEFT', (left_margin, up_margin + button_height), self.on_press_left)
         RemoteControlUI.build_button_with_action(panel, 'RIGHT', (left_margin + 2 * button_width, up_margin + button_height), self.on_press_right)
-        RemoteControlUI.build_button_with_action(panel, 'HOME', (left_margin + button_width, up_margin + button_height), self.on_press_home)
+        RemoteControlUI.build_button_with_action(panel, 'STOP', (left_margin + button_width, up_margin + button_height), self.on_press_home)
+
+    def create_look_button_pad(self, panel):
+
+        left_margin = RemoteControlUI.button_pad_left_margin
+        up_margin = RemoteControlUI.button_pad_up_margin
+        button_height = RemoteControlUI.button_height
+        button_width = RemoteControlUI.button_width
+
+        total_left_margin = left_margin + 3 * button_width + left_margin
+        total_up_margin = 2 * up_margin + button_height
+        height_button_plus_margin = up_margin + button_height
+
+        RemoteControlUI.build_button_with_action(panel, 'look up', (total_left_margin, total_up_margin), self.on_press_look_up)
+        RemoteControlUI.build_button_with_action(panel, 'look down', (total_left_margin, total_up_margin + height_button_plus_margin), self.on_press_look_down)
+        RemoteControlUI.build_button_with_action(panel, 'look home', (total_left_margin, total_up_margin + 2 * height_button_plus_margin), self.on_press_look_home)
 
     def create_led_command_selector(self, panel):
 
@@ -121,22 +137,22 @@ class RemoteControlUI(wx.Frame):
         my_btn = wx.Button(panel, label=label, pos=pos, size=(RemoteControlUI.button_width, RemoteControlUI.button_height))
         my_btn.Bind(wx.EVT_BUTTON, action)
 
-    def on_press_up(self, event):
+    def on_press_forward(self, event):
         try:
-            print("UP!!")
+            print("FORWARD!!")
             self.commands_client.move("forward")
 
         except:
-            print("Problem with command up")
+            print("Problem with command forward")
             traceback.print_exc()
 
-    def on_press_down(self, event):
+    def on_press_backward(self, event):
         try:
-            print("DOWN!!")
+            print("BACKWARD!!")
             self.commands_client.move("backward")
 
         except:
-            print("Problem with command down")
+            print("Problem with command backward")
             traceback.print_exc()
 
     def on_press_left(self, event):
@@ -164,6 +180,33 @@ class RemoteControlUI(wx.Frame):
 
         except:
             print("Problem with command home")
+            traceback.print_exc()
+
+    def on_press_look_up(self, event):
+        try:
+            print("Look up!!")
+            self.commands_client.look("up")
+
+        except:
+            print("Problem with command Look up")
+            traceback.print_exc()
+
+    def on_press_look_down(self, event):
+        try:
+            print("Look down!!")
+            self.commands_client.look("down")
+
+        except:
+            print("Problem with command Look down")
+            traceback.print_exc()
+
+    def on_press_look_home(self, event):
+        try:
+            print("Look home!!")
+            self.commands_client.look("home")
+
+        except:
+            print("Problem with command Look home")
             traceback.print_exc()
 
     def OnClose(self, event):
