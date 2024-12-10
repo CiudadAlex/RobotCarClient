@@ -62,7 +62,7 @@ class TextCommandInterpreter:
             return False
 
     def interpret_change_mode(self, text):
-        return self.interpret_command(text, TextCommandInterpreter.commands_complex, "CHANGE MODE", self.execute_change_mode)
+        return self.interpret_command(text, TextCommandInterpreter.commands_change_mode, "CHANGE MODE", self.execute_change_mode)
 
     def interpret_car_command(self, text):
 
@@ -112,6 +112,7 @@ class TextCommandInterpreter:
         return False
 
     def execute_change_mode(self, text):
+        print(f">>>>>>>>>>>>>>>>>>>>> NEW MODE = {text}")
         self.mode = text
 
     def execute_complex_command(self, text):
