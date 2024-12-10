@@ -12,12 +12,13 @@ if __name__ == "__main__":
 
 # FIXME Generator Corpus Yolo
 # FIXME Room recognizer
+# FIXME Record Video
+# FIXME Speakers to answer
 
 
 # FIXME Door recognizer
 # FIXME LLM with contexts
 # FIXME Command: Go to room (use RoomRouter)
-# FIXME Record Video
-# FIXME Speakers to answer
+
 
 
