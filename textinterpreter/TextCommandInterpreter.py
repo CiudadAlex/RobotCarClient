@@ -5,6 +5,7 @@ from ai.llm.InformationRetriever import InformationRetriever
 from tools.Text2SpeechEngine import Text2SpeechEngine
 from tools.Wikipedia import Wikipedia
 from complexcommands.ComplexCommand360 import ComplexCommand360
+from complexcommands.ComplexCommandFollowMe import ComplexCommandFollowMe
 
 
 class TextCommandInterpreter:
@@ -145,7 +146,10 @@ class TextCommandInterpreter:
 
         if TextCommandInterpreter.COMPLEX_COMMAND_360 == complex_command:
             print("360!!!!!!!")
-            ComplexCommand360.execute()
+            ComplexCommand360.get_instance().execute()
+        elif TextCommandInterpreter.COMPLEX_COMMAND_FOLLOW_ME == complex_command:
+            print("Follow me!!!!!!!")
+            ComplexCommandFollowMe.get_instance().execute()
         else:
             print(f"No implementation for complex command {complex_command}")
 
