@@ -4,6 +4,7 @@ from textinterpreter.music.MusicPlayer import MusicPlayer
 from ai.llm.InformationRetriever import InformationRetriever
 from tools.Text2SpeechEngine import Text2SpeechEngine
 from tools.Wikipedia import Wikipedia
+from complexcommands.ComplexCommand360 import ComplexCommand360
 
 
 class TextCommandInterpreter:
@@ -12,6 +13,11 @@ class TextCommandInterpreter:
     MODE_MUSIC = "MODE_MUSIC"
     MODE_QUESTIONS = "MODE_QUESTIONS"
 
+    COMPLEX_COMMAND_360 = "COMPLEX_COMMAND_360"
+    COMPLEX_COMMAND_FOLLOW_ME = "COMPLEX_COMMAND_FOLLOW_ME"
+    COMPLEX_COMMAND_RECORD = "COMPLEX_COMMAND_RECORD"
+    COMPLEX_COMMAND_GO_TO_ROOM = "COMPLEX_COMMAND_GO_TO_ROOM"
+
     commands_change_mode = {
                         MODE_COMMAND: ["change command", "change commands", "command", "commands"],
                         MODE_MUSIC: ["change music", "music"],
@@ -19,10 +25,10 @@ class TextCommandInterpreter:
                         }
 
     commands_complex = {
-                        "follow me": ["follow me"],
-                        "360": ["360", "3 60", "three sixty", "tree 60"],
-                        "record": ["record"],
-                        "go to room": ["go to room"]
+                        COMPLEX_COMMAND_FOLLOW_ME: ["follow me"],
+                        COMPLEX_COMMAND_360: ["360", "3 60", "three sixty", "tree 60"],
+                        COMPLEX_COMMAND_RECORD: ["record"],
+                        COMPLEX_COMMAND_GO_TO_ROOM: ["go to room"]
                         }
     commands_led = {
                     "police": ["police"],
@@ -121,9 +127,9 @@ class TextCommandInterpreter:
 
         return False
 
-    def execute_change_mode(self, text):
-        print(f">>>>>>>>>>>>>>>>>>>>> NEW MODE = {text}")
-        self.mode = text
+    def execute_change_mode(self, new_mode):
+        print(f">>>>>>>>>>>>>>>>>>>>> NEW MODE = {new_mode}")
+        self.mode = new_mode
 
         if self.mode == TextCommandInterpreter.MODE_COMMAND:
             self.commands_client.led_stop()
@@ -134,7 +140,14 @@ class TextCommandInterpreter:
         else:
             self.commands_client.led_stop()
 
-    def execute_complex_command(self, text):
-        print(f">>>>>>>>>>>>>>>>>>>>> COMPLEX_COMMAND = {text}")
+    def execute_complex_command(self, complex_command):
+        print(f">>>>>>>>>>>>>>>>>>>>> COMPLEX_COMMAND = {complex_command}")
+
+        if TextCommandInterpreter.COMPLEX_COMMAND_360 == complex_command:
+            print("360!!!!!!!")
+            ComplexCommand360.execute()
+        else:
+            print(f"No implementation for complex command {complex_command}")
+
         # FIXME implement
 
