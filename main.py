@@ -8,6 +8,7 @@ if __name__ == "__main__":
 
 # FIXME test ask LLM
 # FIXME test Command: Follow me (use Tracker)
+# FIXME room path algorithm
 
 
 # FIXME Generator Corpus Yolo
@@ -16,7 +17,7 @@ if __name__ == "__main__":
 
 # FIXME Door recognizer
 # FIXME LLM with contexts
-# FIXME Command: Go to room
+# FIXME Command: Go to room (use room path algorithm)
 # FIXME Record Video
 # FIXME Speakers to answer
 

@@ -29,6 +29,8 @@ class ComplexCommandFollowMe:
 
         self.running = True
 
+        self.commands_client.led_police()
+
         while self.running:
 
             results = self.object_detector.predict(self.last_image)
@@ -44,4 +46,6 @@ class ComplexCommandFollowMe:
             rectangle_up_left_position = bounding_box[0]
             rectangle_down_right_position = bounding_box[1]
             self.tracker.track(rectangle_up_left_position, rectangle_down_right_position)
+
+        self.commands_client.led_stop()
 
