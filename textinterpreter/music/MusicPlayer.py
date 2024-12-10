@@ -34,4 +34,5 @@ class MusicPlayer:
 
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + path_music_file)
         self.process = subprocess.Popen([self.vlc_executable_path, "--started-from-file", path_music_file])
+        return self.process.wait()
 

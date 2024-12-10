@@ -81,7 +81,7 @@ class TextCommandInterpreter:
         return self.interpret_command(text, TextCommandInterpreter.commands_led, "LED", self.commands_client.led)
 
     def interpret_music(self, text):
-        self.music_player.process_text(text)
+        self.wrap_func_call_with_listen_off(self.music_player.process_text, text)
         return True
 
     def interpret_questions(self, text):
@@ -94,13 +94,19 @@ class TextCommandInterpreter:
             answer = self.wikipedia.retrieve_first_part(text)
 
         print(f"answer = {answer}")
-        self.commands_client.listen_off()
-        print(f"listen = off")
-        self.text_2_speech_engine.say(answer)
-        self.commands_client.listen_on()
-        print(f"listen = on")
+        self.wrap_func_call_with_listen_off(self.text_2_speech_engine.say, answer)
 
         return True
+
+    def wrap_func_call_with_listen_off(self, func, argument):
+
+        self.commands_client.listen_off()
+        print(f"listen = off")
+
+        func(argument)
+
+        self.commands_client.listen_on()
+        print(f"listen = on")
 
     @staticmethod
     def interpret_command(text, map_command_utterances, command_type, func):
