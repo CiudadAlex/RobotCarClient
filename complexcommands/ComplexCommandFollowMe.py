@@ -32,14 +32,16 @@ class ComplexCommandFollowMe:
         while self.running:
 
             results = self.object_detector.predict(self.last_image)
-            point1, point2 = self.object_detector.get_bounding_box_vertices_of_single_object_of_class(results, "person")
 
-            rectangle_up_left_position = point1
-            rectangle_down_right_position = point2
+            if results is None:
+                continue
+
+            bounding_box = self.object_detector.get_bounding_box_vertices_of_single_object_of_class(results, "person")
+
+            if bounding_box is None:
+                continue
+
+            rectangle_up_left_position = bounding_box[0]
+            rectangle_down_right_position = bounding_box[1]
             self.tracker.track(rectangle_up_left_position, rectangle_down_right_position)
-
-    # FIXME implement
-
-
-
 
