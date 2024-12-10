@@ -5,10 +5,10 @@ import time
 class ComplexCommand360:
 
     last_image = None
-    number_of_steps = 10
+    number_of_steps = 20
 
     time_sleep_move = 0.3
-    time_sleep_adjust_image = 1
+    time_sleep_adjust_image = 1.5
 
     @staticmethod
     def execute():
