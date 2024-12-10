@@ -1,3 +1,5 @@
+import time
+
 from clients.CommandsClient import CommandsClient
 from utils.PropertiesReader import PropertiesReader
 from textinterpreter.music.MusicPlayer import MusicPlayer
@@ -146,9 +148,14 @@ class TextCommandInterpreter:
 
         if TextCommandInterpreter.COMPLEX_COMMAND_360 == complex_command:
             print("360!!!!!!!")
+            ComplexCommandFollowMe.get_instance().running = False
+            time.sleep(1)
             ComplexCommand360.get_instance().execute()
+
         elif TextCommandInterpreter.COMPLEX_COMMAND_FOLLOW_ME == complex_command:
             print("Follow me!!!!!!!")
+            ComplexCommand360.get_instance().running = False
+            time.sleep(1)
             ComplexCommandFollowMe.get_instance().execute()
         else:
             print(f"No implementation for complex command {complex_command}")

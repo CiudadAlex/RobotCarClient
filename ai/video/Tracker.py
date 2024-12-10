@@ -46,5 +46,4 @@ class Tracker:
         elif 1 / factor_up_down > Tracker.factor_to_trigger_movement:
             self.car_movement.move_ahead()
 
-# FIXME use
 

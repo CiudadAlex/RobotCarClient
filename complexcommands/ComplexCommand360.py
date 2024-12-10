@@ -20,12 +20,19 @@ class ComplexCommand360:
         return ComplexCommand360.instance
 
     def __init__(self):
+        self.running = False
         self.last_image = None
         self.commands_client = CommandsClient.get_instance()
 
     def execute(self):
 
+        self.running = True
+
         for step in range(ComplexCommand360.number_of_steps):
+
+            if not self.running:
+                return
+
             self.move_step()
             self.last_image.save(f'.out/image_{step}.png')
 
