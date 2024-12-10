@@ -7,7 +7,7 @@ if __name__ == "__main__":
 
 
 # FIXME test ask LLM
-# FIXME test Command: Follow me (use Tracker)
+# FIXME test Command: Follow me
 
 
 # FIXME Generator Corpus Yolo
