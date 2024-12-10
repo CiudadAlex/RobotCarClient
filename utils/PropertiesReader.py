@@ -27,3 +27,5 @@ class PropertiesReader:
         self.vlc_executable_path = config[section]['vlc_executable_path']
         self.music_dir_path = config[section]['music_dir_path']
         self.model_llama_ccp_path = config[section]['model_llama_ccp_path']
+        self.room_list = config[section]['room_list']
+        self.room_adjacency = config[section]['room_adjacency']
