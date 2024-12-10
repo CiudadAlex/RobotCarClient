@@ -8,9 +8,9 @@ if __name__ == "__main__":
 
 # FIXME Generator Corpus Yolo
 # FIXME test ask LLM
-
-
 # FIXME Command: Follow me (use Tracker)
+
+
 # FIXME Room recognizer
 
 
