@@ -13,9 +13,9 @@ class TextCommandInterpreter:
     MODE_QUESTIONS = "MODE_QUESTIONS"
 
     commands_change_mode = {
-                        MODE_COMMAND: ["change command"],
-                        MODE_MUSIC: ["change music"],
-                        MODE_QUESTIONS: ["change questions", "change question"]
+                        MODE_COMMAND: ["change command", "change commands", "command", "commands"],
+                        MODE_MUSIC: ["change music", "music"],
+                        MODE_QUESTIONS: ["change questions", "change question", "question", "questions"]
                         }
 
     commands_complex = {
@@ -124,6 +124,15 @@ class TextCommandInterpreter:
     def execute_change_mode(self, text):
         print(f">>>>>>>>>>>>>>>>>>>>> NEW MODE = {text}")
         self.mode = text
+
+        if self.mode == TextCommandInterpreter.MODE_COMMAND:
+            self.commands_client.led_stop()
+        elif self.mode == TextCommandInterpreter.MODE_MUSIC:
+            self.commands_client.led_rainbow_flag()
+        elif self.mode == TextCommandInterpreter.MODE_QUESTIONS:
+            self.commands_client.led_breathe()
+        else:
+            self.commands_client.led_stop()
 
     def execute_complex_command(self, text):
         print(f">>>>>>>>>>>>>>>>>>>>> COMPLEX_COMMAND = {text}")
