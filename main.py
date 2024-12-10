@@ -8,7 +8,6 @@ if __name__ == "__main__":
 
 # FIXME test ask LLM
 # FIXME test Command: Follow me (use Tracker)
-# FIXME room path algorithm
 
 
 # FIXME Generator Corpus Yolo
