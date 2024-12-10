@@ -52,7 +52,7 @@ class TextCommandInterpreter:
             return True
 
         if self.mode == TextCommandInterpreter.MODE_COMMAND:
-            return self.interpret_command(text)
+            return self.interpret_car_command(text)
         elif self.mode == TextCommandInterpreter.MODE_MUSIC:
             return self.interpret_music(text)
         elif self.mode == TextCommandInterpreter.MODE_QUESTIONS:
@@ -64,7 +64,7 @@ class TextCommandInterpreter:
     def interpret_change_mode(self, text):
         return self.interpret_command(text, TextCommandInterpreter.commands_complex, "CHANGE MODE", self.execute_change_mode)
 
-    def interpret_command(self, text):
+    def interpret_car_command(self, text):
 
         if self.interpret_command_complex(text):
             return True

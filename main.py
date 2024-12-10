@@ -7,7 +7,6 @@ if __name__ == "__main__":
 
 # FIXME test Questions to wikipedia API
 # FIXME test play music, answer wikipedia, plain command
-# FIXME test remote control graphic UI
 
 
 # FIXME Command: Follow me (use Tracker)
