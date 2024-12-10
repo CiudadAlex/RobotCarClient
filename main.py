@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
 # FIXME Door recognizer
 # FIXME LLM with contexts
-# FIXME Command: Go to room (use room path algorithm)
+# FIXME Command: Go to room (use RoomRouter)
 # FIXME Record Video
 # FIXME Speakers to answer
 

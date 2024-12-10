@@ -5,6 +5,7 @@ class RoomRouter:
 
     def __init__(self):
         self.map_routes = self.build_map_routes()
+        print(f"map_routes = {self.map_routes}")
 
     def build_map_routes(self):
 
@@ -43,8 +44,7 @@ class RoomRouter:
 
         set_visited_rooms = {room_start}
         list_next_rooms = self.map_routes[room_start]
-        routes = []
-        routes.extend(list_next_rooms)
+        routes = [list_next_rooms]
 
         while True:
 
