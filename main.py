@@ -7,17 +7,18 @@ if __name__ == "__main__":
 
 # FIXME test Questions to wikipedia API
 # FIXME test play music, answer wikipedia, plain command
+# FIXME test remote control graphic UI
 
 
-# FIXME build Car itself
 # FIXME Command: Follow me (use Tracker)
 # FIXME Command: Photos 360
 # FIXME Generator Corpus Yolo
+# FIXME Room recognizer
 
 
+# FIXME Door recognizer
 # FIXME LLM with contexts
 # FIXME Command: Go to room
-# FIXME Door recognizer
 # FIXME Record Video
 # FIXME Speakers to answer
 
