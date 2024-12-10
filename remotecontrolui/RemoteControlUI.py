@@ -4,6 +4,7 @@ from clients.CommandsClient import CommandsClient
 from clients.TextStreamClient import TextStreamClient
 from clients.AudioStreamClient import AudioStreamClient
 from textinterpreter.TextCommandInterpreter import TextCommandInterpreter
+from complexcommands.ComplexCommand360 import ComplexCommand360
 import wx
 import traceback
 import os
@@ -72,6 +73,8 @@ class RemoteControlUI(wx.Frame):
                 text_stream_client.start()
 
     def on_image_received(self, image):
+
+        ComplexCommand360.last_image = image
 
         # image = self.resize_pil_image(image, 1)
         wx_image = wx.Image(image.size[0], image.size[1])
