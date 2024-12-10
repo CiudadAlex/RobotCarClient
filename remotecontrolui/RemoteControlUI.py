@@ -109,11 +109,10 @@ class RemoteControlUI(wx.Frame):
 
         total_left_margin = left_margin + 3 * button_width + left_margin
         total_up_margin = 2 * up_margin + button_height
-        height_button_plus_margin = up_margin + button_height
 
         RemoteControlUI.build_button_with_action(panel, 'look up', (total_left_margin, total_up_margin), self.on_press_look_up)
-        RemoteControlUI.build_button_with_action(panel, 'look down', (total_left_margin, total_up_margin + height_button_plus_margin), self.on_press_look_down)
-        RemoteControlUI.build_button_with_action(panel, 'look home', (total_left_margin, total_up_margin + 2 * height_button_plus_margin), self.on_press_look_home)
+        RemoteControlUI.build_button_with_action(panel, 'look down', (total_left_margin, total_up_margin + button_height), self.on_press_look_down)
+        RemoteControlUI.build_button_with_action(panel, 'look home', (total_left_margin, total_up_margin + 2 * button_height), self.on_press_look_home)
 
     def create_led_command_selector(self, panel):
 
