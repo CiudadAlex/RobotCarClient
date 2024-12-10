@@ -79,6 +79,9 @@ class CommandsClient(Thread):
     def move_turn_right(self):
         self.move("turn_right")
 
+    def move_stop(self):
+        self.move("stop")
+
     def look(self, mode):
 
         command_path = f'look/{mode}'

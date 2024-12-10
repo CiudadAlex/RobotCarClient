@@ -177,7 +177,7 @@ class RemoteControlUI(wx.Frame):
 
     def on_press_home(self, event):
         try:
-            print("HOME!!")
+            print("STOP!!")
             self.commands_client.move("stop")
 
         except:
