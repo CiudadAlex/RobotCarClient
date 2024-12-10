@@ -35,3 +35,32 @@ class RoomRouter:
             map_routes[room1] = []
 
         map_routes[room1].append(room2)
+
+    def create_route(self, room_start, room_end):
+
+        if room_start == room_end:
+            return []
+
+        set_visited_rooms = {room_start}
+
+        routes = []
+
+        list_next_rooms = self.map_routes[room_start]
+
+        # FIXME finish
+
+    def get_expanded_routes(self, route_unfinished, set_visited_rooms):
+
+        last_room = route_unfinished[-1]
+        list_next_rooms = self.map_routes[last_room]
+        list_expanded_routes = []
+
+        for next_room in list_next_rooms:
+
+            if next_room not in set_visited_rooms:
+                expanded_route = []
+                expanded_route.extend(route_unfinished)
+                expanded_route.append(next_room)
+                set_visited_rooms.add(next_room)
+                list_expanded_routes.append(expanded_route)
+
