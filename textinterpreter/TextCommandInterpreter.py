@@ -94,7 +94,11 @@ class TextCommandInterpreter:
             answer = self.wikipedia.retrieve_first_part(text)
 
         print(f"answer = {answer}")
+        self.commands_client.listen_off()
+        print(f"listen = off")
         self.text_2_speech_engine.say(answer)
+        self.commands_client.listen_on()
+        print(f"listen = on")
 
         return True
 

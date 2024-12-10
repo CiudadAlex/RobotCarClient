@@ -185,7 +185,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_look_up(self, event):
         try:
             print("Look up!!")
-            self.commands_client.look("up")
+            self.commands_client.look_up()
 
         except:
             print("Problem with command Look up")
@@ -194,7 +194,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_look_down(self, event):
         try:
             print("Look down!!")
-            self.commands_client.look("down")
+            self.commands_client.look_down()
 
         except:
             print("Problem with command Look down")
@@ -203,7 +203,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_look_home(self, event):
         try:
             print("Look home!!")
-            self.commands_client.look("home")
+            self.commands_client.look_home()
 
         except:
             print("Problem with command Look home")

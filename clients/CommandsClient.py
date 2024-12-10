@@ -57,3 +57,23 @@ class CommandsClient(Thread):
         command_path = f'look/{mode}'
         self.queue_of_command_paths.put(command_path)
 
+    def look_up(self):
+        self.look("up")
+
+    def look_down(self):
+        self.look("down")
+
+    def look_home(self):
+        self.look("home")
+
+    def listen(self, mode):
+
+        command_path = f'listen/{mode}'
+        self.queue_of_command_paths.put(command_path)
+
+    def listen_on(self):
+        self.listen("on")
+
+    def listen_off(self):
+        self.listen("off")
+
