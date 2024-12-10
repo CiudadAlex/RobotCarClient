@@ -140,7 +140,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_forward(self, event):
         try:
             print("FORWARD!!")
-            self.commands_client.move("forward")
+            self.commands_client.move_forward()
 
         except:
             print("Problem with command forward")
@@ -149,7 +149,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_backward(self, event):
         try:
             print("BACKWARD!!")
-            self.commands_client.move("backward")
+            self.commands_client.move_backward()
 
         except:
             print("Problem with command backward")
@@ -158,7 +158,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_left(self, event):
         try:
             print("LEFT!!")
-            self.commands_client.move("turn_left")
+            self.commands_client.move_turn_left()
 
         except:
             print("Problem with command left")
@@ -167,7 +167,7 @@ class RemoteControlUI(wx.Frame):
     def on_press_right(self, event):
         try:
             print("RIGHT!!")
-            self.commands_client.move("turn_right")
+            self.commands_client.move_turn_right()
 
         except:
             print("Problem with command right")

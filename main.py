@@ -5,7 +5,7 @@ if __name__ == "__main__":
 
     RemoteControlUI.launch(connect_to_video_stream=True, connect_to_audio_or_text_command_stream=True)
 
-# FIXME switch off listening while music o voice playing
+
 # FIXME Command: Photos 360
 # FIXME test ask LLM
 

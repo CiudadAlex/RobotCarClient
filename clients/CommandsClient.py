@@ -47,10 +47,37 @@ class CommandsClient(Thread):
         command_path = f'led/{mode}'
         self.queue_of_command_paths.put(command_path)
 
+    def led_stop(self):
+        self.led("stop")
+
+    def led_alarm(self):
+        self.led("alarm")
+
+    def led_police(self):
+        self.led("police")
+
+    def led_rainbow_flag(self):
+        self.led("rainbow_flag")
+
+    def led_breathe(self):
+        self.led("breathe")
+
     def move(self, mode):
 
         command_path = f'move/{mode}'
         self.queue_of_command_paths.put(command_path)
+
+    def move_forward(self):
+        self.move("forward")
+
+    def move_backward(self):
+        self.move("backward")
+
+    def move_turn_left(self):
+        self.move("turn_left")
+
+    def move_turn_right(self):
+        self.move("turn_right")
 
     def look(self, mode):
 
