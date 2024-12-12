@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
 # FIXME Generator Corpus Yolo
 # FIXME Room recognizer
-# FIXME Record Video
+# FIXME Record Video >> ImageUtils.generate_mp4(f"{path_output}/video_{self.video_id}.mp4", list_images_pil)
 # FIXME Speakers to answer
 
 
