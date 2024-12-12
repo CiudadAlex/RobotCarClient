@@ -33,19 +33,19 @@ class CommandsClient(Thread):
     def run(self):
 
         while True:
-            command_path = self.queue_of_command_paths.get()
-            self.execute_command_path(command_path)
+            command_path, body = self.queue_of_command_paths.get()
+            self.execute_command_path(command_path, body)
             self.queue_of_command_paths.task_done()
 
-    def execute_command_path(self, command_path):
+    def execute_command_path(self, command_path, body):
         print(f'Command : {command_path}')
-        response = requests.post(f'http://{self.host}:{self.port}/{command_path}')
+        response = requests.post(f'http://{self.host}:{self.port}/{command_path}', json=body)
         print(f'Response: {response.status_code}')
 
     def led(self, mode):
 
         command_path = f'led/{mode}'
-        self.queue_of_command_paths.put(command_path)
+        self.queue_of_command_paths.put((command_path, None))
 
     def led_stop(self):
         self.led("stop")
@@ -65,7 +65,7 @@ class CommandsClient(Thread):
     def move(self, mode):
 
         command_path = f'move/{mode}'
-        self.queue_of_command_paths.put(command_path)
+        self.queue_of_command_paths.put((command_path, None))
 
     def move_forward(self):
         self.move("forward")
@@ -85,7 +85,7 @@ class CommandsClient(Thread):
     def look(self, mode):
 
         command_path = f'look/{mode}'
-        self.queue_of_command_paths.put(command_path)
+        self.queue_of_command_paths.put((command_path, None))
 
     def look_up(self):
         self.look("up")
@@ -99,11 +99,16 @@ class CommandsClient(Thread):
     def listen(self, mode):
 
         command_path = f'listen/{mode}'
-        self.queue_of_command_paths.put(command_path)
+        self.queue_of_command_paths.put((command_path, None))
 
     def listen_on(self):
         self.listen("on")
 
     def listen_off(self):
         self.listen("off")
+
+    def say(self, text):
+
+        command_path = 'say'
+        self.queue_of_command_paths.put((command_path, text))
 

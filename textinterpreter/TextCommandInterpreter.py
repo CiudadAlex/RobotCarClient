@@ -50,6 +50,7 @@ class TextCommandInterpreter:
         self.information_retriever = InformationRetriever(self.properties_reader.model_llama_ccp_path)
         self.text_2_speech_engine = Text2SpeechEngine("en")
         self.wikipedia = Wikipedia()
+        self.car_speaks = True
 
     def interpret(self, text):
 
@@ -103,7 +104,10 @@ class TextCommandInterpreter:
             answer = self.wikipedia.retrieve_first_part(text)
 
         print(f"answer = {answer}")
-        self.wrap_func_call_with_listen_off(self.text_2_speech_engine.say, answer)
+        if self.car_speaks:
+            self.commands_client.say(answer)
+        else:
+            self.wrap_func_call_with_listen_off(self.text_2_speech_engine.say, answer)
 
         return True
 
