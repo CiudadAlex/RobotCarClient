@@ -8,6 +8,7 @@ from tools.Text2SpeechEngine import Text2SpeechEngine
 from tools.Wikipedia import Wikipedia
 from complexcommands.ComplexCommand360 import ComplexCommand360
 from complexcommands.ComplexCommandFollowMe import ComplexCommandFollowMe
+from complexcommands.ComplexCommandRecord import ComplexCommandRecord
 
 
 class TextCommandInterpreter:
@@ -161,6 +162,12 @@ class TextCommandInterpreter:
             ComplexCommand360.get_instance().running = False
             time.sleep(1)
             ComplexCommandFollowMe.get_instance().execute()
+
+        elif TextCommandInterpreter.COMPLEX_COMMAND_RECORD == complex_command:
+            print("Record!!!!!!!")
+            ComplexCommandRecord.get_instance().set_recording(True)
+            # FIXME switch it off
+
         else:
             print(f"No implementation for complex command {complex_command}")
 
