@@ -165,8 +165,7 @@ class TextCommandInterpreter:
 
         elif TextCommandInterpreter.COMPLEX_COMMAND_RECORD == complex_command:
             print("Record!!!!!!!")
-            ComplexCommandRecord.get_instance().set_recording(True)
-            # FIXME switch it off
+            ComplexCommandRecord.get_instance().switch_recording()
 
         else:
             print(f"No implementation for complex command {complex_command}")

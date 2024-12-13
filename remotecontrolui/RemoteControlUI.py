@@ -30,7 +30,8 @@ class RemoteControlUI(wx.Frame):
         super().__init__(parent=None, title='Camera Control Pad', size=(500, 500))
         panel = wx.Panel(self)
 
-        self.options_combo_led_commands = ['stop', 'alarm', 'police', 'rainbow', 'rainbow_flag', 'breathe']
+        self.options_combo_led_commands = ['stop', 'alarm', 'police', 'rainbow', 'rainbow_flag', 'breathe', 'red',
+                                           'fading_red']
 
         self.create_button_pad(panel)
         self.create_led_command_selector(panel)

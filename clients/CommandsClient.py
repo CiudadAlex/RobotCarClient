@@ -62,6 +62,12 @@ class CommandsClient(Thread):
     def led_breathe(self):
         self.led("breathe")
 
+    def led_red(self):
+        self.led("red")
+
+    def led_fading_red(self):
+        self.led("fading_red")
+
     def move(self, mode):
 
         command_path = f'move/{mode}'
