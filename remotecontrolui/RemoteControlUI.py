@@ -20,13 +20,13 @@ class RemoteControlUI(wx.Frame):
     button_pad_up_margin = 30
 
     @staticmethod
-    def launch(connect_to_video_stream=True, connect_to_audio_or_text_command_stream=True):
+    def launch(connect_to_video_stream=True, connect_to_audio_or_text_command_stream=True, car_speaks=True):
         app = wx.App()
-        remote_control_ui = RemoteControlUI(connect_to_video_stream, connect_to_audio_or_text_command_stream)
+        remote_control_ui = RemoteControlUI(connect_to_video_stream, connect_to_audio_or_text_command_stream, car_speaks)
         remote_control_ui.Show()
         app.MainLoop()
 
-    def __init__(self, connect_to_video_stream, connect_to_audio_or_text_command_stream):
+    def __init__(self, connect_to_video_stream, connect_to_audio_or_text_command_stream, car_speaks):
         super().__init__(parent=None, title='Camera Control Pad', size=(500, 500))
         panel = wx.Panel(self)
 
@@ -49,7 +49,7 @@ class RemoteControlUI(wx.Frame):
         commands_by_audio = True
         self.create_stream_clients(commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream)
         self.commands_client = CommandsClient.get_instance()
-        self.text_command_interpreter = TextCommandInterpreter()
+        self.text_command_interpreter = TextCommandInterpreter(car_speaks=car_speaks)
 
     def on_text_received(self, text):
         print(f"############################ {text}")

@@ -43,7 +43,7 @@ class TextCommandInterpreter:
                     "breathe": ["breathe"]
                     }
 
-    def __init__(self):
+    def __init__(self, car_speaks=True):
         self.commands_client = CommandsClient.get_instance()
         self.mode = TextCommandInterpreter.MODE_COMMAND
         self.properties_reader = PropertiesReader.get_instance()
@@ -51,7 +51,7 @@ class TextCommandInterpreter:
         self.information_retriever = InformationRetriever(self.properties_reader.model_llama_ccp_path)
         self.text_2_speech_engine = Text2SpeechEngine("en")
         self.wikipedia = Wikipedia()
-        self.car_speaks = True
+        self.car_speaks = car_speaks
 
     def interpret(self, text):
 
