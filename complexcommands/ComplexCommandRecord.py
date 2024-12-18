@@ -50,5 +50,5 @@ class ComplexCommandRecord:
 
     def create_video(self):
         self.video_id = self.video_id + 1
-        ImageUtils.generate_mp4(f"{self.path_output}/video_{self.video_id}.mp4", self.list_image)
+        ImageUtils.generate_mp4(f"{self.path_output}/video_{self.video_id}.mp4", self.list_image, fps=10)
         self.list_image = []
