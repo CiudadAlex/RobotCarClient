@@ -8,7 +8,6 @@ if __name__ == "__main__":
                            car_speaks=False)
 
 
-# FIXME test: ask LLM
 # FIXME test: Command Follow me
 # FIXME test: Record Video
 # FIXME test: Speakers to answer

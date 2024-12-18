@@ -97,6 +97,9 @@ class TextCommandInterpreter:
 
     def interpret_questions(self, text):
 
+        self.commands_client.listen_off()
+        print(f"listen = off")
+
         num_of_words = len(text.split())
 
         if num_of_words > 2:
@@ -108,19 +111,12 @@ class TextCommandInterpreter:
         if self.car_speaks:
             self.commands_client.say(answer)
         else:
-            self.wrap_func_call_with_listen_off(self.text_2_speech_engine.say, answer)
-
-        return True
-
-    def wrap_func_call_with_listen_off(self, func, argument):
-
-        self.commands_client.listen_off()
-        print(f"listen = off")
-
-        func(argument)
+            self.text_2_speech_engine.say(answer)
 
         self.commands_client.listen_on()
         print(f"listen = on")
+
+        return True
 
     @staticmethod
     def interpret_command(text, map_command_utterances, command_type, func):
