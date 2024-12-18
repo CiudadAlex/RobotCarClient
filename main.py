@@ -9,7 +9,6 @@ if __name__ == "__main__":
 
 
 # FIXME test: Command Follow me
-# FIXME test: Record Video
 # FIXME test: Speakers to answer
 
 
