@@ -92,7 +92,15 @@ class TextCommandInterpreter:
         return self.interpret_command(text, TextCommandInterpreter.commands_led, "LED", self.commands_client.led)
 
     def interpret_music(self, text):
-        self.wrap_func_call_with_listen_off(self.music_player.process_text, text)
+
+        self.commands_client.listen_off()
+        print(f"listen = off")
+
+        self.music_player.process_text(text)
+
+        self.commands_client.listen_on()
+        print(f"listen = on")
+
         return True
 
     def interpret_questions(self, text):
