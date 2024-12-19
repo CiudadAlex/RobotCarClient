@@ -36,6 +36,12 @@ class ComplexCommand360:
         os.makedirs(self.images_path, exist_ok=True)
         os.makedirs(self.labels_path, exist_ok=True)
 
+        room_list = properties_reader.room_list
+        self.data_yaml_path = f'{properties_reader.room_dataset_path}/data.yaml'
+        if not os.path.exists(self.data_yaml_path):
+            with open(self.data_yaml_path, 'w') as data_yaml_file:
+                data_yaml_file.write(f'train: ../train/images\n\nnc: {len(room_list)}\nnames: {room_list}')
+
     def execute(self):
 
         self.running = True
