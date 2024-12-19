@@ -30,8 +30,10 @@ class RemoteControlUI(wx.Frame):
         super().__init__(parent=None, title='Camera Control Pad', size=(500, 500))
         panel = wx.Panel(self)
 
+        self.properties_reader = PropertiesReader.get_instance()
         self.options_combo_led_commands = ['stop', 'alarm', 'police', 'rainbow', 'rainbow_flag', 'breathe', 'red',
                                            'fading_red']
+        self.options_combo_rooms = self.properties_reader.room_list.split(",")
 
         self.create_button_pad(panel)
         self.create_led_command_selector(panel)
@@ -57,11 +59,10 @@ class RemoteControlUI(wx.Frame):
 
     def create_stream_clients(self, commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream):
 
-        properties_reader = PropertiesReader.get_instance()
-        host = properties_reader.host
-        port_images_stream = int(properties_reader.port_images_stream)
-        port_text_stream = int(properties_reader.port_text_stream)
-        port_audio_stream = int(properties_reader.port_audio_stream)
+        host = self.properties_reader.host
+        port_images_stream = int(self.properties_reader.port_images_stream)
+        port_text_stream = int(self.properties_reader.port_text_stream)
+        port_audio_stream = int(self.properties_reader.port_audio_stream)
 
         if connect_to_video_stream:
             image_stream_client = ImageStreamClient(host, port_images_stream, self.on_image_received)
@@ -116,7 +117,7 @@ class RemoteControlUI(wx.Frame):
         button_width = RemoteControlUI.button_width
 
         total_left_margin = left_margin + 3 * button_width + left_margin
-        total_up_margin = 2 * up_margin + button_height
+        total_up_margin = 3 * up_margin + 2 * button_height
 
         RemoteControlUI.build_button_with_action(panel, 'look up', (total_left_margin, total_up_margin), self.on_press_look_up)
         RemoteControlUI.build_button_with_action(panel, 'look down', (total_left_margin, total_up_margin + button_height), self.on_press_look_down)
@@ -133,11 +134,30 @@ class RemoteControlUI(wx.Frame):
         cb = wx.ComboBox(panel, -1, pos=pos, size=(button_width, button_height), choices=self.options_combo_led_commands, style=wx.CB_READONLY)
         cb.Bind(wx.EVT_COMBOBOX, self.on_led_command_selection)
 
+    def create_room_selector(self, panel):
+
+        left_margin = RemoteControlUI.button_pad_left_margin
+        up_margin = RemoteControlUI.button_pad_up_margin
+        button_height = RemoteControlUI.button_height
+        button_width = RemoteControlUI.button_width
+
+        total_up_margin = 2 * up_margin + button_height
+
+        pos = (left_margin + 3 * button_width + left_margin, total_up_margin)
+        cb = wx.ComboBox(panel, -1, pos=pos, size=(button_width, button_height), choices=self.options_combo_rooms, style=wx.CB_READONLY)
+        cb.Bind(wx.EVT_COMBOBOX, self.on_room_selection)
+
     def on_led_command_selection(self, event):
 
         idx_selection = event.GetSelection()
         mode = self.options_combo_led_commands[idx_selection]
         self.commands_client.led(mode)
+
+    def on_room_selection(self, event):
+
+        idx_selection = event.GetSelection()
+        room = self.options_combo_rooms[idx_selection]
+        ComplexCommand360.get_instance().selected_room = room
 
     @staticmethod
     def build_button_with_action(panel, label, pos, action):

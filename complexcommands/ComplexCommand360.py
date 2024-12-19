@@ -22,6 +22,7 @@ class ComplexCommand360:
     def __init__(self):
         self.running = False
         self.last_image = None
+        self.selected_room = None
         self.commands_client = CommandsClient.get_instance()
 
     def execute(self):
@@ -35,6 +36,8 @@ class ComplexCommand360:
 
             self.move_step()
             self.last_image.save(f'.out/image_{step}.png')
+
+            # FIXME generate corpus
 
     def move_step(self):
 

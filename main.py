@@ -10,9 +10,9 @@ if __name__ == "__main__":
 
 # FIXME test: stop for Command Follow me
 # FIXME test: Speakers to answer
-
-
 # FIXME Generator Corpus Yolo
+
+
 # FIXME Room recognizer
 
 
