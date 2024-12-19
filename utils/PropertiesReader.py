@@ -29,3 +29,4 @@ class PropertiesReader:
         self.model_llama_ccp_path = config[section]['model_llama_ccp_path']
         self.room_list = config[section]['room_list']
         self.room_adjacency = config[section]['room_adjacency']
+        self.room_dataset_path = config[section]['room_dataset_path']
