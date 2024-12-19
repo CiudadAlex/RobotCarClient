@@ -36,7 +36,6 @@ class TextCommandInterpreter:
                         }
     commands_led = {
                     "police": ["police"],
-                    "stop": ["stop"],
                     "alarm": ["alarm"],
                     "rainbow": ["rainbow"],
                     "rainbow flag": ["rainbow flag"],
@@ -77,13 +76,26 @@ class TextCommandInterpreter:
 
     def interpret_car_command(self, text):
 
-        if self.interpret_command_complex(text):
+        if self.interpret_command_stop(text):
+            return True
+        elif self.interpret_command_complex(text):
             return True
         elif self.interpret_command_led(text):
             return True
         else:
             print(f"No interpretation of command: {text}")
             return False
+
+    def interpret_command_stop(self, text):
+
+        if text == "stop":
+            ComplexCommandFollowMe.get_instance().running = False
+            ComplexCommand360.get_instance().running = False
+            ComplexCommandRecord.get_instance().set_recording_off()
+            self.commands_client.led_stop()
+            return True
+
+        return False
 
     def interpret_command_complex(self, text):
         return self.interpret_command(text, TextCommandInterpreter.commands_complex, "COMPLEX", self.execute_complex_command)
