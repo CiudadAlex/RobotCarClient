@@ -10,6 +10,7 @@ from complexcommands.ComplexCommandRecord import ComplexCommandRecord
 import wx
 import traceback
 import os
+import time
 
 
 class RemoteControlUI(wx.Frame):
@@ -166,39 +167,26 @@ class RemoteControlUI(wx.Frame):
         my_btn.Bind(wx.EVT_BUTTON, action)
 
     def on_press_forward(self, event):
-        try:
-            print("FORWARD!!")
-            self.commands_client.move_forward()
-
-        except:
-            print("Problem with command forward")
-            traceback.print_exc()
+        self.move_seconds("forward", self.commands_client.move_forward)
 
     def on_press_backward(self, event):
-        try:
-            print("BACKWARD!!")
-            self.commands_client.move_backward()
-
-        except:
-            print("Problem with command backward")
-            traceback.print_exc()
+        self.move_seconds("backward", self.commands_client.move_backward)
 
     def on_press_left(self, event):
-        try:
-            print("LEFT!!")
-            self.commands_client.move_turn_left()
-
-        except:
-            print("Problem with command left")
-            traceback.print_exc()
+        self.move_seconds("left", self.commands_client.move_turn_left)
 
     def on_press_right(self, event):
+        self.move_seconds("right", self.commands_client.move_turn_right)
+
+    def move_seconds(self, label, action_move, secs=0.5):
         try:
-            print("RIGHT!!")
-            self.commands_client.move_turn_right()
+            print(f"Move {label}!!")
+            action_move()
+            time.sleep(secs)
+            self.commands_client.move("stop")
 
         except:
-            print("Problem with command right")
+            print(f"Problem with command move {label}")
             traceback.print_exc()
 
     def on_press_home(self, event):
