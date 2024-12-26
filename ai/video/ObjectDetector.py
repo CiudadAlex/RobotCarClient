@@ -1,11 +1,13 @@
 from ultralytics import YOLO
 import math
+import os
 
 
 class ObjectDetector:
 
     def __init__(self, model_path):
-        self.model = YOLO(model_path)
+        os.environ['YOLO_VERBOSE'] = 'False'
+        self.model = YOLO(model_path, verbose=False)
 
     @classmethod
     def load_custom_model(cls, model_name):
