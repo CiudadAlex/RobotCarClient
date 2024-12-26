@@ -8,10 +8,10 @@ if __name__ == "__main__":
                            car_speaks=True)
 
 
-# FIXME emergency brake
 # FIXME web remote controller
 # FIXME follow me look to the side to find person
 
+# FIXME test: emergency brake
 # FIXME test: stop for Command Follow me
 # FIXME test: Speakers to answer
 # FIXME test: Generator Corpus Yolo
