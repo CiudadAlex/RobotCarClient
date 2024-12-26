@@ -173,10 +173,10 @@ class RemoteControlUI(wx.Frame):
         self.move_seconds("backward", self.commands_client.move_backward)
 
     def on_press_left(self, event):
-        self.move_seconds("left", self.commands_client.move_turn_left)
+        self.move_seconds("left", self.commands_client.move_turn_left, secs=0.2)
 
     def on_press_right(self, event):
-        self.move_seconds("right", self.commands_client.move_turn_right)
+        self.move_seconds("right", self.commands_client.move_turn_right, secs=0.2)
 
     def move_seconds(self, label, action_move, secs=0.5):
         try:
