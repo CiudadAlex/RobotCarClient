@@ -8,9 +8,7 @@ if __name__ == "__main__":
                            car_speaks=True)
 
 
-# FIXME follow me look to the side to find person
-
-
+# FIXME test: follow me look to the side to find person
 # FIXME test: web remote controller
 # FIXME test: emergency brake
 # FIXME test: stop for Command Follow me

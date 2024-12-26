@@ -9,12 +9,12 @@ class CarMovement:
 
     def move_right(self):
         self.commands_client.move_turn_right()
-        time.sleep(0.2)
+        time.sleep(0.12)
         self.commands_client.move_stop()
 
     def move_left(self):
         self.commands_client.move_turn_left()
-        time.sleep(0.2)
+        time.sleep(0.12)
         self.commands_client.move_stop()
 
     def move_ahead(self):
