@@ -12,9 +12,6 @@ if __name__ == "__main__":
 # FIXME test: emergency brake
 # FIXME test: stop for Command Follow me
 # FIXME test: Speakers to answer
-# FIXME test: Generator Corpus Yolo
-
-
 # FIXME Room recognizer
 
 
