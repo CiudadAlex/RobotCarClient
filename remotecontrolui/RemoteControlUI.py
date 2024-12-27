@@ -7,6 +7,7 @@ from textinterpreter.TextCommandInterpreter import TextCommandInterpreter
 from complexcommands.ComplexCommand360 import ComplexCommand360
 from complexcommands.ComplexCommandFollowMe import ComplexCommandFollowMe
 from complexcommands.ComplexCommandRecord import ComplexCommandRecord
+from ai.video.ModelGenerator import ModelGenerator
 import wx
 import traceback
 import os
@@ -40,6 +41,7 @@ class RemoteControlUI(wx.Frame):
         self.create_led_command_selector(panel)
         self.create_room_selector(panel)
         self.create_look_button_pad(panel)
+        self.create_train_button_pad(panel)
 
         left_margin = RemoteControlUI.button_pad_left_margin
         up_margin = RemoteControlUI.button_pad_up_margin
@@ -124,6 +126,18 @@ class RemoteControlUI(wx.Frame):
         RemoteControlUI.build_button_with_action(panel, 'look up', (total_left_margin, total_up_margin), self.on_press_look_up)
         RemoteControlUI.build_button_with_action(panel, 'look down', (total_left_margin, total_up_margin + button_height), self.on_press_look_down)
         RemoteControlUI.build_button_with_action(panel, 'look home', (total_left_margin, total_up_margin + 2 * button_height), self.on_press_look_home)
+
+    def create_train_button_pad(self, panel):
+
+        left_margin = RemoteControlUI.button_pad_left_margin
+        up_margin = RemoteControlUI.button_pad_up_margin
+        button_height = RemoteControlUI.button_height
+        button_width = RemoteControlUI.button_width
+
+        total_left_margin = left_margin + 3 * button_width + left_margin
+        total_up_margin = 4 * up_margin + 5 * button_height
+
+        RemoteControlUI.build_button_with_action(panel, 'Train room', (total_left_margin, total_up_margin), self.on_press_train_room)
 
     def create_led_command_selector(self, panel):
 
@@ -224,6 +238,15 @@ class RemoteControlUI(wx.Frame):
 
         except:
             print("Problem with command Look home")
+            traceback.print_exc()
+
+    def on_press_train_room(self, event):
+        try:
+            print("Train room!!")
+            ModelGenerator.train_model_rooms()
+
+        except:
+            print("Problem with command Look up")
             traceback.print_exc()
 
     def OnClose(self, event):
