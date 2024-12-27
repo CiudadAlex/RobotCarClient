@@ -36,7 +36,7 @@ class ComplexCommand360:
         os.makedirs(self.images_path, exist_ok=True)
         os.makedirs(self.labels_path, exist_ok=True)
 
-        room_list = properties_reader.room_list
+        room_list = properties_reader.room_list.split(",")
         self.data_yaml_path = f'{properties_reader.room_dataset_path}/data.yaml'
         if not os.path.exists(self.data_yaml_path):
             with open(self.data_yaml_path, 'w') as data_yaml_file:
