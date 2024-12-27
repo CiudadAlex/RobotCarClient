@@ -38,6 +38,7 @@ class RemoteControlUI(wx.Frame):
 
         self.create_button_pad(panel)
         self.create_led_command_selector(panel)
+        self.create_room_selector(panel)
         self.create_look_button_pad(panel)
 
         left_margin = RemoteControlUI.button_pad_left_margin
