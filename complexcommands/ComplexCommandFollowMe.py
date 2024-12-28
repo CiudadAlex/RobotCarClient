@@ -2,7 +2,6 @@ from clients.CommandsClient import CommandsClient
 from tools.CarMovement import CarMovement
 from ai.video.Tracker import Tracker
 from ai.video.ObjectDetector import ObjectDetector
-import time
 
 
 class ComplexCommandFollowMe:

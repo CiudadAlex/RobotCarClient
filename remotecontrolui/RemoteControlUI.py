@@ -7,6 +7,7 @@ from textinterpreter.TextCommandInterpreter import TextCommandInterpreter
 from complexcommands.ComplexCommand360 import ComplexCommand360
 from complexcommands.ComplexCommandFollowMe import ComplexCommandFollowMe
 from complexcommands.ComplexCommandRecord import ComplexCommandRecord
+from complexcommands.ComplexCommandRoom import ComplexCommandRoom
 from ai.video.ModelGenerator import ModelGenerator
 import wx
 import traceback
@@ -85,6 +86,7 @@ class RemoteControlUI(wx.Frame):
         ComplexCommand360.get_instance().last_image = image
         ComplexCommandFollowMe.get_instance().last_image = image
         ComplexCommandRecord.get_instance().set_last_image(image)
+        ComplexCommandRoom.get_instance().last_image = image
 
         # image = self.resize_pil_image(image, 1)
         wx_image = wx.Image(image.size[0], image.size[1])

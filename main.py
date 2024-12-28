@@ -15,6 +15,7 @@ if __name__ == "__main__":
 
 # FIXME Make complex commands a thread (to be able to stop them)
 # FIXME Room recognizer
+# FIXME Refactor 'say'
 
 
 # FIXME Door recognizer
