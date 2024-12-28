@@ -9,13 +9,13 @@ if __name__ == "__main__":
 
 
 # FIXME test: follow me look to the side to find person
-# FIXME test: emergency brake
+# FIXME test: emergency brake (Stop only if going forward)
 # FIXME test: stop for Command Follow me
 # FIXME test: Speakers to answer
 # FIXME test: Room recognizer
 
+
 # FIXME Room recognizer: More photographs if doubt
-# FIXME Emergency brake >> Stop only if going forward
 
 
 # FIXME Door recognizer
