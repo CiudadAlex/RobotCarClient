@@ -179,6 +179,7 @@ class RemoteControlUI(wx.Frame):
         room = self.options_combo_rooms[id_room]
         ComplexCommand360.get_instance().selected_room = room
         ComplexCommand360.get_instance().id_selected_room = id_room
+        ComplexCommandGoToRoom.get_instance().selected_room = room
 
     @staticmethod
     def build_button_with_action(panel, label, pos, action):
