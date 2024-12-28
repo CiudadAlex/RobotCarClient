@@ -12,6 +12,8 @@ if __name__ == "__main__":
 # FIXME test: emergency brake
 # FIXME test: stop for Command Follow me
 # FIXME test: Speakers to answer
+
+# FIXME Make complex commands a thread (to be able to stop them)
 # FIXME Room recognizer
 
 
