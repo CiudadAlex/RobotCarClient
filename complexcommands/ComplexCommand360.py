@@ -1,5 +1,6 @@
 from clients.CommandsClient import CommandsClient
 from utils.PropertiesReader import PropertiesReader
+import threading
 import time
 import os
 import uuid
@@ -43,6 +44,11 @@ class ComplexCommand360:
                 data_yaml_file.write(f'train: ../train/images\n\nnc: {len(room_list)}\nnames: {room_list}')
 
     def execute(self):
+
+        execution_thread = threading.Thread(target=self.execute_inner)
+        execution_thread.start()
+
+    def execute_inner(self):
 
         print("ComplexCommand360!!!!!!!")
 

@@ -2,6 +2,7 @@ from ai.video.ObjectDetector import ObjectDetector
 from clients.CommandsClient import CommandsClient
 from managers.SpeakManager import SpeakManager
 from utils.Counter import Counter
+import threading
 import time
 
 
@@ -28,6 +29,11 @@ class ComplexCommandRoom:
         self.commands_client = CommandsClient.get_instance()
 
     def execute(self):
+
+        execution_thread = threading.Thread(target=self.execute_inner)
+        execution_thread.start()
+
+    def execute_inner(self):
 
         print("ComplexCommandRoom!!!!!!!")
 

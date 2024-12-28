@@ -2,6 +2,7 @@ from clients.CommandsClient import CommandsClient
 from tools.CarMovement import CarMovement
 from ai.video.Tracker import Tracker
 from ai.video.ObjectDetector import ObjectDetector
+import threading
 
 
 class ComplexCommandFollowMe:
@@ -26,6 +27,11 @@ class ComplexCommandFollowMe:
         self.num_not_detections = 0
 
     def execute(self):
+
+        execution_thread = threading.Thread(target=self.execute_inner)
+        execution_thread.start()
+
+    def execute_inner(self):
 
         print("ComplexCommandFollowMe!!!!!!!")
 
