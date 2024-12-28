@@ -35,9 +35,8 @@ class ObjectDetector:
 
             for box in boxes:
 
-                # class name
-                cls = int(box.cls[0])
-                class_name_box = r.names[cls]
+                class_id = int(box.cls[0])
+                class_name_box = r.names[class_id]
 
                 if class_name_box == class_name:
                     return True
@@ -54,14 +53,51 @@ class ObjectDetector:
 
             for box in boxes:
 
-                # class name
-                cls = int(box.cls[0])
-                class_name_box = r.names[cls]
+                class_id = int(box.cls[0])
+                class_name_box = r.names[class_id]
 
                 if class_name_box == class_name:
                     count = count + 1
 
         return count
+
+    @staticmethod
+    def get_list_class_and_confidence(results):
+
+        list_class_and_confidence = []
+
+        for r in results:
+            boxes = r.boxes
+
+            for box in boxes:
+
+                confidence = math.ceil((box.conf[0] * 100)) / 100
+                class_id = int(box.cls[0])
+                class_name_box = r.names[class_id]
+
+                list_class_and_confidence.append((class_name_box, confidence))
+
+        return list_class_and_confidence
+
+    @staticmethod
+    def get_most_confident_class(results):
+
+        most_confident_class_name = None
+        max_confidence = -1
+
+        for r in results:
+            boxes = r.boxes
+
+            for box in boxes:
+                confidence = math.ceil((box.conf[0] * 100)) / 100
+                class_id = int(box.cls[0])
+                class_name_box = r.names[class_id]
+
+                if confidence > max_confidence:
+                    max_confidence = confidence
+                    most_confident_class_name = class_name_box
+
+        return most_confident_class_name
 
     @staticmethod
     def print_results(results):
@@ -76,10 +112,10 @@ class ObjectDetector:
 
                 confidence = math.ceil((box.conf[0] * 100)) / 100
 
-                # class name
-                cls = int(box.cls[0])
+                class_id = int(box.cls[0])
+                class_name_box = r.names[class_id]
 
-                print(f"Class name: {r.names[cls]}. Confidence: {confidence}"
+                print(f"Class name: {class_name_box}. Confidence: {confidence}"
                       f". Window ---> (x1, y1) = ({x1}, {y1}), (x2, y2) = ({x2}, {y2})")
 
     @staticmethod
@@ -93,9 +129,8 @@ class ObjectDetector:
 
             for box in boxes:
 
-                # class name
-                cls = int(box.cls[0])
-                class_name_box = r.names[cls]
+                class_id = int(box.cls[0])
+                class_name_box = r.names[class_id]
 
                 if class_name_box == class_name:
                     # bounding box

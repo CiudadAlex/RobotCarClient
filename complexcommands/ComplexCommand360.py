@@ -9,7 +9,7 @@ class ComplexCommand360:
 
     number_of_steps = 20
 
-    time_sleep_move = 0.3
+    time_sleep_move = 0.15
     time_sleep_adjust_image = 1.5
 
     instance = None
