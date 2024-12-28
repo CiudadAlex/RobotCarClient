@@ -27,6 +27,8 @@ class ComplexCommandFollowMe:
 
     def execute(self):
 
+        print("ComplexCommandFollowMe!!!!!!!")
+
         self.running = True
 
         self.commands_client.led_police()

@@ -9,6 +9,7 @@ from tools.Wikipedia import Wikipedia
 from complexcommands.ComplexCommand360 import ComplexCommand360
 from complexcommands.ComplexCommandFollowMe import ComplexCommandFollowMe
 from complexcommands.ComplexCommandRecord import ComplexCommandRecord
+from complexcommands.ComplexCommandRoom import ComplexCommandRoom
 
 
 class TextCommandInterpreter:
@@ -20,6 +21,7 @@ class TextCommandInterpreter:
     COMPLEX_COMMAND_360 = "COMPLEX_COMMAND_360"
     COMPLEX_COMMAND_FOLLOW_ME = "COMPLEX_COMMAND_FOLLOW_ME"
     COMPLEX_COMMAND_RECORD = "COMPLEX_COMMAND_RECORD"
+    COMPLEX_COMMAND_ROOM = "COMPLEX_COMMAND_ROOM"
     COMPLEX_COMMAND_GO_TO_ROOM = "COMPLEX_COMMAND_GO_TO_ROOM"
 
     commands_change_mode = {
@@ -30,9 +32,10 @@ class TextCommandInterpreter:
 
     commands_complex = {
                         COMPLEX_COMMAND_FOLLOW_ME: ["follow me"],
-                        COMPLEX_COMMAND_360: ["360", "3 60", "three sixty", "tree 60"],
+                        COMPLEX_COMMAND_360: ["360", "3 60", "60", "three sixty", "tree 60"],
                         COMPLEX_COMMAND_RECORD: ["record"],
-                        COMPLEX_COMMAND_GO_TO_ROOM: ["go to room"]
+                        COMPLEX_COMMAND_GO_TO_ROOM: ["go to room"],
+                        COMPLEX_COMMAND_ROOM: ["room", "where are you", "where"],
                         }
     commands_led = {
                     "police": ["police"],
@@ -89,10 +92,7 @@ class TextCommandInterpreter:
     def interpret_command_stop(self, text):
 
         if text == "stop":
-            ComplexCommandFollowMe.get_instance().running = False
-            ComplexCommand360.get_instance().running = False
-            ComplexCommandRecord.get_instance().set_recording_off()
-            self.commands_client.led_stop()
+            self.stop_all()
             return True
 
         return False
@@ -164,20 +164,36 @@ class TextCommandInterpreter:
         else:
             self.commands_client.led_stop()
 
+    def stop_all(self, stop_recording=True):
+
+        ComplexCommandFollowMe.get_instance().running = False
+        ComplexCommand360.get_instance().running = False
+        ComplexCommandRoom.get_instance().running = False
+        self.commands_client.led_stop()
+
+        if stop_recording:
+            ComplexCommandRecord.get_instance().set_recording_off()
+
     def execute_complex_command(self, complex_command):
         print(f">>>>>>>>>>>>>>>>>>>>> COMPLEX_COMMAND = {complex_command}")
 
         if TextCommandInterpreter.COMPLEX_COMMAND_360 == complex_command:
-            print("360!!!!!!!")
-            ComplexCommandFollowMe.get_instance().running = False
+
+            self.stop_all(stop_recording=False)
             time.sleep(1)
             ComplexCommand360.get_instance().execute()
 
         elif TextCommandInterpreter.COMPLEX_COMMAND_FOLLOW_ME == complex_command:
-            print("Follow me!!!!!!!")
-            ComplexCommand360.get_instance().running = False
+
+            self.stop_all(stop_recording=False)
             time.sleep(1)
             ComplexCommandFollowMe.get_instance().execute()
+
+        elif TextCommandInterpreter.COMPLEX_COMMAND_ROOM == complex_command:
+
+            self.stop_all(stop_recording=False)
+            time.sleep(1)
+            ComplexCommandRoom.get_instance().execute()
 
         elif TextCommandInterpreter.COMPLEX_COMMAND_RECORD == complex_command:
             print("Record!!!!!!!")
@@ -185,6 +201,4 @@ class TextCommandInterpreter:
 
         else:
             print(f"No implementation for complex command {complex_command}")
-
-        # FIXME implement
 

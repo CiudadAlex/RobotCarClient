@@ -28,6 +28,8 @@ class ComplexCommandRoom:
 
     def execute(self):
 
+        print("ComplexCommandRoom!!!!!!!")
+
         self.running = True
         counter = Counter()
 

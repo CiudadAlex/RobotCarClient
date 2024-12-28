@@ -44,6 +44,8 @@ class ComplexCommand360:
 
     def execute(self):
 
+        print("ComplexCommand360!!!!!!!")
+
         self.running = True
 
         for step in range(ComplexCommand360.number_of_steps):
