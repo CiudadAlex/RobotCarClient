@@ -8,7 +8,9 @@ from complexcommands.ComplexCommand360 import ComplexCommand360
 from complexcommands.ComplexCommandFollowMe import ComplexCommandFollowMe
 from complexcommands.ComplexCommandRecord import ComplexCommandRecord
 from complexcommands.ComplexCommandRoom import ComplexCommandRoom
+from managers.SpeakManager import SpeakManager
 import time
+
 
 class TextCommandInterpreter:
 
@@ -125,11 +127,7 @@ class TextCommandInterpreter:
         else:
             answer = self.wikipedia.retrieve_first_part(text)
 
-        print(f"answer = {answer}")
-        if self.car_speaks:
-            self.commands_client.say(answer)
-        else:
-            self.text_2_speech_engine.say(answer)
+        SpeakManager.get_instance().say(answer)
 
         self.commands_client.listen_on()
         print(f"listen = on")

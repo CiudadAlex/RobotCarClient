@@ -1,5 +1,6 @@
 from ai.video.ObjectDetector import ObjectDetector
 from clients.CommandsClient import CommandsClient
+from managers.SpeakManager import SpeakManager
 from utils.Counter import Counter
 import time
 
@@ -43,7 +44,8 @@ class ComplexCommandRoom:
             counter.add(last_image_class)
 
         most_confident_class = counter.get_max_count()
-        self.commands_client.say(most_confident_class)
+
+        SpeakManager.get_instance().say(most_confident_class)
 
         self.running = False
 
