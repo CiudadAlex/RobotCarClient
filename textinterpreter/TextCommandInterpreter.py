@@ -1,5 +1,3 @@
-import time
-
 from clients.CommandsClient import CommandsClient
 from utils.PropertiesReader import PropertiesReader
 from textinterpreter.music.MusicPlayer import MusicPlayer
@@ -10,7 +8,7 @@ from complexcommands.ComplexCommand360 import ComplexCommand360
 from complexcommands.ComplexCommandFollowMe import ComplexCommandFollowMe
 from complexcommands.ComplexCommandRecord import ComplexCommandRecord
 from complexcommands.ComplexCommandRoom import ComplexCommandRoom
-
+import time
 
 class TextCommandInterpreter:
 

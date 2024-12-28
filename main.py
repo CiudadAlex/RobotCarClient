@@ -1,8 +1,9 @@
 from remotecontrolui.RemoteControlUI import RemoteControlUI
+from managers.SpeakManager import SpeakManager
 
 
 if __name__ == "__main__":
-
+    SpeakManager.get_instance().car_speaks = True
     RemoteControlUI.launch(connect_to_video_stream=True,
                            connect_to_audio_or_text_command_stream=True,
                            car_speaks=True)
