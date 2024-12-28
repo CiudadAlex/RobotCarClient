@@ -18,11 +18,12 @@ class SpeakManager:
         self.commands_client = CommandsClient.get_instance()
         self.text_2_speech_engine = Text2SpeechEngine("en")
 
-    def say(self, text):
+    def say(self, text_raw):
 
         self.commands_client.listen_off()
         print(f"listen = off")
 
+        text = "3 2 1: " + text_raw
         print(f"say = {text}")
         if self.car_speaks:
             self.commands_client.say(text)
