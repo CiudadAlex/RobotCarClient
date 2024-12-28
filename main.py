@@ -15,6 +15,7 @@ if __name__ == "__main__":
 # FIXME test: Room recognizer
 
 # FIXME Room recognizer: More photographs if doubt
+# FIXME Emergency brake >> Stop only if going forward
 
 
 # FIXME Door recognizer
