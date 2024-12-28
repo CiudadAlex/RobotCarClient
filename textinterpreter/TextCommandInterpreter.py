@@ -8,6 +8,7 @@ from complexcommands.ComplexCommand360 import ComplexCommand360
 from complexcommands.ComplexCommandFollowMe import ComplexCommandFollowMe
 from complexcommands.ComplexCommandRecord import ComplexCommandRecord
 from complexcommands.ComplexCommandRoom import ComplexCommandRoom
+from complexcommands.ComplexCommandGoToRoom import ComplexCommandGoToRoom
 from managers.SpeakManager import SpeakManager
 import time
 
@@ -34,7 +35,7 @@ class TextCommandInterpreter:
                         COMPLEX_COMMAND_FOLLOW_ME: ["follow me"],
                         COMPLEX_COMMAND_360: ["360", "3 60", "60", "three sixty", "tree 60"],
                         COMPLEX_COMMAND_RECORD: ["record"],
-                        COMPLEX_COMMAND_GO_TO_ROOM: ["go to room"],
+                        COMPLEX_COMMAND_GO_TO_ROOM: ["go to room", "go"],
                         COMPLEX_COMMAND_ROOM: ["room", "where are you", "where"],
                         }
     commands_led = {
@@ -164,6 +165,7 @@ class TextCommandInterpreter:
         ComplexCommandFollowMe.get_instance().running = False
         ComplexCommand360.get_instance().running = False
         ComplexCommandRoom.get_instance().running = False
+        ComplexCommandGoToRoom.get_instance().running = False
         self.commands_client.led_stop()
 
         if stop_recording:
@@ -189,6 +191,12 @@ class TextCommandInterpreter:
             self.stop_all(stop_recording=False)
             time.sleep(1)
             ComplexCommandRoom.get_instance().execute()
+
+        elif TextCommandInterpreter.COMPLEX_COMMAND_GO_TO_ROOM == complex_command:
+
+            self.stop_all(stop_recording=False)
+            time.sleep(1)
+            ComplexCommandGoToRoom.get_instance().execute()
 
         elif TextCommandInterpreter.COMPLEX_COMMAND_RECORD == complex_command:
             print("Record!!!!!!!")

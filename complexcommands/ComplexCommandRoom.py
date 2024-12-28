@@ -25,7 +25,7 @@ class ComplexCommandRoom:
     def __init__(self):
         self.running = False
         self.last_image = None
-        self.object_detector = ObjectDetector.load_custom_model("room_s_20024_12_28")
+        self.object_detector = ObjectDetector.load_custom_model("room_s_2024_12_28")
         self.commands_client = CommandsClient.get_instance()
 
     def execute(self):

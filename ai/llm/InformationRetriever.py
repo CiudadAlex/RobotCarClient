@@ -25,4 +25,3 @@ class InformationRetriever:
     def get_answer(self, question):
         return self.llm(question)
 
-# FIXME add contexts
