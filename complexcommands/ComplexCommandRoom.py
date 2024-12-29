@@ -2,6 +2,7 @@ from ai.video.ObjectDetector import ObjectDetector
 from clients.CommandsClient import CommandsClient
 from managers.SpeakManager import SpeakManager
 from utils.Counter import Counter
+from inforeception.CarInformationReceptor import CarInformationReceptor
 import threading
 import time
 
@@ -24,7 +25,6 @@ class ComplexCommandRoom:
 
     def __init__(self):
         self.running = False
-        self.last_image = None
         self.object_detector = ObjectDetector.load_custom_model("room_s_2024_12_28")
         self.commands_client = CommandsClient.get_instance()
 
@@ -57,7 +57,8 @@ class ComplexCommandRoom:
 
     def get_class_of_last_image(self):
 
-        results = self.object_detector.predict(self.last_image)
+        last_image = CarInformationReceptor.get_instance().last_image
+        results = self.object_detector.predict(last_image)
         most_confident_class = self.object_detector.get_most_confident_class(results)
         return most_confident_class
 

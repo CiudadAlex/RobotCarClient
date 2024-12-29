@@ -2,6 +2,7 @@ from clients.CommandsClient import CommandsClient
 from tools.CarMovement import CarMovement
 from ai.video.Tracker import Tracker
 from ai.video.ObjectDetector import ObjectDetector
+from inforeception.CarInformationReceptor import CarInformationReceptor
 import threading
 
 
@@ -19,7 +20,6 @@ class ComplexCommandFollowMe:
 
     def __init__(self):
         self.running = False
-        self.last_image = None
         self.commands_client = CommandsClient.get_instance()
         self.object_detector = ObjectDetector.load_standard_model("s")
         self.car_movement = CarMovement()
@@ -41,7 +41,8 @@ class ComplexCommandFollowMe:
 
         while self.running:
 
-            results = self.object_detector.predict(self.last_image)
+            last_image = CarInformationReceptor.get_instance().last_image
+            results = self.object_detector.predict(last_image)
 
             if results is None:
                 self.look_for_person_if_needed()

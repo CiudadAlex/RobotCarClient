@@ -1,6 +1,7 @@
 from clients.CommandsClient import CommandsClient
 from ai.video.ObjectDetector import ObjectDetector
 from tools.RoomRouter import RoomRouter
+from inforeception.CarInformationReceptor import CarInformationReceptor
 import threading
 
 
@@ -17,7 +18,6 @@ class ComplexCommandGoToRoom:
 
     def __init__(self):
         self.running = False
-        self.last_image = None
         self.selected_room = None
         self.commands_client = CommandsClient.get_instance()
         self.object_detector = ObjectDetector.load_custom_model("room_s_2024_12_28")

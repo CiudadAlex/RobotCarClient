@@ -1,5 +1,6 @@
 from clients.CommandsClient import CommandsClient
 from utils.PropertiesReader import PropertiesReader
+from inforeception.CarInformationReceptor import CarInformationReceptor
 import threading
 import time
 import os
@@ -25,7 +26,6 @@ class ComplexCommand360:
 
     def __init__(self):
         self.running = False
-        self.last_image = None
         self.id_selected_room = None
         self.selected_room = None
         self.commands_client = CommandsClient.get_instance()
@@ -71,7 +71,8 @@ class ComplexCommand360:
         uuid4 = uuid.uuid4()
         image_file_name = f'{self.selected_room}_{uuid4}.png'
 
-        self.last_image.save(f'{self.images_path}/{image_file_name}.png')
+        last_image = CarInformationReceptor.get_instance().last_image
+        last_image.save(f'{self.images_path}/{image_file_name}.png')
 
         with open(f'{self.labels_path}/{image_file_name}.txt', 'w') as labels_file:
             labels_file.write(f'{self.id_selected_room} 0.5 0.5 1 1\n')
