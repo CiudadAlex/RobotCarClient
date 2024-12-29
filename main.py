@@ -16,7 +16,8 @@ if __name__ == "__main__":
 
 
 # FIXME Room recognizer: More photographs if doubt
-# FIXME Refactor to constant: room_s_2024_12_28
+# FIXME Refactor to constant: room_s_2024_12_28 + DetermineRoomHelper
+# FIXME Refactor last image
 
 # FIXME Door recognizer
 # FIXME LLM with contexts
