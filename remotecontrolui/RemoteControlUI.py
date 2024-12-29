@@ -1,6 +1,5 @@
 from utils.PropertiesReader import PropertiesReader
 from clients.CommandsClient import CommandsClient
-from textinterpreter.TextCommandInterpreter import TextCommandInterpreter
 from complexcommands.ComplexCommandRecord import ComplexCommandRecord
 from ai.video.ModelGenerator import ModelGenerator
 from inforeception.CarInformationReceptor import CarInformationReceptor
@@ -51,14 +50,8 @@ class RemoteControlUI(wx.Frame):
 
         commands_by_audio = True
         CarInformationReceptor.build_instance(commands_by_audio, connect_to_video_stream,
-                                              connect_to_audio_or_text_command_stream, self.on_image_received,
-                                              self.on_text_received)
+                                              connect_to_audio_or_text_command_stream, self.on_image_received)
         self.commands_client = CommandsClient.get_instance()
-        self.text_command_interpreter = TextCommandInterpreter()
-
-    def on_text_received(self, text):
-        print(f"############################ {text}")
-        self.text_command_interpreter.interpret(text)
 
     def on_image_received(self, image):
 
