@@ -1,6 +1,7 @@
 from clients.CommandsClient import CommandsClient
 from utils.PropertiesReader import PropertiesReader
 from inforeception.CarInformationReceptor import CarInformationReceptor
+from inforeception.SelectedDataReceptor import SelectedDataReceptor
 import threading
 import time
 import os
@@ -26,8 +27,6 @@ class ComplexCommand360:
 
     def __init__(self):
         self.running = False
-        self.id_selected_room = None
-        self.selected_room = None
         self.commands_client = CommandsClient.get_instance()
 
         properties_reader = PropertiesReader.get_instance()
@@ -64,18 +63,21 @@ class ComplexCommand360:
 
     def save_image_in_corpus(self):
 
-        if self.id_selected_room is None:
+        id_selected_room = SelectedDataReceptor.get_instance().id_selected_room
+        selected_room = SelectedDataReceptor.get_instance().selected_room
+
+        if id_selected_room is None:
             print("No selected ROOM")
             return
 
         uuid4 = uuid.uuid4()
-        image_file_name = f'{self.selected_room}_{uuid4}.png'
+        image_file_name = f'{selected_room}_{uuid4}.png'
 
         last_image = CarInformationReceptor.get_instance().last_image
         last_image.save(f'{self.images_path}/{image_file_name}.png')
 
         with open(f'{self.labels_path}/{image_file_name}.txt', 'w') as labels_file:
-            labels_file.write(f'{self.id_selected_room} 0.5 0.5 1 1\n')
+            labels_file.write(f'{id_selected_room} 0.5 0.5 1 1\n')
 
     def move_step(self):
 

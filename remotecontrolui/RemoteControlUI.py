@@ -1,11 +1,10 @@
 from utils.PropertiesReader import PropertiesReader
 from clients.CommandsClient import CommandsClient
 from textinterpreter.TextCommandInterpreter import TextCommandInterpreter
-from complexcommands.ComplexCommand360 import ComplexCommand360
 from complexcommands.ComplexCommandRecord import ComplexCommandRecord
-from complexcommands.ComplexCommandGoToRoom import ComplexCommandGoToRoom
 from ai.video.ModelGenerator import ModelGenerator
 from inforeception.CarInformationReceptor import CarInformationReceptor
+from inforeception.SelectedDataReceptor import SelectedDataReceptor
 import wx
 import traceback
 import os
@@ -152,9 +151,9 @@ class RemoteControlUI(wx.Frame):
 
         id_room = event.GetSelection()
         room = self.options_combo_rooms[id_room]
-        ComplexCommand360.get_instance().selected_room = room
-        ComplexCommand360.get_instance().id_selected_room = id_room
-        ComplexCommandGoToRoom.get_instance().selected_room = room
+
+        SelectedDataReceptor.get_instance().id_selected_room = id_room
+        SelectedDataReceptor.get_instance().selected_room = room
 
     @staticmethod
     def build_button_with_action(panel, label, pos, action):
