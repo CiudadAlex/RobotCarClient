@@ -1,8 +1,5 @@
 from utils.PropertiesReader import PropertiesReader
-from clients.ImageStreamClient import ImageStreamClient
 from clients.CommandsClient import CommandsClient
-from clients.TextStreamClient import TextStreamClient
-from clients.AudioStreamClient import AudioStreamClient
 from textinterpreter.TextCommandInterpreter import TextCommandInterpreter
 from complexcommands.ComplexCommand360 import ComplexCommand360
 from complexcommands.ComplexCommandFollowMe import ComplexCommandFollowMe
@@ -10,6 +7,7 @@ from complexcommands.ComplexCommandRecord import ComplexCommandRecord
 from complexcommands.ComplexCommandRoom import ComplexCommandRoom
 from complexcommands.ComplexCommandGoToRoom import ComplexCommandGoToRoom
 from ai.video.ModelGenerator import ModelGenerator
+from inforeception.CarInformationReceptor import CarInformationReceptor
 import wx
 import traceback
 import os
@@ -55,32 +53,15 @@ class RemoteControlUI(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.OnClose)
 
         commands_by_audio = True
-        self.create_stream_clients(commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream)
+        CarInformationReceptor.build_instance(commands_by_audio, connect_to_video_stream,
+                                              connect_to_audio_or_text_command_stream, self.on_image_received,
+                                              self.on_text_received)
         self.commands_client = CommandsClient.get_instance()
         self.text_command_interpreter = TextCommandInterpreter()
 
     def on_text_received(self, text):
         print(f"############################ {text}")
         self.text_command_interpreter.interpret(text)
-
-    def create_stream_clients(self, commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream):
-
-        host = self.properties_reader.host
-        port_images_stream = int(self.properties_reader.port_images_stream)
-        port_text_stream = int(self.properties_reader.port_text_stream)
-        port_audio_stream = int(self.properties_reader.port_audio_stream)
-
-        if connect_to_video_stream:
-            image_stream_client = ImageStreamClient(host, port_images_stream, self.on_image_received)
-            image_stream_client.start()
-
-        if connect_to_audio_or_text_command_stream:
-            if commands_by_audio:
-                audio_stream_client = AudioStreamClient(host, port_audio_stream, self.on_text_received)
-                audio_stream_client.start()
-            else:
-                text_stream_client = TextStreamClient(host, port_text_stream, self.on_text_received)
-                text_stream_client.start()
 
     def on_image_received(self, image):
 
