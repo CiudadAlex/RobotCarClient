@@ -14,17 +14,14 @@ class CarInformationReceptor:
         return CarInformationReceptor.instance
 
     @staticmethod
-    def build_instance(commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream,
-                       on_image_received, on_text_received):
+    def build_instance(commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream):
         CarInformationReceptor.instance = CarInformationReceptor(commands_by_audio, connect_to_video_stream,
-                                                                 connect_to_audio_or_text_command_stream,
-                                                                 on_image_received, on_text_received)
+                                                                 connect_to_audio_or_text_command_stream)
 
-    def __init__(self, commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream,
-                 on_image_received):
+    def __init__(self, commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream):
 
         self.last_image = None
-        self.on_image_received = on_image_received
+        self.on_image_received = None
 
         self.text_command_interpreter = TextCommandInterpreter()
 

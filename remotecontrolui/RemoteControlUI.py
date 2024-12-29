@@ -18,13 +18,13 @@ class RemoteControlUI(wx.Frame):
     button_pad_up_margin = 30
 
     @staticmethod
-    def launch(connect_to_video_stream=True, connect_to_audio_or_text_command_stream=True):
+    def launch():
         app = wx.App()
-        remote_control_ui = RemoteControlUI(connect_to_video_stream, connect_to_audio_or_text_command_stream)
+        remote_control_ui = RemoteControlUI()
         remote_control_ui.Show()
         app.MainLoop()
 
-    def __init__(self, connect_to_video_stream, connect_to_audio_or_text_command_stream):
+    def __init__(self):
         super().__init__(parent=None, title='Camera Control Pad', size=(500, 500))
         panel = wx.Panel(self)
 
@@ -48,9 +48,8 @@ class RemoteControlUI(wx.Frame):
 
         self.Bind(wx.EVT_CLOSE, self.OnClose)
 
-        commands_by_audio = True
-        CarInformationReceptor.build_instance(commands_by_audio, connect_to_video_stream,
-                                              connect_to_audio_or_text_command_stream, self.on_image_received)
+        CarInformationReceptor.get_instance().on_image_received = self.on_image_received
+
         self.commands_client = CommandsClient.get_instance()
 
     def on_image_received(self, image):
