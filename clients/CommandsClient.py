@@ -34,13 +34,13 @@ class CommandsClient(Thread):
 
         while True:
             command_path, body = self.queue_of_command_paths.get()
-            self.execute_command_path(command_path, body)
+            self.execute_command_path_post(command_path, body)
             self.queue_of_command_paths.task_done()
 
-    def execute_command_path(self, command_path, body):
-        print(f'Command : {command_path}')
+    def execute_command_path_post(self, command_path, body):
+        print(f'Command POST: {command_path}')
         response = requests.post(f'http://{self.host}:{self.port}/{command_path}', json=body)
-        print(f'Response: {response.status_code}')
+        print(f'Response POST: {response.status_code}')
 
     def led(self, mode):
 
@@ -118,3 +118,34 @@ class CommandsClient(Thread):
         command_path = 'say'
         self.queue_of_command_paths.put((command_path, text))
 
+    def set_room(self, selected_room_id, selected_room_name):
+
+        data = {
+            'selected_room_id': selected_room_id,
+            'selected_room_name': selected_room_name
+        }
+
+        command_path = 'room'
+        self.queue_of_command_paths.put((command_path, data))
+
+    def set_door(self, selected_door_id, selected_door_name):
+
+        data = {
+            'selected_door_id': selected_door_id,
+            'selected_door_name': selected_door_name
+        }
+
+        command_path = 'door'
+        self.queue_of_command_paths.put((command_path, data))
+
+    def execute_command_path_get(self, command_path):
+        print(f'Command GET: {command_path}')
+        response = requests.post(f'http://{self.host}:{self.port}/{command_path}')
+        print(f'Response GET: {response.status_code}')
+        return response.json()
+
+    def get_room(self):
+        self.execute_command_path_get("room")
+
+    def get_door(self):
+        self.execute_command_path_get("door")
