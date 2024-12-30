@@ -48,7 +48,7 @@ class RemoteControlUI(wx.Frame):
 
         self.Bind(wx.EVT_CLOSE, self.OnClose)
 
-        CarInformationReceptor.get_instance().on_image_received = self.on_image_received
+        CarInformationReceptor.get_instance().list_on_image_received.append(self.on_image_received)
 
         self.commands_client = CommandsClient.get_instance()
 

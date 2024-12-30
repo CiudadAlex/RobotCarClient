@@ -21,7 +21,7 @@ class CarInformationReceptor:
     def __init__(self, commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream):
 
         self.last_image = None
-        self.on_image_received = None
+        self.list_on_image_received = []
 
         self.text_command_interpreter = TextCommandInterpreter()
 
@@ -51,6 +51,6 @@ class CarInformationReceptor:
 
         self.last_image = image
 
-        if self.on_image_received is not None:
-            self.on_image_received(image)
+        for on_image_received in self.list_on_image_received:
+            on_image_received(image)
 
