@@ -2,7 +2,6 @@ from clients.TextStreamClient import TextStreamClient
 from clients.AudioStreamClient import AudioStreamClient
 from clients.ImageStreamClient import ImageStreamClient
 from utils.PropertiesReader import PropertiesReader
-from textinterpreter.TextCommandInterpreter import TextCommandInterpreter
 
 
 class CarInformationReceptor:
@@ -14,16 +13,16 @@ class CarInformationReceptor:
         return CarInformationReceptor.instance
 
     @staticmethod
-    def build_instance(commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream):
-        CarInformationReceptor.instance = CarInformationReceptor(commands_by_audio, connect_to_video_stream,
-                                                                 connect_to_audio_or_text_command_stream)
+    def build_instance(commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream, on_text_received):
 
-    def __init__(self, commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream):
+        CarInformationReceptor.instance = CarInformationReceptor(commands_by_audio, connect_to_video_stream,
+                                                                 connect_to_audio_or_text_command_stream,
+                                                                 on_text_received)
+
+    def __init__(self, commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream, on_text_received):
 
         self.last_image = None
         self.list_on_image_received = []
-
-        self.text_command_interpreter = TextCommandInterpreter()
 
         self.properties_reader = PropertiesReader.get_instance()
         host = self.properties_reader.host
@@ -37,15 +36,11 @@ class CarInformationReceptor:
 
         if connect_to_audio_or_text_command_stream:
             if commands_by_audio:
-                audio_stream_client = AudioStreamClient(host, port_audio_stream, self.on_text_received)
+                audio_stream_client = AudioStreamClient(host, port_audio_stream, on_text_received)
                 audio_stream_client.start()
             else:
-                text_stream_client = TextStreamClient(host, port_text_stream, self.on_text_received)
+                text_stream_client = TextStreamClient(host, port_text_stream, on_text_received)
                 text_stream_client.start()
-
-    def on_text_received(self, text):
-        print(f"############################ {text}")
-        self.text_command_interpreter.interpret(text)
 
     def on_image_received_action(self, image):
 
