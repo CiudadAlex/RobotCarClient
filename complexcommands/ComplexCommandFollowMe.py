@@ -4,6 +4,7 @@ from ai.video.Tracker import Tracker
 from ai.video.ObjectDetector import ObjectDetector
 from inforeception.CarInformationReceptor import CarInformationReceptor
 import threading
+import time
 
 
 class ComplexCommandFollowMe:
@@ -70,4 +71,5 @@ class ComplexCommandFollowMe:
 
         if self.num_not_detections > 3:
             self.car_movement.move_right()
+            time.sleep(0.5)
             self.num_not_detections = 0
