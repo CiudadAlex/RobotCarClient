@@ -26,7 +26,7 @@ class RemoteControlUI(wx.Frame):
         app.MainLoop()
 
     def __init__(self):
-        super().__init__(parent=None, title='Camera Control Pad', size=(500, 500))
+        super().__init__(parent=None, title='Camera Control Pad', size=(600, 600))
         panel = wx.Panel(self)
 
         self.properties_reader = PropertiesReader.get_instance()
@@ -92,7 +92,7 @@ class RemoteControlUI(wx.Frame):
         total_left_margin = left_margin + 3 * button_width + left_margin
 
         vertical_layout_composer = VerticalLayoutComposer(total_left_margin, up_margin, button_height,
-                                                          RemoteControlUI.button_height/2, RemoteControlUI.button_width)
+                                                          button_width * 1.5, button_height / 2)
 
         self.create_led_command_selector(panel, vertical_layout_composer)
         self.create_room_selector(panel, vertical_layout_composer)
