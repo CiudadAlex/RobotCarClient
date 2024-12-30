@@ -1,6 +1,7 @@
 import threading
 from tools.ImageUtils import ImageUtils
 from clients.CommandsClient import CommandsClient
+from inforeception.CarInformationReceptor import CarInformationReceptor
 
 
 class ComplexCommandRecord:
@@ -20,6 +21,8 @@ class ComplexCommandRecord:
         self.video_id = 0
         self.path_output = "./.out"
         self.commands_client = CommandsClient.get_instance()
+
+        CarInformationReceptor.get_instance().list_on_image_received.append(self.set_last_image)
 
     def set_last_image(self, image):
         if self.recording:

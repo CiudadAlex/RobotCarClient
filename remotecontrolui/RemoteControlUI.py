@@ -1,6 +1,5 @@
 from utils.PropertiesReader import PropertiesReader
 from clients.CommandsClient import CommandsClient
-from complexcommands.ComplexCommandRecord import ComplexCommandRecord
 from ai.video.ModelGenerator import ModelGenerator
 from inforeception.CarInformationReceptor import CarInformationReceptor
 from inforeception.SelectedDataReceptor import SelectedDataReceptor
@@ -53,8 +52,6 @@ class RemoteControlUI(wx.Frame):
         self.commands_client = CommandsClient.get_instance()
 
     def on_image_received(self, image):
-
-        ComplexCommandRecord.get_instance().set_last_image(image)
 
         # image = self.resize_pil_image(image, 1)
         wx_image = wx.Image(image.size[0], image.size[1])
