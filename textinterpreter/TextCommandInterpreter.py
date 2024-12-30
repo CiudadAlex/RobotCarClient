@@ -9,6 +9,7 @@ from complexcommands.ComplexCommandFollowMe import ComplexCommandFollowMe
 from complexcommands.ComplexCommandRecord import ComplexCommandRecord
 from complexcommands.ComplexCommandRoom import ComplexCommandRoom
 from complexcommands.ComplexCommandGoToRoom import ComplexCommandGoToRoom
+from complexcommands.ComplexCommandPhotoDoor import ComplexCommandPhotoDoor
 from managers.SpeakManager import SpeakManager
 import time
 
@@ -24,6 +25,7 @@ class TextCommandInterpreter:
     COMPLEX_COMMAND_RECORD = "COMPLEX_COMMAND_RECORD"
     COMPLEX_COMMAND_ROOM = "COMPLEX_COMMAND_ROOM"
     COMPLEX_COMMAND_GO_TO_ROOM = "COMPLEX_COMMAND_GO_TO_ROOM"
+    COMPLEX_COMMAND_PHOTO_DOOR = "COMPLEX_COMMAND_PHOTO_DOOR"
 
     commands_change_mode = {
                         MODE_COMMAND: ["change command", "change commands", "command", "commands"],
@@ -37,6 +39,7 @@ class TextCommandInterpreter:
                         COMPLEX_COMMAND_RECORD: ["record"],
                         COMPLEX_COMMAND_GO_TO_ROOM: ["go to room", "go room", "go now"],
                         COMPLEX_COMMAND_ROOM: ["room", "where are you", "where"],
+                        COMPLEX_COMMAND_PHOTO_DOOR: ["photo", "door"],
                         }
     commands_led = {
                     "police": ["police"],
@@ -197,6 +200,12 @@ class TextCommandInterpreter:
             self.stop_all(stop_recording=False)
             time.sleep(1)
             ComplexCommandGoToRoom.get_instance().execute()
+
+        elif TextCommandInterpreter.COMPLEX_COMMAND_PHOTO_DOOR == complex_command:
+
+            self.stop_all(stop_recording=False)
+            time.sleep(1)
+            ComplexCommandPhotoDoor.get_instance().execute()
 
         elif TextCommandInterpreter.COMPLEX_COMMAND_RECORD == complex_command:
             print("Record!!!!!!!")
