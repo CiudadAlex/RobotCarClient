@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
 # FIXME Door recognizer
 # FIXME LLM with contexts
-# FIXME Command: Go to room (use RoomRouter)
+# FIXME Command: Go to room
 
 
 
