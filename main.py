@@ -15,16 +15,17 @@ if __name__ == "__main__":
 
 
 # FIXME test: follow me
-# FIXME test: Speakers to answer
 # FIXME test: Limit of 4 secs to send audio to speech recognition
 
 # FIXME Room recognizer: More photographs if doubt
 # FIXME Door recognizer
+# FIXME selection of room and door in car + selector in UI Web
 
 
-# FIXME selection of room and door in car
-# FIXME LLM with contexts
 # FIXME Command: Go to room
+# FIXME Speakers to answer
+# FIXME LLM with contexts
+
 
 
 

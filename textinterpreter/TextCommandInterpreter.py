@@ -35,7 +35,7 @@ class TextCommandInterpreter:
                         COMPLEX_COMMAND_FOLLOW_ME: ["follow me", "follow"],
                         COMPLEX_COMMAND_360: ["360", "3 60", "60", "three sixty", "tree 60"],
                         COMPLEX_COMMAND_RECORD: ["record"],
-                        COMPLEX_COMMAND_GO_TO_ROOM: ["go to room", "go"],
+                        COMPLEX_COMMAND_GO_TO_ROOM: ["go to room", "go room", "go now"],
                         COMPLEX_COMMAND_ROOM: ["room", "where are you", "where"],
                         }
     commands_led = {
