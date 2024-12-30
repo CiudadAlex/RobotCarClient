@@ -1,11 +1,10 @@
 from clients.CommandsClient import CommandsClient
 from utils.PropertiesReader import PropertiesReader
+from utils.YoloDatasetBuilder import YoloDatasetBuilder
 from inforeception.CarInformationReceptor import CarInformationReceptor
 from inforeception.SelectedDataReceptor import SelectedDataReceptor
 import threading
 import time
-import os
-import uuid
 
 
 class ComplexCommand360:
@@ -30,17 +29,10 @@ class ComplexCommand360:
         self.commands_client = CommandsClient.get_instance()
 
         properties_reader = PropertiesReader.get_instance()
-        train_path = f'{properties_reader.room_dataset_path}/train'
-        self.images_path = f'{train_path}/images'
-        self.labels_path = f'{train_path}/labels'
-        os.makedirs(self.images_path, exist_ok=True)
-        os.makedirs(self.labels_path, exist_ok=True)
-
+        room_dataset_path = properties_reader.room_dataset_path
         room_list = properties_reader.room_list.split(",")
-        self.data_yaml_path = f'{properties_reader.room_dataset_path}/data.yaml'
-        if not os.path.exists(self.data_yaml_path):
-            with open(self.data_yaml_path, 'w') as data_yaml_file:
-                data_yaml_file.write(f'train: ../train/images\n\nnc: {len(room_list)}\nnames: {room_list}')
+        self.yolo_dataset_builder = YoloDatasetBuilder(room_dataset_path, room_list)
+        self.yolo_dataset_builder.build_structure()
 
     def stop(self):
         self.running = False
@@ -73,14 +65,8 @@ class ComplexCommand360:
             print("No selected ROOM")
             return
 
-        uuid4 = uuid.uuid4()
-        image_file_name = f'{selected_room_name}_{uuid4}.png'
-
         last_image = CarInformationReceptor.get_instance().last_image
-        last_image.save(f'{self.images_path}/{image_file_name}.png')
-
-        with open(f'{self.labels_path}/{image_file_name}.txt', 'w') as labels_file:
-            labels_file.write(f'{selected_room_id} 0.5 0.5 1 1\n')
+        self.yolo_dataset_builder.save_image_in_corpus(last_image, selected_room_id, selected_room_name)
 
     def move_step(self):
 
