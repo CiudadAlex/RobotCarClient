@@ -16,3 +16,6 @@ class SelectedDataReceptor:
         self.id_selected_room = None
         self.selected_room = None
 
+        self.selected_door_id = None
+        self.selected_door_name = None
+

@@ -14,10 +14,12 @@ if __name__ == "__main__":
 # FIXME test: follow me look to the side to find person
 # FIXME test: Speakers to answer
 
-
 # FIXME Room recognizer: More photographs if doubt
 # FIXME Limit of 4 secs to send audio to speech recognition
 # FIXME Door recognizer
+
+# FIXME Refactor id_selected_room
+# FIXME Refactor grid in UI
 
 
 # FIXME selection of room and door in car

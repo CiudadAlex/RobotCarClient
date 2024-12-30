@@ -40,6 +40,7 @@ class RemoteControlUI(wx.Frame):
         self.create_button_pad(panel)
         self.create_led_command_selector(panel)
         self.create_room_selector(panel)
+        self.create_door_selector(panel)
         self.create_look_button_pad(panel)
         self.create_train_button_pad(panel)
 
@@ -135,6 +136,19 @@ class RemoteControlUI(wx.Frame):
         cb = wx.ComboBox(panel, -1, pos=pos, size=(button_width, button_height), choices=self.options_combo_rooms, style=wx.CB_READONLY)
         cb.Bind(wx.EVT_COMBOBOX, self.on_room_selection)
 
+    def create_door_selector(self, panel):
+
+        left_margin = RemoteControlUI.button_pad_left_margin
+        up_margin = RemoteControlUI.button_pad_up_margin
+        button_height = RemoteControlUI.button_height
+        button_width = RemoteControlUI.button_width
+
+        total_up_margin = 2 * up_margin + button_height
+
+        pos = (left_margin + 3 * button_width + left_margin, total_up_margin)
+        cb = wx.ComboBox(panel, -1, pos=pos, size=(button_width, button_height), choices=self.options_combo_doors, style=wx.CB_READONLY)
+        cb.Bind(wx.EVT_COMBOBOX, self.on_door_selection)
+
     def on_led_command_selection(self, event):
 
         idx_selection = event.GetSelection()
@@ -148,6 +162,14 @@ class RemoteControlUI(wx.Frame):
 
         SelectedDataReceptor.get_instance().id_selected_room = id_room
         SelectedDataReceptor.get_instance().selected_room = room
+
+    def on_door_selection(self, event):
+
+        id_door = event.GetSelection()
+        door = self.options_combo_rooms[id_door]
+
+        SelectedDataReceptor.get_instance().selected_door_id = id_door
+        SelectedDataReceptor.get_instance().selected_door_name = door
 
     @staticmethod
     def build_button_with_action(panel, label, pos, action):
