@@ -24,6 +24,9 @@ class AudioStreamClient(AbstractStreamClient):
         self.queue_of_chunks = queue.Queue()
         self.list_chunk_parts = []
 
+        # Since audio chunks are of 0.5 secs, value of 8 means 4 secs
+        self.max_number_of_speech_chunks_to_send_in_queue = 8
+
         # Start recognizing audio in a separate thread
         recognizing_thread = threading.Thread(target=self.process_audio_queue)
         recognizing_thread.start()
@@ -41,12 +44,20 @@ class AudioStreamClient(AbstractStreamClient):
             print("Speech detected!!")
             self.list_chunk_parts.append(chunk_part)
 
-        else:
+            num_chunks = len(self.list_chunk_parts)
+            if num_chunks >= self.max_number_of_speech_chunks_to_send_in_queue:
+                self.put_in_queue_to_process()
 
-            if len(self.list_chunk_parts) > 0:
-                audio_chunk = b''.join(self.list_chunk_parts)
-                self.queue_of_chunks.put(audio_chunk)
-                self.list_chunk_parts.clear()
+        else:
+            num_chunks = len(self.list_chunk_parts)
+            if num_chunks > 0:
+                self.put_in_queue_to_process()
+
+    def put_in_queue_to_process(self):
+
+        audio_chunk = b''.join(self.list_chunk_parts)
+        self.queue_of_chunks.put(audio_chunk)
+        self.list_chunk_parts.clear()
 
     def process_audio_queue(self):
 
