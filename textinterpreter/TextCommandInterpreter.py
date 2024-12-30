@@ -162,10 +162,10 @@ class TextCommandInterpreter:
 
     def stop_all(self, stop_recording=True):
 
-        ComplexCommandFollowMe.get_instance().running = False
-        ComplexCommand360.get_instance().running = False
-        ComplexCommandRoom.get_instance().running = False
-        ComplexCommandGoToRoom.get_instance().running = False
+        ComplexCommandFollowMe.get_instance().stop()
+        ComplexCommand360.get_instance().stop()
+        ComplexCommandRoom.get_instance().stop()
+        ComplexCommandGoToRoom.get_instance().stop()
         self.commands_client.led_stop()
 
         if stop_recording:

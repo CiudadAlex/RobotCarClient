@@ -26,6 +26,9 @@ class ComplexCommandFollowMe:
         self.tracker = Tracker(width=320, height=240, car_movement=self.car_movement)
         self.num_not_detections = 0
 
+    def stop(self):
+        self.running = False
+
     def execute(self):
 
         execution_thread = threading.Thread(target=self.execute_inner)

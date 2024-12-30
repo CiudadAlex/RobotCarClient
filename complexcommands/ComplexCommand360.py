@@ -42,6 +42,9 @@ class ComplexCommand360:
             with open(self.data_yaml_path, 'w') as data_yaml_file:
                 data_yaml_file.write(f'train: ../train/images\n\nnc: {len(room_list)}\nnames: {room_list}')
 
+    def stop(self):
+        self.running = False
+
     def execute(self):
 
         execution_thread = threading.Thread(target=self.execute_inner)

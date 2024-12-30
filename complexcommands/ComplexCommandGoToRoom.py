@@ -23,6 +23,9 @@ class ComplexCommandGoToRoom:
         self.object_detector = ObjectDetector.load_custom_model("room_s_2024_12_28")
         self.room_router = RoomRouter()
 
+    def stop(self):
+        self.running = False
+
     def execute(self):
 
         execution_thread = threading.Thread(target=self.execute_inner)

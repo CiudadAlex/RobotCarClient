@@ -28,6 +28,9 @@ class ComplexCommandRoom:
         self.object_detector = ObjectDetector.load_custom_model("room_s_2024_12_28")
         self.commands_client = CommandsClient.get_instance()
 
+    def stop(self):
+        self.running = False
+
     def execute(self):
 
         execution_thread = threading.Thread(target=self.execute_inner)
