@@ -18,7 +18,7 @@ if __name__ == "__main__":
 # FIXME test: Limit of 4 secs to send audio to speech recognition
 
 # FIXME Room recognizer: More photographs if doubt
-# FIXME Door recognizer
+# FIXME ComplexCommandPhotoDoor
 # FIXME selection of room and door in car + selector in UI Web
 
 

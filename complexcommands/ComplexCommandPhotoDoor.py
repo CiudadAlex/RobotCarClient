@@ -1,5 +1,8 @@
 from inforeception.SelectedDataReceptor import SelectedDataReceptor
 from inforeception.CarInformationReceptor import CarInformationReceptor
+from utils.PropertiesReader import PropertiesReader
+from utils.YoloDatasetBuilder import YoloDatasetBuilder
+from tools.RoomRouter import RoomRouter
 import threading
 
 
@@ -13,6 +16,15 @@ class ComplexCommandPhotoDoor:
             ComplexCommandPhotoDoor.instance = ComplexCommandPhotoDoor()
 
         return ComplexCommandPhotoDoor.instance
+
+    def __init__(self):
+
+        properties_reader = PropertiesReader.get_instance()
+        door_dataset_path = properties_reader.door_dataset_path
+        room_router = RoomRouter()
+        door_list = room_router.get_list_all_adjacency()
+        self.yolo_dataset_builder = YoloDatasetBuilder(door_dataset_path, door_list)
+        self.yolo_dataset_builder.build_structure()
 
     def execute(self):
 
@@ -33,13 +45,6 @@ class ComplexCommandPhotoDoor:
             print("No selected DOOR")
             return
 
-        uuid4 = "uuid4"
-        image_file_name = f'{selected_door_name}_{uuid4}.png'
-
         last_image = CarInformationReceptor.get_instance().last_image
-        last_image.save(f'{self.images_path}/{image_file_name}.png')
+        self.yolo_dataset_builder.save_image_in_corpus(last_image, selected_door_id, selected_door_name)
 
-        with open(f'{self.labels_path}/{image_file_name}.txt', 'w') as labels_file:
-            labels_file.write(f'{selected_door_id} 0.5 0.5 1 1\n')
-
-    # FIXME finish
