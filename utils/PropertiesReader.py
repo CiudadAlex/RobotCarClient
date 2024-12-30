@@ -30,3 +30,5 @@ class PropertiesReader:
         self.room_list = config[section]['room_list']
         self.room_adjacency = config[section]['room_adjacency']
         self.room_dataset_path = config[section]['room_dataset_path']
+        self.door_dataset_path = config[section]['door_dataset_path']
+

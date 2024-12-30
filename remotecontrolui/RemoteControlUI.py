@@ -3,6 +3,7 @@ from clients.CommandsClient import CommandsClient
 from ai.video.ModelGenerator import ModelGenerator
 from inforeception.CarInformationReceptor import CarInformationReceptor
 from inforeception.SelectedDataReceptor import SelectedDataReceptor
+from tools.RoomRouter import RoomRouter
 import wx
 import traceback
 import os
@@ -30,7 +31,11 @@ class RemoteControlUI(wx.Frame):
         self.properties_reader = PropertiesReader.get_instance()
         self.options_combo_led_commands = ['stop', 'alarm', 'police', 'rainbow', 'rainbow_flag', 'breathe', 'red',
                                            'fading_red']
+
         self.options_combo_rooms = self.properties_reader.room_list.split(",")
+
+        room_router = RoomRouter()
+        self.options_combo_doors = room_router.get_list_all_adjacency()
 
         self.create_button_pad(panel)
         self.create_led_command_selector(panel)
