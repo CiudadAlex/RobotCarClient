@@ -20,6 +20,7 @@ if __name__ == "__main__":
 # FIXME Door recognizer
 
 
+# FIXME selection of room and door in car
 # FIXME LLM with contexts
 # FIXME Command: Go to room
 
