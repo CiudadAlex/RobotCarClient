@@ -1,7 +1,5 @@
-from clients.CommandsClient import CommandsClient
-from ai.video.ObjectDetector import ObjectDetector
 from tools.RoomRouter import RoomRouter
-from inforeception.CarInformationReceptor import CarInformationReceptor
+from complexcommands.helpers.DetermineRoomHelper import DetermineRoomHelper
 from inforeception.SelectedDataReceptor import SelectedDataReceptor
 import threading
 
@@ -19,12 +17,12 @@ class ComplexCommandGoToRoom:
 
     def __init__(self):
         self.running = False
-        self.commands_client = CommandsClient.get_instance()
-        self.object_detector = ObjectDetector.load_custom_model("room_s_2024_12_28")
+        self.determine_room_helper = DetermineRoomHelper()
         self.room_router = RoomRouter()
 
     def stop(self):
         self.running = False
+        self.determine_room_helper.stop()
 
     def execute(self):
 
@@ -37,10 +35,11 @@ class ComplexCommandGoToRoom:
 
         self.running = True
 
-        # FIXME calculate from ComplexCommandRoom (refactor)
-        room_start = None
+        room_start = self.determine_room_helper.get_room()
         room_end = SelectedDataReceptor.get_instance().selected_room
         route = self.room_router.create_route(room_start, room_end)
+
+        # FIXME finish (find door)
 
         self.running = False
 
