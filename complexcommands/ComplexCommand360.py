@@ -66,21 +66,21 @@ class ComplexCommand360:
 
     def save_image_in_corpus(self):
 
-        id_selected_room = SelectedDataReceptor.get_instance().id_selected_room
-        selected_room = SelectedDataReceptor.get_instance().selected_room
+        selected_room_id = SelectedDataReceptor.get_instance().selected_room_id
+        selected_room_name = SelectedDataReceptor.get_instance().selected_room_name
 
-        if id_selected_room is None:
+        if selected_room_id is None:
             print("No selected ROOM")
             return
 
         uuid4 = uuid.uuid4()
-        image_file_name = f'{selected_room}_{uuid4}.png'
+        image_file_name = f'{selected_room_name}_{uuid4}.png'
 
         last_image = CarInformationReceptor.get_instance().last_image
         last_image.save(f'{self.images_path}/{image_file_name}.png')
 
         with open(f'{self.labels_path}/{image_file_name}.txt', 'w') as labels_file:
-            labels_file.write(f'{id_selected_room} 0.5 0.5 1 1\n')
+            labels_file.write(f'{selected_room_id} 0.5 0.5 1 1\n')
 
     def move_step(self):
 

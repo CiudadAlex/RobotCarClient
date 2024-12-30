@@ -13,8 +13,8 @@ class SelectedDataReceptor:
         return SelectedDataReceptor.instance
 
     def __init__(self):
-        self.id_selected_room = None
-        self.selected_room = None
+        self.selected_room_id = None
+        self.selected_room_name = None
 
         self.selected_door_id = None
         self.selected_door_name = None

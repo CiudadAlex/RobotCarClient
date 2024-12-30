@@ -36,7 +36,7 @@ class ComplexCommandGoToRoom:
         self.running = True
 
         room_start = self.determine_room_helper.get_room()
-        room_end = SelectedDataReceptor.get_instance().selected_room
+        room_end = SelectedDataReceptor.get_instance().selected_room_name
         route = self.room_router.create_route(room_start, room_end)
 
         # FIXME finish (find door)
