@@ -4,6 +4,7 @@ from ai.video.ModelGenerator import ModelGenerator
 from inforeception.CarInformationReceptor import CarInformationReceptor
 from inforeception.SelectedDataReceptor import SelectedDataReceptor
 from tools.RoomRouter import RoomRouter
+from remotecontrolui.VerticalLayoutComposer import VerticalLayoutComposer
 import wx
 import traceback
 import os
@@ -38,11 +39,7 @@ class RemoteControlUI(wx.Frame):
         self.options_combo_doors = room_router.get_list_all_adjacency()
 
         self.create_button_pad(panel)
-        self.create_led_command_selector(panel)
-        self.create_room_selector(panel)
-        self.create_door_selector(panel)
-        self.create_look_button_pad(panel)
-        self.create_train_button_pad(panel)
+        self.create_second_column(panel)
 
         left_margin = RemoteControlUI.button_pad_left_margin
         up_margin = RemoteControlUI.button_pad_up_margin
@@ -86,67 +83,59 @@ class RemoteControlUI(wx.Frame):
         RemoteControlUI.build_button_with_action(panel, 'RIGHT', (left_margin + 2 * button_width, up_margin + button_height), self.on_press_right)
         RemoteControlUI.build_button_with_action(panel, 'STOP', (left_margin + button_width, up_margin + button_height), self.on_press_home)
 
-    def create_look_button_pad(self, panel):
+    def create_second_column(self, panel):
 
         left_margin = RemoteControlUI.button_pad_left_margin
         up_margin = RemoteControlUI.button_pad_up_margin
         button_height = RemoteControlUI.button_height
         button_width = RemoteControlUI.button_width
-
         total_left_margin = left_margin + 3 * button_width + left_margin
-        total_up_margin = 3 * up_margin + 2 * button_height
 
-        RemoteControlUI.build_button_with_action(panel, 'look up', (total_left_margin, total_up_margin), self.on_press_look_up)
-        RemoteControlUI.build_button_with_action(panel, 'look down', (total_left_margin, total_up_margin + button_height), self.on_press_look_down)
-        RemoteControlUI.build_button_with_action(panel, 'look home', (total_left_margin, total_up_margin + 2 * button_height), self.on_press_look_home)
+        vertical_layout_composer = VerticalLayoutComposer(total_left_margin, up_margin, button_height,
+                                                          RemoteControlUI.button_height/2, RemoteControlUI.button_width)
 
-    def create_train_button_pad(self, panel):
+        self.create_led_command_selector(panel, vertical_layout_composer)
+        self.create_room_selector(panel, vertical_layout_composer)
+        self.create_door_selector(panel, vertical_layout_composer)
+        self.create_look_button_pad(panel, vertical_layout_composer)
+        self.create_train_button_pad(panel, vertical_layout_composer)
 
-        left_margin = RemoteControlUI.button_pad_left_margin
-        up_margin = RemoteControlUI.button_pad_up_margin
-        button_height = RemoteControlUI.button_height
-        button_width = RemoteControlUI.button_width
+    def create_look_button_pad(self, panel, vertical_layout_composer):
 
-        total_left_margin = left_margin + 3 * button_width + left_margin
-        total_up_margin = 4 * up_margin + 5 * button_height
+        size = vertical_layout_composer.get_size()
 
-        RemoteControlUI.build_button_with_action(panel, 'Train room', (total_left_margin, total_up_margin), self.on_press_train_room)
+        RemoteControlUI.build_button_with_action(panel, 'look up', vertical_layout_composer.get_next_position(),
+                                                 self.on_press_look_up, size)
+        RemoteControlUI.build_button_with_action(panel, 'look down', vertical_layout_composer.get_next_position(),
+                                                 self.on_press_look_down, size)
+        RemoteControlUI.build_button_with_action(panel, 'look home', vertical_layout_composer.get_next_position(),
+                                                 self.on_press_look_home, size)
 
-    def create_led_command_selector(self, panel):
+    def create_train_button_pad(self, panel, vertical_layout_composer):
 
-        left_margin = RemoteControlUI.button_pad_left_margin
-        up_margin = RemoteControlUI.button_pad_up_margin
-        button_height = RemoteControlUI.button_height
-        button_width = RemoteControlUI.button_width
+        pos = vertical_layout_composer.get_next_position()
+        size = vertical_layout_composer.get_size()
+        RemoteControlUI.build_button_with_action(panel, 'Train room', pos, self.on_press_train_room, size)
 
-        pos = (left_margin + 3 * button_width + left_margin, up_margin)
-        cb = wx.ComboBox(panel, -1, pos=pos, size=(button_width, button_height), choices=self.options_combo_led_commands, style=wx.CB_READONLY)
+    def create_led_command_selector(self, panel, vertical_layout_composer):
+
+        pos = vertical_layout_composer.get_next_position()
+        size = vertical_layout_composer.get_size()
+        cb = wx.ComboBox(panel, -1, pos=pos, size=size, choices=self.options_combo_led_commands, style=wx.CB_READONLY)
         cb.Bind(wx.EVT_COMBOBOX, self.on_led_command_selection)
 
-    def create_room_selector(self, panel):
+    def create_room_selector(self, panel, vertical_layout_composer):
 
-        left_margin = RemoteControlUI.button_pad_left_margin
-        up_margin = RemoteControlUI.button_pad_up_margin
-        button_height = RemoteControlUI.button_height
-        button_width = RemoteControlUI.button_width
-
-        total_up_margin = 2 * up_margin + button_height
-
-        pos = (left_margin + 3 * button_width + left_margin, total_up_margin)
-        cb = wx.ComboBox(panel, -1, pos=pos, size=(button_width, button_height), choices=self.options_combo_rooms, style=wx.CB_READONLY)
+        pos = vertical_layout_composer.get_next_position()
+        size = vertical_layout_composer.get_size()
+        cb = wx.ComboBox(panel, -1, pos=pos, size=size, choices=self.options_combo_rooms, style=wx.CB_READONLY)
         cb.Bind(wx.EVT_COMBOBOX, self.on_room_selection)
 
-    def create_door_selector(self, panel):
+    def create_door_selector(self, panel, vertical_layout_composer):
 
-        left_margin = RemoteControlUI.button_pad_left_margin
-        up_margin = RemoteControlUI.button_pad_up_margin
-        button_height = RemoteControlUI.button_height
-        button_width = RemoteControlUI.button_width
-
-        total_up_margin = 2 * up_margin + button_height
-
-        pos = (left_margin + 3 * button_width + left_margin, total_up_margin)
-        cb = wx.ComboBox(panel, -1, pos=pos, size=(button_width, button_height), choices=self.options_combo_doors, style=wx.CB_READONLY)
+        pos = vertical_layout_composer.get_next_position()
+        size = vertical_layout_composer.get_size()
+        cb = wx.ComboBox(panel, -1, pos=pos, size=size, choices=self.options_combo_doors, style=wx.CB_READONLY)
         cb.Bind(wx.EVT_COMBOBOX, self.on_door_selection)
 
     def on_led_command_selection(self, event):
@@ -172,8 +161,12 @@ class RemoteControlUI(wx.Frame):
         SelectedDataReceptor.get_instance().selected_door_name = door
 
     @staticmethod
-    def build_button_with_action(panel, label, pos, action):
-        my_btn = wx.Button(panel, label=label, pos=pos, size=(RemoteControlUI.button_width, RemoteControlUI.button_height))
+    def build_button_with_action(panel, label, pos, action, size=None):
+
+        if size is None:
+            size = (RemoteControlUI.button_width, RemoteControlUI.button_height)
+
+        my_btn = wx.Button(panel, label=label, pos=pos, size=size)
         my_btn.Bind(wx.EVT_BUTTON, action)
 
     def on_press_forward(self, event):
