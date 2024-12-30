@@ -16,9 +16,10 @@ if __name__ == "__main__":
 
 
 # FIXME Room recognizer: More photographs if doubt
-
-
+# FIXME Limit of 4 secs to send audio to speech recognition
 # FIXME Door recognizer
+
+
 # FIXME LLM with contexts
 # FIXME Command: Go to room
 
