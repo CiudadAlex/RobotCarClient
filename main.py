@@ -21,6 +21,7 @@ if __name__ == "__main__":
 
 # FIXME Room recognizer: More photographs if doubt
 # FIXME selector of room and door in UI Web
+# FIXME store in car list of rooms and doors
 
 
 # FIXME Speakers to answer
