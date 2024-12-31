@@ -158,7 +158,7 @@ class RemoteControlUI(wx.Frame):
         id_door = event.GetSelection()
         door = self.options_combo_doors[id_door]
 
-        SelectedDataReceptor.get_instance().setdoor(id_door, door)
+        SelectedDataReceptor.get_instance().set_door(id_door, door)
 
     @staticmethod
     def build_button_with_action(panel, label, pos, action, size=None):
