@@ -14,11 +14,10 @@ if __name__ == "__main__":
     RemoteControlUI.launch()
 
 
-# FIXME test: follow me
-# FIXME test: Limit of 4 secs to send audio to speech recognition
 # FIXME test: ComplexCommandPhotoDoor
 # FIXME test: ComplexCommandGoToRoom
 
+# FIXME follow me: look both sides before complete turn around
 # FIXME Room recognizer: More photographs if doubt
 # FIXME selector of room and door in UI Web
 # FIXME store in car list of rooms and doors
