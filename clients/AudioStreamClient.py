@@ -46,6 +46,7 @@ class AudioStreamClient(AbstractStreamClient):
 
             num_chunks = len(self.list_chunk_parts)
             if num_chunks >= self.max_number_of_speech_chunks_to_send_in_queue:
+                print("Speech detected length limit reached")
                 self.put_in_queue_to_process()
 
         else:
