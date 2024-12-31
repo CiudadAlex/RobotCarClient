@@ -23,8 +23,8 @@ class SelectedDataReceptor:
         self.commands_client.set_door(selected_door_id, selected_door_name)
 
     def get_room(self):
-        self.commands_client.get_room()
+        return self.commands_client.get_room()
 
     def get_door(self):
-        self.commands_client.get_door()
+        return self.commands_client.get_door()
 
