@@ -144,7 +144,7 @@ class CommandsClient(Thread):
 
     def execute_command_path_get(self, command_path):
         print(f'Command GET: {command_path}')
-        response = requests.post(f'http://{self.host}:{self.port}/{command_path}')
+        response = requests.get(f'http://{self.host}:{self.port}/{command_path}')
         print(f'Response GET: {response.status_code}')
         return response.json()
 
