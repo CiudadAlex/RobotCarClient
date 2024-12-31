@@ -39,8 +39,8 @@ class ComplexCommandPhotoDoor:
     def save_image_in_corpus(self):
 
         door_json = SelectedDataReceptor.get_instance().get_door()
-        selected_door_id = door_json.selected_door_id
-        selected_door_name = door_json.selected_door_name
+        selected_door_id = door_json['selected_door_id']
+        selected_door_name = door_json['selected_door_name']
 
         if selected_door_id is None:
             print("No selected DOOR")
