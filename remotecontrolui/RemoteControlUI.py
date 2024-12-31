@@ -113,9 +113,11 @@ class RemoteControlUI(wx.Frame):
 
     def create_train_button_pad(self, panel, vertical_layout_composer):
 
-        pos = vertical_layout_composer.get_next_position()
         size = vertical_layout_composer.get_size()
-        RemoteControlUI.build_button_with_action(panel, 'Train room', pos, self.on_press_train_room, size)
+        RemoteControlUI.build_button_with_action(panel, 'Train room', vertical_layout_composer.get_next_position(),
+                                                 self.on_press_train_room, size)
+        RemoteControlUI.build_button_with_action(panel, 'Train door', vertical_layout_composer.get_next_position(),
+                                                 self.on_press_train_door, size)
 
     def create_led_command_selector(self, panel, vertical_layout_composer):
 
@@ -226,13 +228,24 @@ class RemoteControlUI(wx.Frame):
             print("Problem with command Look home")
             traceback.print_exc()
 
-    def on_press_train_room(self, event):
+    @staticmethod
+    def on_press_train_room(event):
         try:
             print("Train room!!")
             ModelGenerator.train_model_rooms()
 
         except:
-            print("Problem with command Look up")
+            print("Problem with training rooms")
+            traceback.print_exc()
+
+    @staticmethod
+    def on_press_train_door(event):
+        try:
+            print("Train door!!")
+            ModelGenerator.train_model_doors()
+
+        except:
+            print("Problem with training doors")
             traceback.print_exc()
 
     def OnClose(self, event):
