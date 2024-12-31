@@ -3,7 +3,9 @@ from inforeception.CarInformationReceptor import CarInformationReceptor
 from utils.PropertiesReader import PropertiesReader
 from utils.YoloDatasetBuilder import YoloDatasetBuilder
 from tools.RoomRouter import RoomRouter
+from clients.CommandsClient import CommandsClient
 import threading
+import time
 
 
 class ComplexCommandPhotoDoor:
@@ -19,6 +21,7 @@ class ComplexCommandPhotoDoor:
 
     def __init__(self):
 
+        self.commands_client = CommandsClient.get_instance()
         properties_reader = PropertiesReader.get_instance()
         door_dataset_path = properties_reader.door_dataset_path
         room_router = RoomRouter()
@@ -34,7 +37,10 @@ class ComplexCommandPhotoDoor:
     def execute_inner(self):
 
         print("ComplexCommandPhotoDoor!!!!!!!")
+        self.commands_client.led_red()
         self.save_image_in_corpus()
+        time.sleep(1)
+        self.commands_client.led_stop()
 
     def save_image_in_corpus(self):
 

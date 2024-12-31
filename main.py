@@ -14,7 +14,6 @@ if __name__ == "__main__":
     RemoteControlUI.launch()
 
 
-# FIXME test: ComplexCommandPhotoDoor
 # FIXME test: ComplexCommandGoToRoom
 
 # FIXME follow me: look both sides before complete turn around
