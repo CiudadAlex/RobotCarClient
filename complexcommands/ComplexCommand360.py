@@ -58,8 +58,9 @@ class ComplexCommand360:
 
     def save_image_in_corpus(self):
 
-        selected_room_id = SelectedDataReceptor.get_instance().selected_room_id
-        selected_room_name = SelectedDataReceptor.get_instance().selected_room_name
+        room_json = SelectedDataReceptor.get_instance().get_room()
+        selected_room_id = room_json.selected_room_id
+        selected_room_name = room_json.selected_room_name
 
         if selected_room_id is None:
             print("No selected ROOM")

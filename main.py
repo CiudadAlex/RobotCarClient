@@ -19,7 +19,7 @@ if __name__ == "__main__":
 # FIXME test: ComplexCommandPhotoDoor
 
 # FIXME Room recognizer: More photographs if doubt
-# FIXME selection of room and door in car + selector in UI Web
+# FIXME selector of room and door in UI Web
 
 
 # FIXME Command: Go to room

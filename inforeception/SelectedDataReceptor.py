@@ -1,3 +1,4 @@
+from clients.CommandsClient import CommandsClient
 
 
 class SelectedDataReceptor:
@@ -13,9 +14,17 @@ class SelectedDataReceptor:
         return SelectedDataReceptor.instance
 
     def __init__(self):
-        self.selected_room_id = None
-        self.selected_room_name = None
+        self.commands_client = CommandsClient.get_instance()
 
-        self.selected_door_id = None
-        self.selected_door_name = None
+    def set_room(self, selected_room_id, selected_room_name):
+        self.commands_client.set_room(selected_room_id, selected_room_name)
+
+    def set_door(self, selected_door_id, selected_door_name):
+        self.commands_client.set_door(selected_door_id, selected_door_name)
+
+    def get_room(self):
+        self.commands_client.get_room()
+
+    def get_door(self):
+        self.commands_client.get_door()
 
