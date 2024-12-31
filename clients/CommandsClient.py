@@ -149,7 +149,7 @@ class CommandsClient(Thread):
         return response.json()
 
     def get_room(self):
-        self.execute_command_path_get("room")
+        return self.execute_command_path_get("room")
 
     def get_door(self):
-        self.execute_command_path_get("door")
+        return self.execute_command_path_get("door")
