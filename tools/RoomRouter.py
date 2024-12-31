@@ -90,7 +90,7 @@ class RoomRouter:
         for room, list_adj_rooms in self.map_routes.items():
 
             for room_adj in list_adj_rooms:
-                list_all_adjacency.append(f"{room}:{room_adj}")
+                list_all_adjacency.append(f"{room}-{room_adj}")
 
         return list_all_adjacency
 
