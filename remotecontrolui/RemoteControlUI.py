@@ -156,7 +156,7 @@ class RemoteControlUI(wx.Frame):
     def on_door_selection(self, event):
 
         id_door = event.GetSelection()
-        door = self.options_combo_rooms[id_door]
+        door = self.options_combo_doors[id_door]
 
         SelectedDataReceptor.get_instance().setdoor(id_door, door)
 

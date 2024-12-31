@@ -39,7 +39,11 @@ class CommandsClient(Thread):
 
     def execute_command_path_post(self, command_path, body):
         print(f'Command POST: {command_path}')
-        response = requests.post(f'http://{self.host}:{self.port}/{command_path}', json=body)
+        headers = {
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+        }
+        response = requests.post(f'http://{self.host}:{self.port}/{command_path}', json=body, headers=headers)
         print(f'Response POST: {response.status_code}')
 
     def led(self, mode):
