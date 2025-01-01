@@ -13,17 +13,14 @@ if __name__ == "__main__":
 
     RemoteControlUI.launch()
 
-# FIXME store in car list of rooms and doors
-# FIXME follow me: look both sides before complete turn around
 
-# FIXME test: ComplexCommandGoToRoom
+# FIXME test: selector of room and door in UI Web
 # FIXME Room recognizer: More photographs if doubt
-# FIXME selector of room and door in UI Web
+
+# FIXME follow me: look both sides before complete turn around
+# FIXME ComplexCommandGoToRoom (Door recognition model)
 
 
 # FIXME Speakers to answer
 # FIXME LLM with contexts
-
-
-
 
