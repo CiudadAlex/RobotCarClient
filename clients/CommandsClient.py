@@ -142,6 +142,18 @@ class CommandsClient(Thread):
         command_path = 'door'
         self.queue_of_command_paths.put((command_path, data))
 
+    def set_room_list(self, room_list):
+
+        data = room_list
+        command_path = 'room_list'
+        self.queue_of_command_paths.put((command_path, data))
+
+    def set_door_list(self, door_list):
+
+        data = door_list
+        command_path = 'door_list'
+        self.queue_of_command_paths.put((command_path, data))
+
     def execute_command_path_get(self, command_path):
         print(f'Command GET: {command_path}')
         response = requests.get(f'http://{self.host}:{self.port}/{command_path}')
@@ -153,3 +165,10 @@ class CommandsClient(Thread):
 
     def get_door(self):
         return self.execute_command_path_get("door")
+
+    def get_room_list(self):
+        return self.execute_command_path_get("room_list")
+
+    def get_door_list(self):
+        return self.execute_command_path_get("door_list")
+
