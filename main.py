@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
 
 # FIXME test: selector of room and door in UI Web
-# FIXME Room recognizer: More photographs if doubt
+# FIXME Room recognizer: redo training with higher look
 
 # FIXME follow me: look both sides before complete turn around
 # FIXME ComplexCommandGoToRoom (Door recognition model)
