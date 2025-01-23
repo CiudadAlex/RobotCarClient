@@ -2,6 +2,7 @@ from clients.CommandsClient import CommandsClient
 from utils.PropertiesReader import PropertiesReader
 from textinterpreter.music.MusicPlayer import MusicPlayer
 from ai.llm.InformationRetriever import InformationRetriever
+from ai.llm.LLMContexts import LLMContexts
 from tools.Wikipedia import Wikipedia
 from complexcommands.ComplexCommand360 import ComplexCommand360
 from complexcommands.ComplexCommandFollowMe import ComplexCommandFollowMe
@@ -124,7 +125,7 @@ class TextCommandInterpreter:
         num_of_words = len(text.split())
 
         if num_of_words > 2:
-            answer = self.information_retriever.get_answer(text)
+            answer = self.information_retriever.get_answer(text, context=LLMContexts.SCHEMATIC)
         else:
             answer = self.wikipedia.retrieve_first_part(text)
 

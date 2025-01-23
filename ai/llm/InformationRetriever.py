@@ -22,6 +22,8 @@ class InformationRetriever:
             n_ctx=2048
         )
 
-    def get_answer(self, question):
-        return self.llm(question)
+    def get_answer(self, question, context=""):
+        return self.llm(context + question)
+
+
 
