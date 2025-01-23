@@ -70,6 +70,9 @@ class ComplexCommandFollowMe:
         self.num_not_detections = self.num_not_detections + 1
 
         if self.num_not_detections > 3:
-            self.car_movement.move_right()
+            self.make_move_to_look_for()
             time.sleep(0.5)
             self.num_not_detections = 0
+
+    def make_move_to_look_for(self):
+        self.car_movement.move_right()
