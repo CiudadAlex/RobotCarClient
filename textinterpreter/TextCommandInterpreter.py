@@ -2,7 +2,6 @@ from clients.CommandsClient import CommandsClient
 from utils.PropertiesReader import PropertiesReader
 from textinterpreter.music.MusicPlayer import MusicPlayer
 from ai.llm.InformationRetriever import InformationRetriever
-from tools.Text2SpeechEngine import Text2SpeechEngine
 from tools.Wikipedia import Wikipedia
 from complexcommands.ComplexCommand360 import ComplexCommand360
 from complexcommands.ComplexCommandFollowMe import ComplexCommandFollowMe
@@ -55,7 +54,6 @@ class TextCommandInterpreter:
         self.properties_reader = PropertiesReader.get_instance()
         self.music_player = MusicPlayer(self.properties_reader.music_dir_path, self.properties_reader.vlc_executable_path)
         self.information_retriever = InformationRetriever(self.properties_reader.model_llama_ccp_path)
-        self.text_2_speech_engine = Text2SpeechEngine("en")
         self.wikipedia = Wikipedia()
 
     def interpret(self, text):
@@ -152,6 +150,7 @@ class TextCommandInterpreter:
 
     def execute_change_mode(self, new_mode):
         print(f">>>>>>>>>>>>>>>>>>>>> NEW MODE = {new_mode}")
+        SpeakManager.get_instance().say(new_mode.replace("_", " "))
         self.mode = new_mode
 
         if self.mode == TextCommandInterpreter.MODE_COMMAND:
@@ -181,34 +180,40 @@ class TextCommandInterpreter:
 
             self.stop_all(stop_recording=False)
             time.sleep(1)
+            SpeakManager.get_instance().say("360")
             ComplexCommand360.get_instance().execute()
 
         elif TextCommandInterpreter.COMPLEX_COMMAND_FOLLOW_ME == complex_command:
 
             self.stop_all(stop_recording=False)
             time.sleep(1)
+            SpeakManager.get_instance().say("Following")
             ComplexCommandFollowMe.get_instance().execute()
 
         elif TextCommandInterpreter.COMPLEX_COMMAND_ROOM == complex_command:
 
             self.stop_all(stop_recording=False)
             time.sleep(1)
+            SpeakManager.get_instance().say("Room")
             ComplexCommandRoom.get_instance().execute()
 
         elif TextCommandInterpreter.COMPLEX_COMMAND_GO_TO_ROOM == complex_command:
 
             self.stop_all(stop_recording=False)
             time.sleep(1)
+            SpeakManager.get_instance().say("Go to room")
             ComplexCommandGoToRoom.get_instance().execute()
 
         elif TextCommandInterpreter.COMPLEX_COMMAND_PHOTO_DOOR == complex_command:
 
             self.stop_all(stop_recording=False)
             time.sleep(1)
+            SpeakManager.get_instance().say("Photo")
             ComplexCommandPhotoDoor.get_instance().execute()
 
         elif TextCommandInterpreter.COMPLEX_COMMAND_RECORD == complex_command:
             print("Record!!!!!!!")
+            SpeakManager.get_instance().say("Record")
             ComplexCommandRecord.get_instance().switch_recording()
 
         else:
