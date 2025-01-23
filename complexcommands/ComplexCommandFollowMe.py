@@ -26,6 +26,7 @@ class ComplexCommandFollowMe:
         self.car_movement = CarMovement()
         self.tracker = Tracker(width=320, height=240, car_movement=self.car_movement)
         self.num_not_detections = 0
+        self.index_look_for = 0
 
     def stop(self):
         self.running = False
@@ -62,6 +63,7 @@ class ComplexCommandFollowMe:
             rectangle_down_right_position = bounding_box[1]
             self.tracker.track(rectangle_up_left_position, rectangle_down_right_position)
             self.num_not_detections = 0
+            self.index_look_for = 0
 
         self.commands_client.led_stop()
 
@@ -75,4 +77,17 @@ class ComplexCommandFollowMe:
             self.num_not_detections = 0
 
     def make_move_to_look_for(self):
-        self.car_movement.move_right()
+
+        if self.index_look_for == 0:
+            self.car_movement.move_left()
+        elif self.index_look_for == 1:
+            self.car_movement.move_left()
+        elif self.index_look_for == 2:
+            self.car_movement.move_right()
+            self.car_movement.move_right()
+            self.car_movement.move_right()
+        else:
+            self.car_movement.move_right()
+
+        self.index_look_for = self.index_look_for + 1
+

@@ -16,9 +16,11 @@ if __name__ == "__main__":
 
 # FIXME test: selector of room and door in UI Web
 # FIXME test: Speakers to answer
+# FIXME test: in follow me look both sides before complete turn around
 
-# FIXME follow me: look both sides before complete turn around
 # FIXME LLM with contexts
+# FIXME Text server to transmit Client commands
+
 
 # FIXME Room recognizer: redo training with higher look
 # FIXME ComplexCommandGoToRoom (Door recognition model)
