@@ -19,8 +19,7 @@ if __name__ == "__main__":
 # FIXME test: in follow me look both sides before complete turn around
 # FIXME test: LLM with contexts
 # FIXME test: Text server to transmit Client commands
-
-# FIXME Command to photo and 360 from WebUI
+# FIXME test: Command to photo and 360 from WebUI
 
 
 # FIXME Room recognizer: redo training with higher look
