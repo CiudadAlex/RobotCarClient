@@ -13,13 +13,12 @@ class CarInformationReceptor:
         return CarInformationReceptor.instance
 
     @staticmethod
-    def build_instance(commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream, on_text_received):
+    def build_instance(connect_to_video_stream, connect_to_audio_stream, connect_to_text_stream, on_text_received):
 
-        CarInformationReceptor.instance = CarInformationReceptor(commands_by_audio, connect_to_video_stream,
-                                                                 connect_to_audio_or_text_command_stream,
-                                                                 on_text_received)
+        CarInformationReceptor.instance = CarInformationReceptor(connect_to_video_stream, connect_to_audio_stream,
+                                                                 connect_to_text_stream, on_text_received)
 
-    def __init__(self, commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream, on_text_received):
+    def __init__(self, connect_to_video_stream, connect_to_audio_stream, connect_to_text_stream, on_text_received):
 
         self.last_image = None
         self.list_on_image_received = []
@@ -34,13 +33,13 @@ class CarInformationReceptor:
             image_stream_client = ImageStreamClient(host, port_images_stream, self.on_image_received_action)
             image_stream_client.start()
 
-        if connect_to_audio_or_text_command_stream:
-            if commands_by_audio:
-                audio_stream_client = AudioStreamClient(host, port_audio_stream, on_text_received)
-                audio_stream_client.start()
-            else:
-                text_stream_client = TextStreamClient(host, port_text_stream, on_text_received)
-                text_stream_client.start()
+        if connect_to_audio_stream:
+            audio_stream_client = AudioStreamClient(host, port_audio_stream, on_text_received)
+            audio_stream_client.start()
+
+        if connect_to_text_stream:
+            text_stream_client = TextStreamClient(host, port_text_stream, on_text_received)
+            text_stream_client.start()
 
     def on_image_received_action(self, image):
 

@@ -11,7 +11,7 @@ class Engine:
     text_command_interpreter = None
 
     @staticmethod
-    def start(car_speaks, commands_by_audio, connect_to_video_stream, connect_to_audio_or_text_command_stream):
+    def start(car_speaks, connect_to_video_stream, connect_to_audio_stream, connect_to_text_stream):
 
         SpeakManager.get_instance().car_speaks = car_speaks
 
@@ -19,10 +19,11 @@ class Engine:
 
         Engine.set_room_list_and_door_list_in_car()
 
-        CarInformationReceptor.build_instance(commands_by_audio=commands_by_audio,
-                                              connect_to_video_stream=connect_to_video_stream,
-                                              connect_to_audio_or_text_command_stream=connect_to_audio_or_text_command_stream,
+        CarInformationReceptor.build_instance(connect_to_video_stream=connect_to_video_stream,
+                                              connect_to_audio_stream=connect_to_audio_stream,
+                                              connect_to_text_stream=connect_to_text_stream,
                                               on_text_received=Engine.on_text_received)
+
 
     @staticmethod
     def set_room_list_and_door_list_in_car():

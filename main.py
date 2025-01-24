@@ -6,10 +6,10 @@ online = True
 
 
 if __name__ == "__main__":
-    Engine.start(car_speaks=False,
-                 commands_by_audio=True,
+    Engine.start(car_speaks=True,
                  connect_to_video_stream=online,
-                 connect_to_audio_or_text_command_stream=online)
+                 connect_to_audio_stream=online,
+                 connect_to_text_stream=online)
 
     RemoteControlUI.launch()
 
@@ -18,8 +18,9 @@ if __name__ == "__main__":
 # FIXME test: Speakers to answer
 # FIXME test: in follow me look both sides before complete turn around
 # FIXME test: LLM with contexts
+# FIXME test: Text server to transmit Client commands
 
-# FIXME Text server to transmit Client commands
+# FIXME Command to photo and 360 from WebUI
 
 
 # FIXME Room recognizer: redo training with higher look
