@@ -33,7 +33,7 @@ class Engine:
         room_router = RoomRouter()
 
         room_list = properties_reader.room_list
-        door_list = room_router.get_list_all_adjacency()
+        door_list = ','.join(room_router.get_list_all_adjacency())
 
         commands_client.set_room_list(room_list)
         commands_client.set_door_list(door_list)
