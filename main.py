@@ -18,10 +18,10 @@ if __name__ == "__main__":
 # FIXME test: in follow me look both sides before complete turn around
 # FIXME test: LLM with contexts
 # FIXME test: room sum probabilities
+# FIXME test: generate corpus with val and test images
 
 # FIXME revise Command 360 does not work properly through webUI
 # FIXME revise espeak
-# FIXME generate corpus with val and test images
 
 
 # FIXME Room recognizer: redo training with higher look

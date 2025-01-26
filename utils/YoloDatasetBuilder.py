@@ -1,5 +1,6 @@
 import os
 import uuid
+import random
 
 
 class YoloDatasetBuilder:
@@ -38,7 +39,15 @@ class YoloDatasetBuilder:
 
     def save_image_in_corpus(self, image, class_id, class_name):
 
-        path = self.train_path
+        random_1_to_10 = random.randint(1, 10)
+
+        if random_1_to_10 == 1:
+            path = self.test_path
+        elif random_1_to_10 == 2:
+            path = self.valid_path
+        else:
+            path = self.train_path
+
         images_path = self.get_images_path(path)
         labels_path = self.get_labels_path(path)
 
