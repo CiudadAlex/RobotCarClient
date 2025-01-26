@@ -18,7 +18,6 @@ if __name__ == "__main__":
 # FIXME test: in follow me look both sides before complete turn around
 # FIXME test: LLM with contexts
 
-# FIXME Text server does not reset after sending (if client reboots retransmits last command)
 # FIXME revise Command 360 does not work properly through webUI
 
 
