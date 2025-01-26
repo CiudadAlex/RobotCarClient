@@ -14,12 +14,12 @@ if __name__ == "__main__":
     RemoteControlUI.launch()
 
 
-# FIXME test: selector of room and door in UI Web
 # FIXME test: Speakers to answer
 # FIXME test: in follow me look both sides before complete turn around
 # FIXME test: LLM with contexts
-# FIXME test: Text server to transmit Client commands
-# FIXME test: Command to photo and 360 from WebUI
+
+# FIXME Text server does not reset after sending (if client reboots retransmits last command)
+# FIXME revise Command 360 does not work properly through webUI
 
 
 # FIXME Room recognizer: redo training with higher look
