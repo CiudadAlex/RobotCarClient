@@ -16,7 +16,6 @@ if __name__ == "__main__":
 
 # FIXME test: Speakers to answer
 # FIXME test: in follow me look both sides before complete turn around
-# FIXME test: LLM with contexts
 # FIXME test: room sum probabilities
 # FIXME test: generate corpus with val and test images
 
