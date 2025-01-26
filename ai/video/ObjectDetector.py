@@ -77,7 +77,9 @@ class ObjectDetector:
 
                 list_class_and_confidence.append((class_name_box, confidence))
 
-        return list_class_and_confidence
+        list_class_and_confidence_ordered = sorted(list_class_and_confidence, key=lambda x: x[1], reverse=True)
+
+        return list_class_and_confidence_ordered
 
     @staticmethod
     def get_most_confident_class(results):

@@ -1,7 +1,7 @@
 from ai.video.ObjectDetector import ObjectDetector
 from clients.CommandsClient import CommandsClient
 from ai.video.Models import Models
-from utils.Counter import Counter
+from utils.Aggregator import Aggregator
 from inforeception.CarInformationReceptor import CarInformationReceptor
 import time
 
@@ -33,29 +33,35 @@ class DetermineRoomHelper:
     def get_room(self):
 
         self.running = True
-        counter = Counter()
+        confidence_aggregator = Aggregator()
 
         for step in range(DetermineRoomHelper.number_of_steps):
 
             if not self.running:
-                return counter.get_max_count()
+                return confidence_aggregator.get_max_count()
 
             self.move_step()
-            last_image_class = self.get_class_of_last_image()
-            counter.add(last_image_class)
+            self.aggregate_confidence_of_classes_of_last_image(confidence_aggregator)
 
-        most_confident_class = counter.get_max_count()
+        most_confident_class = confidence_aggregator.get_key_of_max_value()
 
         self.running = False
 
         return most_confident_class
 
-    def get_class_of_last_image(self):
+    def aggregate_confidence_of_classes_of_last_image(self, confidence_aggregator):
 
         last_image = CarInformationReceptor.get_instance().last_image
         results = self.object_detector.predict(last_image)
-        most_confident_class = self.object_detector.get_most_confident_class(results)
-        return most_confident_class
+        list_class_and_confidence = self.object_detector.get_list_class_and_confidence(results)
+
+        detected_class_set = set()
+
+        for clazz, confidence in list_class_and_confidence:
+
+            if clazz not in detected_class_set:
+                confidence_aggregator.add(clazz, confidence)
+                detected_class_set.add(clazz)
 
     def move_step(self):
 
