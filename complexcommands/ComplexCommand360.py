@@ -48,19 +48,19 @@ class ComplexCommand360:
 
         self.running = True
 
+        room_json = SelectedDataReceptor.get_instance().get_room()
+        selected_room_id = room_json["selected_room_id"]
+        selected_room_name = room_json["selected_room_name"]
+
         for step in range(ComplexCommand360.number_of_steps):
 
             if not self.running:
                 return
 
             self.move_step()
-            self.save_image_in_corpus()
+            self.save_image_in_corpus(selected_room_id, selected_room_name)
 
-    def save_image_in_corpus(self):
-
-        room_json = SelectedDataReceptor.get_instance().get_room()
-        selected_room_id = room_json["selected_room_id"]
-        selected_room_name = room_json["selected_room_name"]
+    def save_image_in_corpus(self, selected_room_id, selected_room_name):
 
         if selected_room_id is None:
             print("No selected ROOM")
