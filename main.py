@@ -19,6 +19,9 @@ if __name__ == "__main__":
 # FIXME test: LLM with contexts
 
 # FIXME revise Command 360 does not work properly through webUI
+# FIXME revise espeak
+# FIXME room sum probabilities
+# FIXME generate corpus with val and test images
 
 
 # FIXME Room recognizer: redo training with higher look
