@@ -14,9 +14,7 @@ if __name__ == "__main__":
     RemoteControlUI.launch()
 
 
-# FIXME test: Speakers to answer
 # FIXME test: in follow me look both sides before complete turn around
-# FIXME test: room sum probabilities
 # FIXME test: generate corpus with val and test images
 
 # FIXME revise espeak (makes 360 hang)
