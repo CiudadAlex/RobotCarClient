@@ -14,14 +14,10 @@ if __name__ == "__main__":
     RemoteControlUI.launch()
 
 
-# FIXME test: in follow me look both sides before complete turn around
 # FIXME test: generate corpus with val and test images
-
-# FIXME revise espeak (makes 360 hang)
-
-
 # FIXME Room recognizer: redo training with higher look
 # FIXME ComplexCommandGoToRoom (Door recognition model)
 
 
+# FIXME revise espeak (makes 360 hang)
 
