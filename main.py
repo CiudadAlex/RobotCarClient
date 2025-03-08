@@ -16,6 +16,10 @@ if __name__ == "__main__":
 
 # FIXME test: generate corpus with val and test images
 # FIXME Room recognizer: redo training with higher look
+
+# FIXME Edge recognition to guide.
+# FIXME Wall follower
+
 # FIXME ComplexCommandGoToRoom (Door recognition model)
 
 
