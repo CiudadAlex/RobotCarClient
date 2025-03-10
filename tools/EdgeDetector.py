@@ -6,15 +6,15 @@ import math
 class EdgeDetector:
 
     @staticmethod
-    def get_horizontal_edges(image_path, low_threshold=70, high_threshold=120, max_angle_degree=15):
-        EdgeDetector.get_edges(image_path, low_threshold, high_threshold, max_angle_degree, True)
+    def get_horizontal_edges(image_path, low_threshold=70, high_threshold=120, max_angle_degree=15, show=False):
+        return EdgeDetector.get_edges(image_path, low_threshold, high_threshold, max_angle_degree, True, show)
 
     @staticmethod
-    def get_vertical_edges(image_path, low_threshold=70, high_threshold=120, max_angle_degree=15):
-        EdgeDetector.get_edges(image_path, low_threshold, high_threshold, max_angle_degree, False)
+    def get_vertical_edges(image_path, low_threshold=70, high_threshold=120, max_angle_degree=15, show=False):
+        return EdgeDetector.get_edges(image_path, low_threshold, high_threshold, max_angle_degree, False, show)
 
     @staticmethod
-    def get_edges(image_path, low_threshold=70, high_threshold=120, max_angle_degree=15, horizontal_or_vertical=True):
+    def get_edges(image_path, low_threshold=70, high_threshold=120, max_angle_degree=15, horizontal_or_vertical=True, show=False):
 
         image = cv.imread(image_path, cv.IMREAD_GRAYSCALE)
 
@@ -46,7 +46,12 @@ class EdgeDetector:
                     list_edges.append((point1, point2))
                     cv.line(image, point1, point2, (0, 0, 255), 1, cv.LINE_AA)
 
-        cv.imshow("Source", image)
+        if show:
+            cv.imshow("Source", image)
+            print("Press any key to close")
+            cv.waitKey(0)
+            cv.destroyAllWindows()
+
         return list_edges
 
     @staticmethod
