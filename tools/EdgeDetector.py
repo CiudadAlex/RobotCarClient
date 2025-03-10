@@ -32,7 +32,15 @@ class EdgeDetector:
                 point2 = (l[2], l[3])
                 angle_degree = EdgeDetector.calculate_angle_degree(point1, point2)
 
-                if -max_angle_degree < angle_degree < max_angle_degree:
+                if horizontal_or_vertical:
+                    central_angle_degree = 0
+                else:
+                    central_angle_degree = 90
+
+                bottom_angle_degree = central_angle_degree - max_angle_degree
+                top_angle_degree = central_angle_degree + max_angle_degree
+
+                if bottom_angle_degree < angle_degree < top_angle_degree:
                     print("line degree", angle_degree)
                     print(" >> points: ", point1, point2)
                     list_edges.append((point1, point2))
