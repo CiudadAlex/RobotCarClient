@@ -6,19 +6,26 @@ import math
 class EdgeDetector:
 
     @staticmethod
-    def get_horizontal_edges(image_path, low_threshold=70, high_threshold=120, max_angle_degree=15, show=False):
-        return EdgeDetector.get_edges(image_path, low_threshold, high_threshold, max_angle_degree, True, show)
+    def get_horizontal_edges(image_umat, low_threshold=70, high_threshold=120, max_angle_degree=15, show=False):
+        return EdgeDetector.get_edges(image_umat, low_threshold, high_threshold, max_angle_degree, True, show)
 
     @staticmethod
-    def get_vertical_edges(image_path, low_threshold=70, high_threshold=120, max_angle_degree=15, show=False):
-        return EdgeDetector.get_edges(image_path, low_threshold, high_threshold, max_angle_degree, False, show)
+    def get_vertical_edges(image_umat, low_threshold=70, high_threshold=120, max_angle_degree=15, show=False):
+        return EdgeDetector.get_edges(image_umat, low_threshold, high_threshold, max_angle_degree, False, show)
 
     @staticmethod
-    def get_edges(image_path, low_threshold=70, high_threshold=120, max_angle_degree=15, horizontal_or_vertical=True, show=False):
+    def image_pil_to_umat(image_pil):
+        img_rgb = np.array(image_pil)
+        return cv.cvtColor(img_rgb, cv.COLOR_RGB2GRAY)
 
-        image = cv.imread(image_path, cv.IMREAD_GRAYSCALE)
+    @staticmethod
+    def image_path_to_umat(image_path):
+        return cv.imread(image_path, cv.IMREAD_GRAYSCALE)
 
-        edges = cv.Canny(image, low_threshold, high_threshold, None, 3)
+    @staticmethod
+    def get_edges(image_umat, low_threshold=70, high_threshold=120, max_angle_degree=15, horizontal_or_vertical=True, show=False):
+
+        edges = cv.Canny(image_umat, low_threshold, high_threshold, None, 3)
         hough_lines_p = cv.HoughLinesP(edges, 1, np.pi / 180, 50, None, 50, 10)
         list_edges = []
 
@@ -44,10 +51,10 @@ class EdgeDetector:
                     print("line degree", angle_degree)
                     print(" >> points: ", point1, point2)
                     list_edges.append((point1, point2))
-                    cv.line(image, point1, point2, (0, 0, 255), 1, cv.LINE_AA)
+                    cv.line(image_umat, point1, point2, (0, 0, 255), 1, cv.LINE_AA)
 
         if show:
-            cv.imshow("Source", image)
+            cv.imshow("Source", image_umat)
             print("Press any key to close")
             cv.waitKey(0)
             cv.destroyAllWindows()
