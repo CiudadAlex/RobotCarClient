@@ -92,6 +92,11 @@ class CommandsClient(Thread):
     def move_stop(self):
         self.move("stop")
 
+    def move_a_bit(self, mode, secs):
+
+        command_path = f'move_a_bit/{mode}/{secs}'
+        self.queue_of_command_paths.put((command_path, None))
+
     def look(self, mode):
 
         command_path = f'look/{mode}'
