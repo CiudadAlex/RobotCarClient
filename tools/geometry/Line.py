@@ -8,10 +8,10 @@ class Line:
 
     def __init__(self, p1, p2):
 
-        x1 = p1(0)
-        y1 = p1(1)
-        x2 = p2(0)
-        y2 = p2(1)
+        x1 = p1[0]
+        y1 = p1[1]
+        x2 = p2[0]
+        y2 = p2[1]
 
         self.m = None
         self.b = None

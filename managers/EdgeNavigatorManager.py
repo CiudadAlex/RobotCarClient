@@ -4,10 +4,11 @@ from tools.geometry.Line import Line
 
 class EdgeNavigatorManager:
 
-    def process_image(self, pil_image):
+    @staticmethod
+    def process_image(image_pil):
 
-        image_width = pil_image.size[0]
-        list_lines = EdgeNavigatorManager.get_close_to_horizontal_lines()
+        image_width = image_pil.size[0]
+        list_lines = EdgeNavigatorManager.get_close_to_horizontal_lines(image_pil)
 
         set_intersection_x = EdgeNavigatorManager.get_set_intersection_x_of_lines_in_width(list_lines, image_width)
         set_intersection_x.add(0)
@@ -19,6 +20,8 @@ class EdgeNavigatorManager:
             map_x_min_y[intersection_x] = min_y
 
         x_with_max_y = EdgeNavigatorManager.get_x_with_max_y(map_x_min_y)
+        peronage_max = x_with_max_y / image_width
+        print(f"peronage_max = {peronage_max}")
 
     @staticmethod
     def get_x_with_max_y(map_x_y):
@@ -59,13 +62,13 @@ class EdgeNavigatorManager:
         return set_intersection_x
 
     @staticmethod
-    def get_close_to_horizontal_lines(pil_image):
+    def get_close_to_horizontal_lines(image_pil):
 
-        image_umat = EdgeDetector.image_pil_to_umat(pil_image)
+        image_umat = EdgeDetector.image_pil_to_umat(image_pil)
         edges = EdgeDetector.get_horizontal_edges(image_umat, show=True)
         list_lines = []
 
-        image_height = pil_image.size[1]
+        image_height = image_pil.size[1]
 
         for p1i, p2i in edges:
             # Transform from image coordinate system to euclidean coordinate system
