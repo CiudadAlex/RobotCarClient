@@ -21,6 +21,8 @@ class EdgeNavigatorManager:
 
         x_with_max_y = EdgeNavigatorManager.get_x_with_max_y(map_x_min_y)
         peronage_max = x_with_max_y / image_width
+        print(f"set_intersection_x = {set_intersection_x}")
+        print(f"map_x_min_y = {map_x_min_y}")
         print(f"peronage_max = {peronage_max}")
 
     @staticmethod
