@@ -14,23 +14,14 @@ if __name__ == "__main__":
     RemoteControlUI.launch()
 
 
-# FIXME test: generate corpus with val and test images
+# FIXME Test Edge recognition to guide.
+
+
+# FIXME Wall follower
 # FIXME Room recognizer: redo training with higher look
 
-# FIXME Edge recognition to guide.
-# FIXME Wall follower
 
 # FIXME ComplexCommandGoToRoom (Door recognition model)
 
 
 # FIXME revise espeak (makes 360 hang)
-
-"""
-from PIL import Image
-from managers.EdgeNavigatorManager import EdgeNavigatorManager
-
-image_path = 'C:/Alex/Dev/data_corpus/VideoCamera/room_dataset_v0/train/images/kitchen_68fb62e4-e427-441a-a814-888d35da6887.png.png'
-image_pil = Image.open(image_path)
-
-EdgeNavigatorManager.process_image(image_pil)
-"""
