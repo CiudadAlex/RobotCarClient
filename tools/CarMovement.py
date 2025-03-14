@@ -1,4 +1,5 @@
 from clients.CommandsClient import CommandsClient
+import time
 
 
 class CarMovement:
@@ -10,9 +11,12 @@ class CarMovement:
 
     def move_right(self):
         self.commands_client.move_a_bit_turn_right(self.secs_turn)
+        time.sleep(self.secs_turn)
 
     def move_left(self):
         self.commands_client.move_a_bit_turn_left(self.secs_turn)
+        time.sleep(self.secs_turn)
 
     def move_ahead(self):
         self.commands_client.move_a_bit_forward(self.secs_forward)
+        time.sleep(self.secs_forward)
