@@ -8,6 +8,9 @@ class EdgeNavigatorManager:
     # Max distance direction to consider the direction should not be changed
     MDD_CENTER_THRESHOLD = 0.35
 
+    # Threshold to detect too near walls
+    TOO_NEAR_THRESHOLD = 0.12
+
     instance = None
 
     @staticmethod
@@ -22,7 +25,14 @@ class EdgeNavigatorManager:
         self.car_movement = CarMovement()
 
     def navigate(self, image_pil, debug=False):
-        max_distance_direction = EdgeNavigatorManager.get_max_distance_direction(image_pil, debug=debug)
+
+        max_distance_direction, max_y_index = EdgeNavigatorManager.get_max_distance_direction(image_pil, debug=debug)
+
+        if max_y_index < EdgeNavigatorManager.TOO_NEAR_THRESHOLD:
+            if debug:
+                print(f"TOO_NEAR_THRESHOLD activated")
+            self.car_movement.move_right()
+            return
 
         if max_distance_direction < -EdgeNavigatorManager.MDD_CENTER_THRESHOLD:
             self.car_movement.move_left()
@@ -41,6 +51,7 @@ class EdgeNavigatorManager:
     def get_max_distance_direction(image_pil, debug=False):
 
         image_width = image_pil.size[0]
+        image_height = image_pil.size[1]
         list_lines = EdgeNavigatorManager.get_close_to_horizontal_lines(image_pil)
 
         set_intersection_x = EdgeNavigatorManager.get_set_intersection_x_of_lines_in_width(list_lines, image_width)
@@ -52,17 +63,19 @@ class EdgeNavigatorManager:
             min_y = EdgeNavigatorManager.get_min_value_y(intersection_x, list_lines)
             map_x_min_y[intersection_x] = min_y
 
-        x_with_max_y = EdgeNavigatorManager.get_x_with_max_y(map_x_min_y)
+        x_with_max_y, max_y = EdgeNavigatorManager.get_x_with_max_y(map_x_min_y)
         peronage_max = x_with_max_y / image_width
         max_distance_direction = 2 * (peronage_max - 0.5)
+        max_y_index = max_y / image_height
 
         if debug:
             print(f"set_intersection_x = {set_intersection_x}")
             print(f"map_x_min_y = {map_x_min_y}")
+            print(f"max_y_index = {max_y_index}")
             print(f"peronage_max = {peronage_max}")
             print(f"max_distance_index = {max_distance_direction}")
 
-        return max_distance_direction
+        return max_distance_direction, max_y_index
 
     @staticmethod
     def get_x_with_max_y(map_x_y):
@@ -75,7 +88,7 @@ class EdgeNavigatorManager:
                 max_y = y
                 x_with_max_y = x
 
-        return x_with_max_y
+        return x_with_max_y, max_y
 
     @staticmethod
     def get_min_value_y(x, list_lines):
