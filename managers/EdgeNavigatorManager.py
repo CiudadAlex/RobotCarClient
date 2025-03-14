@@ -1,11 +1,44 @@
 from tools.EdgeDetector import EdgeDetector
 from tools.geometry.Line import Line
+from tools.CarMovement import CarMovement
 
 
 class EdgeNavigatorManager:
 
+    MDI_CENTER_THRESHOLD = 0.35
+
+    instance = None
+
     @staticmethod
-    def process_image(image_pil):
+    def get_instance():
+
+        if EdgeNavigatorManager.instance is None:
+            EdgeNavigatorManager.instance = EdgeNavigatorManager()
+
+        return EdgeNavigatorManager.instance
+
+    def __init__(self):
+        self.car_movement = CarMovement()
+
+    def navigate(self, image_pil, debug=False):
+        max_distance_index = EdgeNavigatorManager.get_max_distance_index(image_pil, debug=debug)
+
+        if max_distance_index < -EdgeNavigatorManager.MDI_CENTER_THRESHOLD:
+            self.car_movement.move_left()
+        elif EdgeNavigatorManager.MDI_CENTER_THRESHOLD < max_distance_index:
+            self.car_movement.move_right()
+
+        self.car_movement.move_ahead()
+
+
+    """
+    Returns the max_distance_index. This indicator goes from [-1, 1]
+    If the value is close to  0 the max distance is in the center.
+    If the value is close to -1 the max distance is in the left.
+    If the value is close to  1 the max distance is in the right.
+    """
+    @staticmethod
+    def get_max_distance_index(image_pil, debug=False):
 
         image_width = image_pil.size[0]
         list_lines = EdgeNavigatorManager.get_close_to_horizontal_lines(image_pil)
@@ -21,9 +54,15 @@ class EdgeNavigatorManager:
 
         x_with_max_y = EdgeNavigatorManager.get_x_with_max_y(map_x_min_y)
         peronage_max = x_with_max_y / image_width
-        print(f"set_intersection_x = {set_intersection_x}")
-        print(f"map_x_min_y = {map_x_min_y}")
-        print(f"peronage_max = {peronage_max}")
+        max_distance_index = 2 * (peronage_max - 0.5)
+
+        if debug:
+            print(f"set_intersection_x = {set_intersection_x}")
+            print(f"map_x_min_y = {map_x_min_y}")
+            print(f"peronage_max = {peronage_max}")
+            print(f"max_distance_index = {max_distance_index}")
+
+        return max_distance_index
 
     @staticmethod
     def get_x_with_max_y(map_x_y):
