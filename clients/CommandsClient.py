@@ -97,6 +97,18 @@ class CommandsClient(Thread):
         command_path = f'move_a_bit/{mode}/{secs}'
         self.queue_of_command_paths.put((command_path, None))
 
+    def move_a_bit_forward(self, secs):
+        self.move_a_bit("forward", secs)
+
+    def move_a_bit_backward(self, secs):
+        self.move_a_bit("backward", secs)
+
+    def move_a_bit_turn_left(self, secs):
+        self.move_a_bit("turn_left", secs)
+
+    def move_a_bit_turn_right(self, secs):
+        self.move_a_bit("turn_right", secs)
+
     def look(self, mode):
 
         command_path = f'look/{mode}'
