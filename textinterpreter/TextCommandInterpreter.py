@@ -10,6 +10,7 @@ from complexcommands.ComplexCommandRecord import ComplexCommandRecord
 from complexcommands.ComplexCommandRoom import ComplexCommandRoom
 from complexcommands.ComplexCommandGoToRoom import ComplexCommandGoToRoom
 from complexcommands.ComplexCommandPhotoDoor import ComplexCommandPhotoDoor
+from complexcommands.ComplexCommandEdgeWander import ComplexCommandEdgeWander
 from managers.SpeakManager import SpeakManager
 import time
 
@@ -26,6 +27,7 @@ class TextCommandInterpreter:
     COMPLEX_COMMAND_ROOM = "COMPLEX_COMMAND_ROOM"
     COMPLEX_COMMAND_GO_TO_ROOM = "COMPLEX_COMMAND_GO_TO_ROOM"
     COMPLEX_COMMAND_PHOTO_DOOR = "COMPLEX_COMMAND_PHOTO_DOOR"
+    COMPLEX_COMMAND_EDGE_WANDER = "COMPLEX_COMMAND_EDGE_WANDER"
 
     commands_change_mode = {
                         MODE_COMMAND: ["change command", "change commands", "command", "commands"],
@@ -40,6 +42,7 @@ class TextCommandInterpreter:
                         COMPLEX_COMMAND_GO_TO_ROOM: ["go to room", "go room", "go now"],
                         COMPLEX_COMMAND_ROOM: ["room", "where are you", "where"],
                         COMPLEX_COMMAND_PHOTO_DOOR: ["photo", "door"],
+                        COMPLEX_COMMAND_EDGE_WANDER: ["edge", "wander"],
                         }
     commands_led = {
                     "police": ["police"],
@@ -169,6 +172,7 @@ class TextCommandInterpreter:
         ComplexCommand360.get_instance().stop()
         ComplexCommandRoom.get_instance().stop()
         ComplexCommandGoToRoom.get_instance().stop()
+        ComplexCommandEdgeWander.get_instance().stop()
         self.commands_client.led_stop()
 
         if stop_recording:
@@ -211,6 +215,13 @@ class TextCommandInterpreter:
             time.sleep(1)
             SpeakManager.get_instance().say("Photo")
             ComplexCommandPhotoDoor.get_instance().execute()
+
+        elif TextCommandInterpreter.COMPLEX_COMMAND_EDGE_WANDER == complex_command:
+
+            self.stop_all(stop_recording=False)
+            time.sleep(1)
+            SpeakManager.get_instance().say("Edge Wander")
+            ComplexCommandEdgeWander.get_instance().execute()
 
         elif TextCommandInterpreter.COMPLEX_COMMAND_RECORD == complex_command:
             print("Record!!!!!!!")
