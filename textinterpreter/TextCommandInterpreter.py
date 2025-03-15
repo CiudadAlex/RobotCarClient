@@ -28,6 +28,7 @@ class TextCommandInterpreter:
     COMPLEX_COMMAND_GO_TO_ROOM = "COMPLEX_COMMAND_GO_TO_ROOM"
     COMPLEX_COMMAND_PHOTO_DOOR = "COMPLEX_COMMAND_PHOTO_DOOR"
     COMPLEX_COMMAND_EDGE_WANDER = "COMPLEX_COMMAND_EDGE_WANDER"
+    COMPLEX_COMMAND_WALL_FOLLOWER = "COMPLEX_COMMAND_WALL_FOLLOWER"
 
     commands_change_mode = {
                         MODE_COMMAND: ["change command", "change commands", "command", "commands"],
@@ -43,6 +44,7 @@ class TextCommandInterpreter:
                         COMPLEX_COMMAND_ROOM: ["room", "where are you", "where"],
                         COMPLEX_COMMAND_PHOTO_DOOR: ["photo", "door"],
                         COMPLEX_COMMAND_EDGE_WANDER: ["edge", "wander"],
+                        COMPLEX_COMMAND_WALL_FOLLOWER: ["wall", "follow wall"],
                         }
     commands_led = {
                     "police": ["police"],
@@ -174,6 +176,7 @@ class TextCommandInterpreter:
         ComplexCommandGoToRoom.get_instance().stop()
         ComplexCommandEdgeWander.get_instance().stop()
         self.commands_client.led_stop()
+        self.commands_client.wall_follower_stop()
 
         if stop_recording:
             ComplexCommandRecord.get_instance().set_recording_off()
@@ -222,6 +225,13 @@ class TextCommandInterpreter:
             time.sleep(1)
             SpeakManager.get_instance().say("Edge Wander")
             ComplexCommandEdgeWander.get_instance().execute()
+
+        elif TextCommandInterpreter.COMPLEX_COMMAND_WALL_FOLLOWER == complex_command:
+
+            self.stop_all(stop_recording=False)
+            time.sleep(1)
+            SpeakManager.get_instance().say("Wall follower")
+            self.commands_client.wall_follower_start()
 
         elif TextCommandInterpreter.COMPLEX_COMMAND_RECORD == complex_command:
             print("Record!!!!!!!")
