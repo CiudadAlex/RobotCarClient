@@ -139,6 +139,17 @@ class CommandsClient(Thread):
         command_path = 'say'
         self.queue_of_command_paths.put((command_path, text))
 
+    def wall_follower_start(self):
+        self.wall_follower("start")
+
+    def wall_follower_stop(self):
+        self.wall_follower("stop")
+
+    def wall_follower(self, mode):
+
+        command_path = f'wall-follower/{mode}'
+        self.queue_of_command_paths.put((command_path, None))
+
     def set_room(self, selected_room_id, selected_room_name):
 
         data = {
