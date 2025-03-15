@@ -15,12 +15,10 @@ if __name__ == "__main__":
 
 
 # FIXME Test Edge recognition to guide.
+# FIXME Test Wall follower
 
 
-# FIXME Wall follower
 # FIXME Room recognizer: redo training with higher look
-
-
 # FIXME ComplexCommandGoToRoom (Door recognition model)
 
 
