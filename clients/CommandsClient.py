@@ -201,4 +201,4 @@ class CommandsClient(Thread):
         return self.execute_command_path_get("door_list")
 
     def get_distance_to_obstacle(self):
-        return self.execute_command_path_get("distance_to_obstacle")
+        return float(self.execute_command_path_get("distance_to_obstacle"))
