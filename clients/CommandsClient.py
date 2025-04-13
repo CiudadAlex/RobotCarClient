@@ -200,3 +200,5 @@ class CommandsClient(Thread):
     def get_door_list(self):
         return self.execute_command_path_get("door_list")
 
+    def get_distance_to_obstacle(self):
+        return self.execute_command_path_get("distance_to_obstacle")
