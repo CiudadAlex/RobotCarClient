@@ -41,7 +41,7 @@ class ComplexCommandEdgeWander:
 
         while self.running:
 
-            distance = self.commands_client.get_distance_to_obstacle(self)
+            distance = self.commands_client.get_distance_to_obstacle()
 
             if distance < ComplexCommandEdgeWander.CLOSE_TO_THE_WALL:
                 self.commands_client.move_a_bit_backward(ComplexCommandEdgeWander.SECS_BACKWARD)
