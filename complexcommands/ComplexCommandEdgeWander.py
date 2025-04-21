@@ -22,6 +22,7 @@ class ComplexCommandEdgeWander:
 
     def __init__(self):
         self.running = False
+        self.debug = True
         self.edge_navigator_manager = EdgeNavigatorManager.get_instance()
         self.commands_client = CommandsClient.get_instance()
 
@@ -43,11 +44,21 @@ class ComplexCommandEdgeWander:
 
             distance = self.commands_client.get_distance_to_obstacle()
 
+            if self.debug:
+                print(f"distance = {distance}")
+
             if distance < ComplexCommandEdgeWander.CLOSE_TO_THE_WALL:
                 self.commands_client.move_a_bit_backward(ComplexCommandEdgeWander.SECS_BACKWARD)
                 time.sleep(1.2)
+
+                if self.debug:
+                    print(f"Backward")
+
             else:
                 last_image = CarInformationReceptor.get_instance().last_image
                 self.edge_navigator_manager.navigate(last_image)
                 time.sleep(1.2)
+
+                if self.debug:
+                    print(f"Navigation step")
 
