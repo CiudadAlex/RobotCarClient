@@ -12,14 +12,3 @@ if __name__ == "__main__":
                  connect_to_text_stream=online)
 
     RemoteControlUI.launch()
-
-
-# FIXME Test Edge recognition to guide.
-# FIXME Test Wall follower
-
-
-# FIXME Room recognizer: redo training with higher look
-# FIXME ComplexCommandGoToRoom (Door recognition model)
-
-
-# FIXME revise espeak (makes 360 hang)
